@@ -1,0 +1,77 @@
+#ifndef CUB3D_H
+# define CUB3D_H
+
+# include "libft.h"
+# include "structs.h"
+# include "defines.h"
+# include "../mlx/mlx.h"
+# include "../mlx/mlx_int.h"
+//-----------------PARS---------------------------------------
+// CHECK_WALLS_UTILS
+int		check_first_or_last_row(char *line, t_game *game);
+int		check_empty_map_line(char *line);
+void	check_first_or_last_clmns(t_game *game);
+void	n_of_rows(t_game *game);
+void	n_of_cols(t_game *game);
+
+// CHECK_WALLS
+void	n_of_rows(t_game *game);
+void	check_adjacent_cells(int i, int j, t_game *game);
+void	check_wall_status(t_game *game);
+
+// CLEAN_MATRIX_UTILS
+char	**realloc_to_tabs(char **matrix);
+void	add_spcs(char *s, int j);
+int		clean_row_size(char *str);
+
+// CLEAN_MATRIX
+void	fill_new_str(char *new_str, char *str);
+void	fill_new_matrix(char **matrix, char **new_matrix);
+char	**tabs_to_spcs(t_game *game);
+void	create_new_map_matrix(t_game *game);
+
+// COLOR
+int		create_trgb(int t, int r, int g, int b);
+void	comma_case(char *line, int *i, int *commas, t_game *game);
+void	check_color_format(char *line, t_game *game);
+int		extract_color(char *line, t_game *game);
+void	parse_color(char *line, t_game *game, int side);
+
+// PARSE_UTILS
+int		is_valid_map_char(char c);
+char	next_token(char *line, int i);
+int		last_token(char *line, int i);
+char	*save_texture_path(char *line, int i, t_game *game);
+void	save_texture(char *line, t_game *game, int side, int i);
+
+// PARSE_MAP
+void	parse_texture(char *line, t_game *game, int side);
+int		parse_line(char *line, t_game *game);
+void	check_line_map_format(char *line, t_game *game);
+void	parse_map_line(char *line, t_game *game);
+int		parse_map(t_game *game);
+
+//-----------------PRINT_MAP----------------------------------
+// PRINT_MAP
+void	draw_cell(t_game *game, char cell, int x, int y);
+void	fill_minimap(t_game *game);
+void	print_minimap(t_game *game);
+
+// ERROR
+int		ft_error_message(char *message, t_game *game);
+
+// EXIT
+void	destroy_game(t_game *game);
+int		ft_closed(t_game *game);
+
+// HANDLE_INPUT
+void	ft_move(t_game *game, int nx, int ny);
+int		ft_handle_input(int keysym, t_game *game);
+
+// INIT
+void	init_mlx(t_game *game);
+void	init_map(t_game *game);
+void	init_sprites(t_game *game);
+void	init_game(t_game *game);
+
+#endif
