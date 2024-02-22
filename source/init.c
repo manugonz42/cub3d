@@ -9,7 +9,7 @@ void	init_mlx(t_game *game)
 		free(game->mlx_server);
 		ft_error_message("Mlx server start failed.\n", game);
 	}
-	game->mlx_window = mlx_new_window(game->mlx_server, 640, 480, "Cub3D");
+	game->mlx_window = mlx_new_window(game->mlx_server, game->width, game->height, "Cub3D");
 	if (!game->mlx_window)
 	{
 		free (game->mlx_server);
@@ -45,11 +45,11 @@ void	init_sprites(t_game *game)
 
 void	init_game(t_game *game)
 {
+	game->alloc = 1;
+	game->c_count = 0;
+	game->width = 1280;
+	game->height = 720;
 	init_mlx(game);
 	init_map(game);
 	init_sprites(game);
-	game->alloc = 1;
-	game->c_count = 0;
-	game->width = 640;
-	game->height = 480;
 }
