@@ -54,6 +54,8 @@ typedef struct s_game
 	void		*mlx_window;
 	int			c_count;
 	int			alloc;
+	int			width;
+	int			height;
 	t_sprites	sprites;
 	t_image		*frame;
 	t_image		*mini_map;

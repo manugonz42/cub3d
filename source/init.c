@@ -50,4 +50,6 @@ void	init_game(t_game *game)
 	init_sprites(game);
 	game->alloc = 1;
 	game->c_count = 0;
+	game->width = 640;
+	game->height = 480;
 }

@@ -52,6 +52,9 @@ void	parse_map_line(char *line, t_game *game);
 int		parse_map(t_game *game);
 
 //-----------------PRINT_MAP----------------------------------
+// CREATE_BACKGROUND
+void	create_background(t_game *game);
+
 // PRINT_MAP
 void	draw_cell(t_game *game, char cell, int x, int y);
 void	fill_minimap(t_game *game);

@@ -20,7 +20,7 @@ SRC_PATH = source/
 TARGET = cub3d
 
 # Source files
-PRINT_MAP = print_map.c
+PRINT_MAP = print_map.c create_background.c
 PARS = check_walls_utils.c check_walls.c clean_matrix_utils.c \
 		clean_matrix.c color.c pars_utils.c parse_map.c
 FILES = draw_window.c error.c exit.c handle_input.c \
