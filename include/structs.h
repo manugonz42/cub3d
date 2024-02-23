@@ -22,8 +22,13 @@ typedef struct s_player
 {
 	float	x;
 	float	y;
-	float	ray;
-	float	fov;
+	double	ray;
+	int		fov;
+	int		mv_speed;
+	int		moving;
+	int		rotating;
+	double	rot_speed;
+
 }	t_player;
 
 typedef struct s_map
@@ -59,6 +64,7 @@ typedef struct s_game
 	t_sprites	sprites;
 	t_image		*frame;
 	t_image		*mini_map;
+	t_player	*player;
 }				t_game;
 
 #endif

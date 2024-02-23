@@ -25,6 +25,16 @@
 # define WE					3
 # define F					4
 # define C					5
+# define FPS_30				33333
+# define FPS_60				16667
+
+// KEYBOARD CONFIG
+# define AHEAD				1
+# define BACK				2
+# define LEFT				4
+# define RIGHT				8
+# define ROT_LEFT			16
+# define ROT_RIGHT			32
 
 // KEYS
 # define W_KEY				119
@@ -33,6 +43,8 @@
 # define D_KEY				100
 # define ESC_KEY			65307
 # define Q_KEY				113
+# define R_ARROW			65363
+# define L_ARROW			65361
 
 // ERROR MESSAGES
 # define INVALID_MAP		"Invalid map"

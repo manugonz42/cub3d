@@ -7,7 +7,8 @@ void	destroy_game(t_game *game)
 
 int		ft_closed(t_game *game)
 {
-	destroy_game(game);
+	(void)game;
+	//destroy_game(game);
 	exit(EXIT_SUCCESS);
 	return (0);
 }

@@ -6,6 +6,8 @@
 # include "defines.h"
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
+# include <math.h>
+
 //-----------------PARS---------------------------------------
 // CHECK_WALLS_UTILS
 int		check_first_or_last_row(char *line, t_game *game);
@@ -55,11 +57,25 @@ int		parse_map(t_game *game);
 // CREATE_BACKGROUND
 void	create_background(t_game *game);
 
+// DRAW_PJ
+void	draw_pj(t_game *game);
+
 // PRINT_MAP
 void	draw_cell(t_game *game, char cell, int x, int y);
 void	fill_minimap(t_game *game);
-void	print_minimap(t_game *game);
+void	save_minimap(t_game *game);
+void	draw_minimap(t_game *game);
 
+//-----------------UPDATE----------------------------------
+// DRAW_NEXT_FRAME
+void	print_frame(t_game *game);
+int		draw_next_frame(t_game *game);
+
+// UPDATE
+void	update_player_pos(t_game *game);
+void	update_ray(t_game *game);
+
+//----------------SRC----------------------------------
 // ERROR
 int		ft_error_message(char *message, t_game *game);
 
@@ -69,7 +85,13 @@ int		ft_closed(t_game *game);
 
 // HANDLE_INPUT
 void	ft_move(t_game *game, int nx, int ny);
-int		ft_handle_input(int keysym, t_game *game);
+int		on_release_input(int keysym, t_game *game);
+int		on_press_input(int keysym, t_game *game);
+
+// INIT_PJ
+void	set_starting_pj_direction(t_game *game, char c);
+void	set_starting_pj_pos(t_game *game);
+void	init_pj(t_game *game);
 
 // INIT
 void	init_mlx(t_game *game);

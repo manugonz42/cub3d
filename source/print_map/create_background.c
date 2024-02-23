@@ -17,5 +17,4 @@ void create_background(t_game *game)
 		else
 			*(int *)(game->frame->addr + i * 4) = floor_color;
 	}
-	mlx_put_image_to_window(game->mlx_server, game->mlx_window, game->frame->ptr, 0, 0);
 }

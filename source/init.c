@@ -15,7 +15,8 @@ void	init_mlx(t_game *game)
 		free (game->mlx_server);
 		ft_error_message("Mlx window creation failed.\n", game);
 	}
-	mlx_key_hook(game->mlx_window, ft_handle_input, game);
+	mlx_hook(game->mlx_window, 2, 1L << 0, on_press_input, game);
+	mlx_hook(game->mlx_window, 3, 1L << 1, on_release_input, game);
 }
 
 void	init_map(t_game *game)
