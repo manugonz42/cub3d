@@ -43,9 +43,9 @@ void	update_ray(t_game *game)
 	if (game->player->rotating == 0)
 		return ;
 	if (game->player->rotating == ROT_LEFT)
-		game->player->ray -= game->player->rot_speed;
-	if (game->player->rotating == ROT_RIGHT)
 		game->player->ray += game->player->rot_speed;
+	if (game->player->rotating == ROT_RIGHT)
+		game->player->ray -= game->player->rot_speed;
 	if (game->player->ray < 0)
 		game->player->ray += 2 * M_PI;
 	if (game->player->ray > 2 * M_PI)

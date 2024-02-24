@@ -65,7 +65,7 @@ void init_ray_cast(t_game *game)
 	if (up)
 		y_step *= -1;
 	x_step = 8 / tan(game->player->ray);
-	if ((!left && x_step > 0) || (left && x_step < 0))
+	if ((!left && x_step < 0) || (left && x_step > 0))
 		x_step *= -1;
 	x_intercept = game->player->x + (game->player->y - y_intercept) / tan(game->player->ray);
 	next_horizontal_x = x_intercept;
