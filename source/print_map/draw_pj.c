@@ -14,6 +14,5 @@ void	draw_pj(t_game *game)
 		img->addr[i] = create_trgb(0, 255, 0, 0);
 		i++;
 	}
-	printf("x: %f, y: %f\n", game->player->x, game->player->y);
 	mlx_put_image_to_window(game->mlx_server, game->mlx_window, img->ptr, game->player->x + 30, game->player->y + 30);
 }

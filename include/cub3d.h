@@ -66,6 +66,13 @@ void	fill_minimap(t_game *game);
 void	save_minimap(t_game *game);
 void	draw_minimap(t_game *game);
 
+//-----------------RAY_CASTING----------------------------------
+// DRAW_RAY
+void	draw_ray(int x, int y, int x2, int y2, t_image *image);
+
+// START_RAY
+void	init_ray_cast(t_game *game);
+
 //-----------------UPDATE----------------------------------
 // DRAW_NEXT_FRAME
 void	print_frame(t_game *game);

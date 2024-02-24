@@ -50,6 +50,6 @@ void	init_pj(t_game *game)
 	game->player->moving = 0;
 	game->player->rotating = 0;
 	game->player->mv_speed = 3;
-	game->player->rot_speed = 3 * (M_PI / 180);
+	game->player->rot_speed = 6 * (M_PI / 180);
 	set_starting_pj_pos(game);
 }

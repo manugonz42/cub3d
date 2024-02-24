@@ -1,70 +1,57 @@
-#include "include/cub3d.h"
+#include "mlx/mlx.h"
+#include "mlx/mlx_int.h"
 
-int i = 0;
 
-typedef struct
+typedef struct s_image
 {
-    void *mlx;
-    void *win;
-    int key_pressed;
-} t_data;
+    void *ptr;
+    char *addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+} t_image;
 
-int deal_key_press(int key, t_data *data)
+void draw_line(int x, int y, int x2, int y2, t_image *image)
 {
-	i = 1;
-    if (key == 119) // Código de la tecla 'W' en ASCII
+    int dx = x2 - x;
+    int dy = y2 - y;
+    int steps, k;
+    float x_increment, y_increment, x_actual, y_actual;
+
+    if (abs(dx) > abs(dy))
+        steps = abs(dx);
+    else
+        steps = abs(dy);
+
+    x_increment = (float)dx / (float)steps;
+    y_increment = (float)dy / (float)steps;
+    x_actual = x;
+    y_actual = y;
+
+    for (k = 0; k < steps; k++)
     {
-		printf("Tecla 'W' presionada\n");
-        data->key_pressed = 1;
-    }
-    return (0);
-}
+        int pixel_index = ((int)y_actual * image->line_length) + ((int)x_actual * (image->bits_per_pixel / 8));
+        *(int *)(image->addr + pixel_index) = 0xFFFFFF; // Color blanco
 
-int deal_key_release(int key, t_data *data)
-{
-	//printf("suelta funcion\n");
-	i = 0;
-    if (key == 119) // Código de la tecla 'W' en ASCII
-    {
-       	printf("Tecla 'W' liberada\n");
-        data->key_pressed = 0;
-    }
-    return (0);
-}
-
-void perform_action(t_data *data)
-{
-    if (data->key_pressed)
-    {
-        // Realiza la acción mientras la tecla 'W' está presionada
-        printf("Realizando acción mientras la tecla 'W' está presionada\n");
-
-        // Tu código aquí
+        x_actual += x_increment;
+        y_actual += y_increment;
     }
 }
 
-int	draw_next_frame(t_data *data)
+int main()
 {
-	if (i == 1)
-		printf("presionada\n");
-	usleep(FPS);
-	return 0;
-}
+    void *mlx_ptr;
+    t_image image;
 
-int main(void)
-{
-    t_data *data;
+    mlx_ptr = mlx_init();
+    image.ptr = mlx_new_image(mlx_ptr, 800, 600);
+    image.addr = mlx_get_data_addr(image.ptr, &image.bits_per_pixel, &image.line_length, &image.endian);
 
-    data->mlx = mlx_init();
-    data->win = mlx_new_window(data->mlx, 500, 500, "Presionar 'W'");
+    draw_line(100, 100, 500, 300, &image);
 
-    // Asocia las funciones deal_key_press y deal_key_release con los eventos
-    // de tecla presionada y tecla liberada, respectivamente.
-	mlx_do_key_autorepeatoff(data->mlx);
-    mlx_hook(data->win, 2, 1L<<0, deal_key_press, &data);
-    mlx_hook(data->win, 3, 1L<<1, deal_key_release, &data);
-	
-	mlx_loop_hook(data->mlx, draw_next_frame, data);
-	mlx_loop(data->mlx);
-    return (0);
+    mlx_put_image_to_window(mlx_ptr, mlx_new_window(mlx_ptr, 800, 600, "Image Window"), image.ptr, 0, 0);
+
+    mlx_loop(mlx_ptr);
+
+    return 0;
 }
