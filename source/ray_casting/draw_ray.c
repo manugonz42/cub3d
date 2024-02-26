@@ -16,7 +16,7 @@ void draw_ray(int x, int y, int x2, int y2, t_image *image)
     x_increment = (float)dx / (float)steps;
     y_increment = (float)dy / (float)steps;
     x_actual = x + 31;
-    y_actual = y + 30;
+    y_actual = y + 31;
 
     int pixel_index = (y_actual * image->line_bytes) + (x_actual * (image->bitsinpixel / 8));
     *(int *)(image->addr + pixel_index) = 0xFF0000; // Color blanco

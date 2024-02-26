@@ -71,7 +71,7 @@ void	draw_minimap(t_game *game);
 void	draw_ray(int x, int y, int x2, int y2, t_image *image);
 
 // START_RAY
-void	init_ray_cast(t_game *game);
+void	init_ray_cast(t_game *game, double cell_height, double cell_width);
 
 //-----------------UPDATE----------------------------------
 // DRAW_NEXT_FRAME

@@ -29,62 +29,54 @@
 	}
 }*/
 
-void init_ray_cast(t_game *game)
+void init_ray_cast(t_game *game, double cell_height, double cell_width)
 {
-	int		horizontal_hit;	
-	int		horizontal_x_hit;
-	//int		vertical_x_hit;
-	int		horizontal_y_hit;
-	//int		vertical_y_hit;
-	int		up;
-	int		left;
-	int		y_intercept;
-	int		x_intercept;
-	int		y_step;
-	int		x_step;
-	int		next_horizontal_x;
-	int		next_horizontal_y;
-	//double	adjacent;
+	t_ray	*ray_data;
 
-	up = 0;
-	left = 0;
-	horizontal_hit = 0;
-	horizontal_x_hit = 0;
-	//vertical_x_hit = 0;
-	horizontal_y_hit = 0;
-	//vertical_y_hit = 0;
+	ray_data = game->player->ray_data;
+	ray_data->up = 0;
+	ray_data->left = 0;
+	ray_data->horizontal_hit = 0;
+	ray_data->horizontal_x_hit = 0;
+	ray_data->vertical_x_hit = 0;
+	ray_data->horizontal_y_hit = 0;
+	ray_data->vertical_y_hit = 0;
+	//Si el rayo esta entre 0 y 180 grados
 	if (game->player->ray > 0 && game->player->ray < M_PI)
-		up = 1;
+		ray_data->up = 1;
+	//Si el rayo esta entre 90 y 270 grados
 	if (game->player->ray > M_PI_2 && game->player->ray < 3 * M_PI_2)
-		left = 1;
-	y_intercept = floor(game->player->y / 8) * 8;
-	if (!up)
-		y_intercept += 8;
-	//adjacent = fabs((game->player->y - y_intercept) / tan(game->player->ray));
-	y_step = 8;
-	if (up)
-		y_step *= -1;
-	x_step = 8 / tan(game->player->ray);
-	if ((!left && x_step < 0) || (left && x_step > 0))
-		x_step *= -1;
-	x_intercept = game->player->x + (game->player->y - y_intercept) / tan(game->player->ray);
-	next_horizontal_x = x_intercept;
-	next_horizontal_y = y_intercept;
-	if (up)
-		next_horizontal_y--;
-	while(!horizontal_hit && next_horizontal_x >= 0 && next_horizontal_x < game->width && next_horizontal_y >= 0 && next_horizontal_y < game->height)
+		ray_data->left = 1;
+	//Casilla en la que se intercepta el rayo
+	ray_data->y_intercept = floor(game->player->y / cell_height) * cell_height;
+	//Si el rayo esta hacia abajo será la siguiente casilla
+	if (!ray_data->up)
+		ray_data->y_intercept += cell_height;
+	ray_data->adjacent = fabs((game->player->y - ray_data->y_intercept) / tan(game->player->ray));
+	ray_data->y_step = cell_height;
+	if (ray_data->up)
+		ray_data->y_step *= -1;
+	ray_data->x_step = cell_width / tan(game->player->ray);
+	if ((!ray_data->left && ray_data->x_step < 0) || (ray_data->left && ray_data->x_step > 0))
+		ray_data->x_step *= -1;
+	ray_data->x_intercept = game->player->x + (game->player->y - ray_data->y_intercept) / tan(game->player->ray);
+	ray_data->next_horizontal_x = ray_data->x_intercept;
+	ray_data->next_horizontal_y = ray_data->y_intercept;
+	if (ray_data->up)
+		ray_data->next_horizontal_y--;
+	while(!ray_data->horizontal_hit && ray_data->next_horizontal_x >= 0 && ray_data->next_horizontal_x < game->width && ray_data->next_horizontal_y >= 0 && ray_data->next_horizontal_y < game->height)
 	{
-		if (game->map->matrix[(int)floor(next_horizontal_y / 8)][(int)floor(next_horizontal_x / 8)] == '1')
+		if (game->map->matrix[(int)floor(ray_data->next_horizontal_y / cell_height)][(int)floor(ray_data->next_horizontal_x / cell_width)] == '1')
 		{
-			horizontal_hit = 1;
-			horizontal_x_hit = next_horizontal_x;
-			horizontal_y_hit = next_horizontal_y;
+			ray_data->horizontal_hit = 1;
+			ray_data->horizontal_x_hit = ray_data->next_horizontal_x;
+			ray_data->horizontal_y_hit = ray_data->next_horizontal_y;
 		}
 		else
 		{
-			next_horizontal_x += x_step;
-			next_horizontal_y += y_step;
+			ray_data->next_horizontal_x += ray_data->x_step;
+			ray_data->next_horizontal_y += ray_data->y_step;
 		}
 	}
-	draw_ray(game->player->x, game->player->y, horizontal_x_hit, horizontal_y_hit, game->frame);	
+	draw_ray(game->player->x, game->player->y, ray_data->horizontal_x_hit, ray_data->horizontal_y_hit, game->frame);	
 }

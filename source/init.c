@@ -1,5 +1,25 @@
 #include "cub3d.h"
 
+void	init_ray(t_game *game)
+{
+	game->player->ray_data->horizontal_hit = 0;
+	game->player->ray_data->horizontal_x_hit = 0;
+	game->player->ray_data->horizontal_y_hit = 0;
+	game->player->ray_data->vertical_hit = 0;
+	game->player->ray_data->vertical_x_hit = 0;
+	game->player->ray_data->vertical_y_hit = 0;
+	game->player->ray_data->up = 0;
+	game->player->ray_data->left = 0;
+	game->player->ray_data->y_intercept = 0;
+	game->player->ray_data->x_intercept = 0;
+	game->player->ray_data->y_step = 0;
+	game->player->ray_data->x_step = 0;
+	game->player->ray_data->next_horizontal_x = 0;
+	game->player->ray_data->next_horizontal_y = 0;
+	game->player->ray_data->adjacent = 0;
+	game->player->ray_data->opposite = 0;
+}
+
 void	init_mlx(t_game *game)
 {
 	game->alloc = 0;
@@ -15,6 +35,7 @@ void	init_mlx(t_game *game)
 		free (game->mlx_server);
 		ft_error_message("Mlx window creation failed.\n", game);
 	}
+	mlx_hook(game->mlx_window, 17, 0, ft_closed, game);
 	mlx_hook(game->mlx_window, 2, 1L << 0, on_press_input, game);
 	mlx_hook(game->mlx_window, 3, 1L << 1, on_release_input, game);
 }
@@ -44,6 +65,14 @@ void	init_sprites(t_game *game)
 		ft_error_message(MALLOC_ERROR, game);
 }
 
+void	set_cell_dimensions(t_game *game)
+{
+	game->map->cell_height = (double)game->height / (double)game->map->rows;
+	game->map->cell_width = (double)game->width / (double)game->map->cols;
+	printf("game->height: %d, game->width: %d\n", game->height, game->width);
+	printf("cell_height: %f, cell_width: %f\n", game->map->cell_height, game->map->cell_width);
+}
+
 void	init_game(t_game *game)
 {
 	game->alloc = 1;
@@ -53,4 +82,10 @@ void	init_game(t_game *game)
 	init_mlx(game);
 	init_map(game);
 	init_sprites(game);
+	parse_map(game);
+	create_new_map_matrix(game);
+	check_wall_status(game);
+	set_cell_dimensions(game);
+	init_pj(game);
+	init_ray(game);
 }

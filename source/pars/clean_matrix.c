@@ -57,5 +57,7 @@ void	create_new_map_matrix(t_game *game)
 	if (check_empty_map_line(game->map->raw_map))
 		ft_error_message(EMPTY_LINE, game);
 	game->map->matrix = tabs_to_spcs(game);
+	n_of_rows(game);
+	n_of_cols(game);
 	//ft_print_matrix(game->map->matrix);
 }

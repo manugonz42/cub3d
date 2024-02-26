@@ -43,6 +43,9 @@ void	set_starting_pj_pos(t_game *game)
 void	init_pj(t_game *game)
 {
 	game->player = malloc(sizeof(t_player));
+	game->player->ray_data = malloc(sizeof(t_ray));
+	if (!game->player || !game->player->ray_data)
+		ft_error_message(MALLOC_ERROR, game);
 	game->player->fov = 60;
 	game->player->ray = 0;
 	game->player->x = 0;

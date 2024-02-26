@@ -15,7 +15,7 @@ int		draw_next_frame(t_game *game)
 	update_ray(game);
 	create_background(game);
 	draw_minimap(game);
-	init_ray_cast(game);
+	init_ray_cast(game, 8, 8);
 	print_frame(game);
 	draw_pj(game);
 	usleep(FPS_30);
