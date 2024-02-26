@@ -15,7 +15,6 @@ void draw_cell(t_game *game, char cell, int x, int y)
         color = create_trgb(0, 200, 200, 200);
     else
         color = *(int *)(game->frame->addr + (map_y * game->map->cols * 8 + map_x) * 4);
-
     height = 0;
     while (height < 8)
     {
@@ -23,7 +22,7 @@ void draw_cell(t_game *game, char cell, int x, int y)
         while (width < 8)
         {
             int pixel_index = ((map_y + height) * game->map->cols * 8 + (map_x + width)) * 4; 
-            *(int *)(game->mini_map->addr + pixel_index) = color;  // Cast a int para asignar 4 bytes
+            *(int *)(game->minimap->img->addr + pixel_index) = color;  // Cast a int para asignar 4 bytes
             width++;
         }
         height++;
@@ -56,9 +55,8 @@ void	save_minimap(t_game *game)
 {
 	n_of_cols(game);
     create_background(game);
-	game->mini_map = malloc(sizeof(t_image));
-	game->mini_map->ptr = mlx_new_image(game->mlx_server, game->map->cols * 8, game->map->rows * 8);
-	game->mini_map->addr = mlx_get_data_addr(game->mini_map->ptr, &game->mini_map->bitsinpixel, &game->mini_map->line_bytes, &game->mini_map->endian);
+	game->minimap->img->ptr = mlx_new_image(game->mlx_server, game->map->cols * 8, game->map->rows * 8);
+	game->minimap->img->addr = mlx_get_data_addr(game->minimap->img->ptr, &game->minimap->img->bitsinpixel, &game->minimap->img->line_bytes, &game->minimap->img->endian);
 	fill_minimap(game);
 }
 
@@ -76,25 +74,21 @@ void draw_minimap(t_game *game)
 {
 	int	y;
 	int	x;
-    int frame_width = game->width;
-    int frame_height = game->height;
-	int minimap_width = game->map->cols * 8;
-    int minimap_height = game->map->rows * 8;
 
     y = 0;
-    while (y < minimap_height)
+    while (y < game->minimap->height)
     {
     	x = 0;
-        while (x < minimap_width)
+        while (x < game->minimap->width)
         {
             int frame_x = x + 30;
             int frame_y = y + 30;
 
-            if (frame_x < frame_width && frame_y < frame_height)
+            if (frame_x < game->width && frame_y < game->height)
             {
-                int frame_pixel_index = (frame_y * frame_width + frame_x) * 4;
-                int minimap_pixel_index = (y * minimap_width + x) * 4;
-                *(int *)(game->frame->addr + frame_pixel_index) = *(int *)(game->mini_map->addr + minimap_pixel_index);
+                int frame_pixel_index = (frame_y * game->width + frame_x) * 4;
+                int minimap_pixel_index = (y * game->minimap->width + x) * 4;
+                *(int *)(game->frame->addr + frame_pixel_index) = *(int *)(game->minimap->img->addr + minimap_pixel_index);
             }
             x++;
         }

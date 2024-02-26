@@ -73,6 +73,19 @@ void	set_cell_dimensions(t_game *game)
 	printf("cell_height: %f, cell_width: %f\n", game->map->cell_height, game->map->cell_width);
 }
 
+void	init_minimap(t_game *game)
+{
+	game->minimap = malloc(sizeof(t_minimap));
+	if (!game->minimap)
+		ft_error_message(MALLOC_ERROR, game);
+	game->minimap->img = malloc(sizeof(t_image));
+	if (!game->minimap->img)
+		ft_error_message(MALLOC_ERROR, game);
+	game->minimap->width = 8 * game->map->cols;
+	game->minimap->height = 8 * game->map->rows;
+	game->minimap->cell_size = 8;
+}
+
 void	init_game(t_game *game)
 {
 	game->alloc = 1;
@@ -85,6 +98,7 @@ void	init_game(t_game *game)
 	parse_map(game);
 	create_new_map_matrix(game);
 	check_wall_status(game);
+	init_minimap(game);
 	set_cell_dimensions(game);
 	init_pj(game);
 	init_ray(game);

@@ -95,7 +95,7 @@ typedef struct s_game
 	int			height;
 	t_sprites	sprites;
 	t_image		*frame;
-	t_image		*mini_map;
+	t_minimap	*minimap;
 	t_player	*player;
 }				t_game;
 

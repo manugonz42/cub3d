@@ -34,7 +34,6 @@ void	update_player_pos(t_game *game)
 		game->player->x = new_x;
 		game->player->y = new_y;
 	}
-	
 }
 
 void	update_ray(t_game *game)
