@@ -5,9 +5,11 @@ void	init_ray(t_game *game)
 	game->player->ray_data->horizontal_hit = 0;
 	game->player->ray_data->horizontal_x_hit = 0;
 	game->player->ray_data->horizontal_y_hit = 0;
+	game->player->ray_data->horizontal_distance = 9999;
 	game->player->ray_data->vertical_hit = 0;
 	game->player->ray_data->vertical_x_hit = 0;
 	game->player->ray_data->vertical_y_hit = 0;
+	game->player->ray_data->vertical_distance = 9999;
 	game->player->ray_data->up = 0;
 	game->player->ray_data->left = 0;
 	game->player->ray_data->y_intercept = 0;

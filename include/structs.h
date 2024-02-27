@@ -6,9 +6,11 @@ typedef struct s_ray
 	int		horizontal_hit;	
 	int		horizontal_x_hit;
 	int		horizontal_y_hit;
+	double	horizontal_distance;
 	int		vertical_hit;
 	int		vertical_x_hit;
 	int		vertical_y_hit;
+	double	vertical_distance;
 	int		up;
 	int		left;
 	int		y_intercept;
@@ -17,6 +19,10 @@ typedef struct s_ray
 	int		x_step;
 	int		next_horizontal_x;
 	int		next_horizontal_y;
+	int		next_vertical_x;
+	int		next_vertical_y;
+	double	wall_hit_x;
+	double	wall_hit_y;
 	double	adjacent;
 	double	opposite;
 }	t_ray;

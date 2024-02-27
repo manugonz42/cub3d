@@ -35,8 +35,8 @@ void	set_starting_pj_pos(t_game *game)
 	}
 	game->player->fov = 60;
 	printf("x: %d y: %d",x , y);
-	game->player->x = x * 8 + 2;
-	game->player->y = y * 8 + 2;
+	game->player->x = x * 8;
+	game->player->y = y * 8;
 	set_starting_pj_direction(game, map[y][x]);
 }
 
