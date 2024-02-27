@@ -6,11 +6,8 @@ void	find_next_horizontal_hit(t_game *game, t_ray *ray_data, double cell_height,
 
 	while(!ray_data->horizontal_hit && ray_data->next_horizontal_x >= 0 && ray_data->next_horizontal_x < cell_width * game->map->cols && ray_data->next_horizontal_y >= 0 && ray_data->next_horizontal_y < cell_height * game->map->rows)
 	{
-		printf("next_horizontal_x: %d\n", ray_data->next_horizontal_x);
-		printf("next_horizontal_y: %d\n", ray_data->next_horizontal_y);
 		if (game->map->matrix[(int)floor(ray_data->next_horizontal_y / cell_height)][(int)floor(ray_data->next_horizontal_x / cell_width)] == '1')
 		{
-			printf("horizontal_hit\n");
 			ray_data->horizontal_hit = 1;
 			ray_data->horizontal_x_hit = ray_data->next_horizontal_x;
 			ray_data->horizontal_y_hit = ray_data->next_horizontal_y;
@@ -21,7 +18,6 @@ void	find_next_horizontal_hit(t_game *game, t_ray *ray_data, double cell_height,
 			ray_data->next_horizontal_y += ray_data->y_step;
 		}
 	}
-	printf("sale del while\n");
 }
 
 void	find_next_vertical_hit(t_game *game, t_ray *ray_data, double cell_height, double cell_width)
@@ -59,7 +55,6 @@ void	set_horizontal_vars(t_game *game, t_ray *ray_data, double cell_height, doub
 		ray_data->y_step *= -1;
 	//Distancia en X entre dos colisiones horizontales
 	ray_data->x_step = cell_width / tan(game->player->ray);
-	printf("cell_width %f x_step: %d\n",cell_width, ray_data->x_step);
 	//Si el rayo va hacia la izquierda hay que restar las X
 	if ((!ray_data->left && ray_data->x_step < 0) || (ray_data->left && ray_data->x_step > 0))
 		ray_data->x_step *= -1;
@@ -80,7 +75,6 @@ void	set_vertical_vars(t_game *game, t_ray *ray, double cell_height, double cell
 	//Si el rayo esta hacia la derecha la colisión será en la siguiente casil la
 	if (!ray->left)
 		ray->x_intercept += cell_width;
-	printf("x_intercept: %d\n", ray->x_intercept);
 	//Distancia en Y entre jugador y la siguiente colision vertical
 	ray->opposite = fabs((game->player->x - ray->x_intercept) * tan(game->player->ray));
 	//Distancia en X entre dos casillas
@@ -242,25 +236,14 @@ void init_ray_cast(t_game *game, double cell_height, double cell_width)
 	t_ray	*ray_data;
 
 	ray_data = game->player->ray_data;
-	printf("1\n");
 	reset_vars(ray_data);
-	printf("2\n");
 	set_direction(game);
-	printf("3\n");
 	set_horizontal_vars(game, ray_data, cell_height, cell_width);	
-	printf("4\n");
 	find_next_horizontal_hit(game, ray_data, cell_height, cell_width);
-	printf("5\n");
 	set_vertical_vars(game, ray_data, cell_height, cell_width);
-	printf("6\n");
 	find_next_vertical_hit(game, ray_data, cell_height, cell_width);
-	printf("7\n");
 	set_hit_point(game, ray_data);
-	printf("8\n");
 	draw_ray(game->player->x, game->player->y, ray_data->wall_hit_x, ray_data->wall_hit_y, game->frame);
-	printf("9\n");
 	draw_horizontal_line_dynamic(game, game->player->x, ray_data->wall_hit_x, game->player->y, 0x00FF00);
-	printf("10\n");
 	draw_vertical_lyne_dynamic(game, game->player->y, ray_data->wall_hit_y, ray_data->wall_hit_x, 0x0000FF);
-	printf("11\n");
 }

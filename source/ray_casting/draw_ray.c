@@ -2,7 +2,7 @@
 
 void draw_ray(int x, int y, int x2, int y2, t_image *image)
 {
-    printf("draw_ray: x: %d, y: %d, x2: %d, y2: %d\n", x, y, x2, y2); // (1)
+    //printf("draw_ray: x: %d, y: %d, x2: %d, y2: %d\n", x, y, x2, y2); // (1)
     int dx = x2 - x;
     int dy = y2 - y;
     int steps, k;
