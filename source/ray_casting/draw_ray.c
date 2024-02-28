@@ -2,7 +2,8 @@
 
 void draw_ray(int x, int y, int x2, int y2, t_image *image)
 {
-    //printf("draw_ray: x: %d, y: %d, x2: %d, y2: %d\n", x, y, x2, y2); // (1)
+    int color = create_trgb(0, 255, 0, 0);
+    printf("draw_ray: x: %d, y: %d, x2: %d, y2: %d\n", x, y, x2, y2); // (1)
     int dx = x2 - x;
     int dy = y2 - y;
     int steps, k;
@@ -27,6 +28,6 @@ void draw_ray(int x, int y, int x2, int y2, t_image *image)
         y_actual += y_increment;
 
         pixel_index = (y_actual * image->line_bytes) + (x_actual * (image->bitsinpixel / 8));
-        *(int *)(image->addr + pixel_index) = 0xFF0000; // Color blanco
+        *(int *)(image->addr + pixel_index) = color; // Color blanco
     }
 }

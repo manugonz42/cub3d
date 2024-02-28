@@ -4,23 +4,23 @@
 typedef struct s_ray
 {
 	int		horizontal_hit;	
-	int		horizontal_x_hit;
-	int		horizontal_y_hit;
+	double	horizontal_x_hit;
+	double	horizontal_y_hit;
 	double	horizontal_distance;
-	int		vertical_hit;
-	int		vertical_x_hit;
-	int		vertical_y_hit;
+	double	vertical_hit;
+	double	vertical_x_hit;
+	double	vertical_y_hit;
 	double	vertical_distance;
 	int		up;
 	int		left;
-	int		y_intercept;
-	int		x_intercept;
-	int		y_step;
-	int		x_step;
-	int		next_horizontal_x;
-	int		next_horizontal_y;
-	int		next_vertical_x;
-	int		next_vertical_y;
+	double	y_intercept;
+	double	x_intercept;
+	double	y_step;
+	double	x_step;
+	double	next_horizontal_x;
+	double	next_horizontal_y;
+	double	next_vertical_x;
+	double	next_vertical_y;
 	double	wall_hit_x;
 	double	wall_hit_y;
 	double	adjacent;
