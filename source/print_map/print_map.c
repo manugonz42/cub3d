@@ -36,7 +36,7 @@ void	fill_minimap(t_game *game)
 	int y;
 	
 	y = 0;
-    ft_print_matrix(game->map->matrix);
+//    ft_print_matrix(game->map->matrix);
 	while (y < game->map->rows)
 	{
 		x = 0;
@@ -55,7 +55,7 @@ void	fill_minimap(t_game *game)
 void	save_minimap(t_game *game)
 {
 	n_of_cols(game);
-    create_background(game);
+ //   create_background(game);
 	game->mini_map = malloc(sizeof(t_image));
 	game->mini_map->ptr = mlx_new_image(game->mlx_server, game->map->cols * 8, game->map->rows * 8);
 	game->mini_map->addr = mlx_get_data_addr(game->mini_map->ptr, &game->mini_map->bitsinpixel, &game->mini_map->line_bytes, &game->mini_map->endian);

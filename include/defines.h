@@ -25,6 +25,8 @@
 # define WE					3
 # define F					4
 # define C					5
+# define B					6
+# define W					7
 # define FPS_30				33333
 # define FPS_60				16667
 

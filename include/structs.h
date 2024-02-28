@@ -50,6 +50,8 @@ typedef struct	s_sprites
 	t_image	*we;
 	t_image	*f;
 	t_image	*c;
+	t_image	*b;
+	t_image	*w;
 }	t_sprites;
 
 typedef struct s_game

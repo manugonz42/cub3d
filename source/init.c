@@ -19,12 +19,12 @@ void	init_mlx(t_game *game)
 	mlx_hook(game->mlx_window, 3, 1L << 1, on_release_input, game);
 }
 
-void	init_map(t_game *game)
+void	init_map(t_game *game, char *map)
 {
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
 		ft_error_message(MALLOC_ERROR, game);
-	game->map->cub_path = "map.cub";
+	game->map->cub_path = map;
 	game->map->alloc = 0;
 	game->map->rows = 0;
 	game->map->cols = 0;
@@ -40,17 +40,19 @@ void	init_sprites(t_game *game)
 	game->sprites.we = malloc(sizeof(t_image));
 	game->sprites.f = malloc(sizeof(t_image));
 	game->sprites.c = malloc(sizeof(t_image));
+	game->sprites.b = malloc(sizeof(t_image));
+	game->sprites.w = malloc(sizeof(t_image));
 	if (!game->sprites.no || !game->sprites.so || !game->sprites.ea || !game->sprites.we || !game->sprites.f || !game->sprites.c)
 		ft_error_message(MALLOC_ERROR, game);
 }
 
-void	init_game(t_game *game)
+void	init_game(t_game *game, char *map)
 {
 	game->alloc = 1;
 	game->c_count = 0;
-	game->width = 1280;
-	game->height = 720;
+	game->width = 1024;
+	game->height = 512;
 	init_mlx(game);
-	init_map(game);
+	init_map(game, map);
 	init_sprites(game);
 }

@@ -29,6 +29,10 @@ int	parse_line(char *line, t_game *game)
 		parse_color(line, game, F);
 	else if (line[0] == 'C')
 		parse_color(line, game, C);
+	else if (line[0] == 'B')
+		parse_color(line, game, B);
+	else if (line[0] == 'W')
+		parse_color(line, game, W);
 	else if (line[0] == '\0' || line[0] == '\n')
 			return (1);
 	else
@@ -47,8 +51,8 @@ void	check_line_map_format(char *line, t_game *game)
 			ft_error_message(INVALID_MAP, game);
 		i++;
 	}
-	/*if (line[i] != '\n')
-		ft_error_message(MISSING_NL, game);*/
+	if (line[i - 1] != '1')
+		ft_error_message(INVALID_MAP, game);
 }
 
 void	parse_map_line(char *line, t_game *game)

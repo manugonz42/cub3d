@@ -1,5 +1,7 @@
 #include "cub3d.h"
 
+void	draw_colision(t_game *game, int x, int y);
+
 /*void ray_cast(t_game *game)
 {
 	int		i;
@@ -87,4 +89,124 @@ void init_ray_cast(t_game *game)
 		}
 	}
 	draw_ray(game->player->x, game->player->y, horizontal_x_hit, horizontal_y_hit, game->frame);	
+}
+
+
+float	ray_dist(float ax, float ay, float bx, float by)
+{
+	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
+}
+
+void	cast_rays(t_game *game)
+{
+	int mx, my, dof;
+	float rx, ry, ra, xo, yo, aTan, nTan, dr, disH, disV, vx, vy, hx, hy;
+
+	dr = M_PI / 180;
+	ra = game->player->ray - 30 * dr;
+	
+	for (int r = 0; r < 60; r++)
+	{
+		//Colision con lineas horizontales
+		dof = 0;
+		disH = 10000000;
+		aTan = -1 / tan(ra);
+		if (ra < M_PI) //Angulo inferior a 180 grados (arriba)
+		{
+			//No entiendo muy bien la matemática aquí, pero como cada casilla en el mapa en el que estoy trabajando es de 32x32, calculamos
+			//la distancia en el eje y (en el que nos movemos para estas colisiones) haciendo una aproximacion a la baja de 5 bits y luego
+			//la distancia que se ha desplazado en el eje x con la inversa de la arcotangente del angulo (aTan)
+			ry = (((int)game->player->y >> 5) << 5) - 0.0001;
+			rx = (game->player->y - ry) * aTan + game->player->x;
+			//apartir de ahí, el offset hasta la siguiente linea a evaluar va a ser siempre -32 apra el eje y, el offset para el eje x va a ser
+			// -32 * aTan
+			yo = - 32;
+			xo = -yo * aTan;
+		}
+		else if (ra > M_PI) //Angulo superior a 180 grados (abajo)
+		{
+			//Igual que antes solo que como es hacia abajo, el redondeo es a la alza y el ofset de las 'y' es positivo
+			ry = (((int)game->player->y >> 5) << 5) + 32;
+			rx = (game->player->y - ry) * aTan + game->player->x;
+			yo = 32;
+			xo = -yo * aTan;
+		}
+		else if (ra == 0 || ra == M_PI) //Nunca hay colision horizontal porque es izquierda o derecha
+		{
+			rx = game->player->x;
+			ry = game->player->y;
+			dof = 8;
+		}
+		while (dof < 8)
+		{
+			mx = ((int)(rx)>>5);
+			my = ((int)(ry)>>5);
+			if (mx < 0 || my < 0 || mx >= game->map->cols || my >= game->map->rows)
+				dof = 8;
+			else if (game->map->matrix[my][mx] == '1')
+			{
+				dof = 8;
+				disH = ray_dist(game->player->x, game->player->y, rx, ry);
+				hx = rx;
+				hy = ry;
+			}
+			else
+			{
+				rx += xo;
+				ry += yo;
+				dof += 1;
+			}
+		}
+
+		//Vertical
+		dof = 0;
+		disV = 10000000;
+		nTan = -tan(ra);
+		if (ra < M_PI/2 || ra > 3 * M_PI/2)
+		{
+			rx = (((int)game->player->x >> 5) << 5) - 0.0001;
+			ry = (game->player->x - rx) * nTan + game->player->y;
+			xo = - 32;
+			yo = -xo * nTan;
+		}
+		else if (ra > M_PI/2 && ra < 3 * M_PI/2)
+		{
+			rx = (((int)game->player->x >> 5) << 5) + 32;
+			ry = (game->player->x - rx) * nTan + game->player->y;
+			xo = 32;
+			yo = -xo * nTan;
+		}
+		else if (ra == 0 || ra == M_PI)
+		{
+			rx = game->player->x;
+			ry = game->player->y;
+			dof = 8;
+		}
+		while (dof < 8)
+		{
+			mx = ((int)(rx)>>5);
+			my = ((int)(ry)>>5);
+			if (mx < 0 || my < 0 || mx >= game->map->cols || my >= game->map->rows)
+				dof = 8;
+			else if (game->map->matrix[my][mx] == '1')
+			{
+				dof = 8;
+				disV = ray_dist(game->player->x, game->player->y, rx, ry);
+				vx = rx;
+				vy = ry;
+			}
+			else
+			{
+				rx += xo;
+				ry += yo;
+				dof += 1;
+			}
+		}
+		//Renderizado
+		if (disH < disV)
+			draw_colision(game, (int)hx, (int)hy);
+		else
+			draw_colision(game, (int)vx, (int)vy);
+		ra += dr;
+	}
 }

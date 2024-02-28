@@ -55,7 +55,7 @@ int		parse_map(t_game *game);
 
 //-----------------PRINT_MAP----------------------------------
 // CREATE_BACKGROUND
-void	create_background(t_game *game);
+void	create_map(t_game *game);
 
 // DRAW_PJ
 void	draw_pj(t_game *game);
@@ -102,8 +102,8 @@ void	init_pj(t_game *game);
 
 // INIT
 void	init_mlx(t_game *game);
-void	init_map(t_game *game);
+void	init_map(t_game *game, char *map);
 void	init_sprites(t_game *game);
-void	init_game(t_game *game);
+void	init_game(t_game *game, char *map);
 
 #endif
