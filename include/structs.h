@@ -54,6 +54,22 @@ typedef struct	s_sprites
 	t_image	*w;
 }	t_sprites;
 
+typedef struct s_ray
+{
+	float	x;
+	float	y;
+	float	xo;
+	float	yo;
+	float	ra;
+	float	aTan;
+	float	disH;
+	float	hx;
+	float	hy;
+	float	disV;
+	float	vx;
+	float	vy;
+}	t_ray;
+
 typedef struct s_game
 {
 	t_map		*map;

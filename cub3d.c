@@ -2,7 +2,7 @@
 
 void	run_game(t_game *game)
 {
-//	mlx_key_hook(game->mlx_window, on_press_input, game);
+	mlx_loop_hook(game->mlx_server, draw_next_frame, game);
 	mlx_hook(game->mlx_window, 17, 0, ft_closed, game);
 	mlx_loop(game->mlx_server);
 }
@@ -28,15 +28,9 @@ int	main(int argc, char *argv[])
 	parse_map(&game);
 	create_new_map_matrix(&game);
 	ft_print_matrix(game.map->matrix);
-	create_map(&game);
+//	create_map(&game);
 	init_pj(&game);
-	draw_pj(&game);
-	mlx_loop_hook(game.mlx_server, draw_next_frame, &game);
-/*	check_wall_status(&game);
-	save_minimap(&game);
-	draw_minimap(&game);
-	draw_pj(&game);
-//	mlx_loop(game.mlx_server);*/
+//	draw_pj(&game);
 	run_game(&game);
 	while(1)
 	{

@@ -106,4 +106,9 @@ void	init_map(t_game *game, char *map);
 void	init_sprites(t_game *game);
 void	init_game(t_game *game, char *map);
 
+
+float	adjust_angle(float ra);
+float	ray_dist(float ax, float ay, float bx, float by);
+void    create_background(t_game *game);
+
 #endif

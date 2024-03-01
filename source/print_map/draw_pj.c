@@ -7,9 +7,9 @@ void	draw_pj(t_game *game)
 
 	i = 0;
 	img = malloc(sizeof(t_image));
-	img->ptr = mlx_new_image(game->mlx_server, 8, 8);
+	img->ptr = mlx_new_image(game->mlx_server, TILE_SIZE / 4, TILE_SIZE / 4);
 	img->addr = mlx_get_data_addr(img->ptr, &img->bitsinpixel, &img->line_bytes, &img->endian);
-	while(i < 64)
+	while(i < (TILE_SIZE) / 4 * (TILE_SIZE / 4))
 	{
 		*(int *)(img->addr + i * 4) = create_trgb(0, 255, 0, 0);
 		i++;

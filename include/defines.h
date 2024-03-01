@@ -63,4 +63,12 @@
 # define NOT_WALL_SR_MAP 	"Map must be surrounded by walls"
 # define EMPTY_LINE			"Empty line in map"
 
+// VALUES
+# define DR                 M_PI / 180
+# define M_PI_2             M_PI / 2
+# define M_PI_3             3 * M_PI / 2
+# define TILE_SIZE          8
+# define TILE_BITS          3
+# define FOV                60
+
 #endif
