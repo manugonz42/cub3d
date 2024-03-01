@@ -92,8 +92,8 @@ void	init_game(t_game *game)
 {
 	game->alloc = 1;
 	game->c_count = 0;
-	game->width = 1280;
-	game->height = 720;
+	game->width = GAME_WIDTH;
+	game->height = GAME_HEIGHT;
 	init_mlx(game);
 	init_map(game);
 	init_sprites(game);

@@ -35,8 +35,8 @@ void	set_starting_pj_pos(t_game *game)
 	}
 	game->player->fov = 60;
 	printf("x: %d y: %d",x , y);
-	game->player->x = x * 8;
-	game->player->y = y * 8;
+	game->player->x = x * TILE_SIZE;
+	game->player->y = y * TILE_SIZE;
 	set_starting_pj_direction(game, map[y][x]);
 }
 
@@ -53,6 +53,6 @@ void	init_pj(t_game *game)
 	game->player->moving = 0;
 	game->player->rotating = 0;
 	game->player->mv_speed = 3;
-	game->player->rot_speed = 1 * (M_PI / 180);
+	game->player->rot_speed = 6 * (M_PI / 180);
 	set_starting_pj_pos(game);
 }

@@ -8,12 +8,14 @@ void	find_next_horizontal_hit(t_game *game, t_ray *ray_data, double cell_height,
 	{
 		if (game->map->matrix[(int)floor(ray_data->next_horizontal_y / cell_height)][(int)floor(ray_data->next_horizontal_x / cell_width)] == '1')
 		{
+			//printf("horizontal if: y_step: %f, y_start: %f, next_vertical_y: %f, x_start %f, next_X %f\n", ray_data->y_step, game->player->y, ray_data->next_vertical_y, game->player->x, ray_data->next_vertical_x);
 			ray_data->horizontal_hit = 1;
 			ray_data->horizontal_x_hit = ray_data->next_horizontal_x;
 			ray_data->horizontal_y_hit = ray_data->next_horizontal_y;
 		}
 		else
 		{
+			//printf("horizontal while: y_step: %f, y_start: %f, next_vertical_y: %f, x_start %f, next_X %f\n", ray_data->y_step, game->player->y, ray_data->next_vertical_y, game->player->x, ray_data->next_vertical_x);
 			ray_data->next_horizontal_x += ray_data->x_step;
 			ray_data->next_horizontal_y += ray_data->y_step;
 		}
@@ -22,20 +24,19 @@ void	find_next_horizontal_hit(t_game *game, t_ray *ray_data, double cell_height,
 
 void	find_next_vertical_hit(t_game *game, t_ray *ray_data, double cell_height, double cell_width)
 {
-	printf("while vertical\n");
 	//Comprobamos en cada iteración si siguiente linea vertical pertenece a una pared
 	while(!ray_data->vertical_hit && ray_data->next_vertical_x >= 0 && ray_data->next_vertical_x < cell_width * game->map->cols && ray_data->next_vertical_y >= 0 && ray_data->next_vertical_y < cell_height * game->map->rows)
 	{
 		if (game->map->matrix[(int)floor(ray_data->next_vertical_y / cell_height)][(int)floor(ray_data->next_vertical_x / cell_width)] == '1')
 		{
-			printf("if: y_step: %f, y_start: %f, next_vertical_y: %f\n", ray_data->y_step, game->player->y, ray_data->next_vertical_y);
+			//printf("vertical if: y_step: %f, y_start: %f, next_vertical_y: %f x_start %f, next_X %f\n", ray_data->y_step, game->player->y, ray_data->next_vertical_y, game->player->x, ray_data->next_vertical_x);
 			ray_data->vertical_hit = 1;
 			ray_data->vertical_x_hit = ray_data->next_vertical_x;
 			ray_data->vertical_y_hit = ray_data->next_vertical_y;
 		}
 		else
 		{
-			printf(GREEN"else: y_step: %f, y_start: %f, next_vertical_y: %f\n"WHITE, ray_data->y_step, game->player->y, ray_data->next_vertical_y);
+			//printf(GREEN"else: y_step: %f, y_start: %f, next_vertical_y: %f\n"WHITE, ray_data->y_step, game->player->y, ray_data->next_vertical_y);
 			ray_data->next_vertical_x += ray_data->x_step;
 			ray_data->next_vertical_y += ray_data->y_step;
 		}
@@ -46,9 +47,11 @@ void	set_horizontal_vars(t_game *game, t_ray *ray_data, double cell_height, doub
 {
 	double	ray_angle;
 
+	printf("player x: %f, y: %f\n", game->player->x, game->player->y);
+	//printf("horizntal player angle: %f\n", game->player->ray);
 	ray_angle = game->player->ray;
-	if (ray_angle == 0 || ray_angle == M_PI)
-		ray_angle = INT_MAX;
+	/*if (ray_angle == 0 || ray_angle == M_PI)
+		ray_angle = INT_MAX;*/
 	//Distancia en Y entre jugador y la siguiente colisión horizontal
 	ray_data->y_intercept = floor(game->player->y / cell_height) * cell_height;
 	//Si el rayo esta hacia abajo la colisión será en la siguiente casil la
@@ -74,6 +77,7 @@ void	set_horizontal_vars(t_game *game, t_ray *ray_data, double cell_height, doub
 	//Si miramos hacia arriba hay que comprobar la casilla anterior
 	if (ray_data->up)
 		ray_data->next_horizontal_y--;
+	//printf("horizontal x_step %f, y_step: %f\n",ray_data->x_step, ray_data->y_step);
 }
 
 void	set_vertical_vars(t_game *game, t_ray *ray, double cell_height, double cell_width)
@@ -81,9 +85,8 @@ void	set_vertical_vars(t_game *game, t_ray *ray, double cell_height, double cell
 	(void)cell_height;
 	double	ray_angle;
 
+	//printf("player angle: %f\n", game->player->ray);
 	ray_angle = game->player->ray;
-	if (ray_angle == 0 || ray_angle == M_PI)
-		ray_angle = INT_MAX;
 	//Distancia en X entre jugador y la siguiente colisión vertical
 	ray->x_intercept = floor(game->player->x / cell_width) * cell_width;
 	//Si el rayo esta hacia la derecha la colisión será en la siguiente casil la
@@ -98,6 +101,7 @@ void	set_vertical_vars(t_game *game, t_ray *ray, double cell_height, double cell
 		ray->x_step *= -1;
 	//Distancia en Y entre dos colisiones verticales
 	ray->y_step = cell_height * tan(ray_angle);
+	
 	//Si el rayo va hacia arriba hay que restar las Y
 	if ((!ray->up && ray->y_step < 0) || (ray->up && ray->y_step > 0))
 		ray->y_step *= -1;
@@ -109,7 +113,7 @@ void	set_vertical_vars(t_game *game, t_ray *ray, double cell_height, double cell
 	//Si miramos hacia la izquierda hay que comprobar la casilla anterior
 	if (ray->left)
 		ray->next_vertical_x--;
-	printf("vertocal x_step %f, y_step: %f\n",ray->x_step, ray->y_step);
+	//printf("vertocal x_step %f, y_step: %f\n",ray->x_step, ray->y_step);
 }
 
 void	set_direction(t_game *game)
@@ -236,21 +240,32 @@ void	set_hit_point(t_game *game, t_ray *ray_data)
 		ray_data->vertical_distance = distance(game->player->x, game->player->y, ray_data->vertical_x_hit, ray_data->vertical_y_hit);
 	if (ray_data->horizontal_distance < ray_data->vertical_distance)
 	{
-		printf(RED"horizontal\n"WHITE);
 		ray_data->wall_hit_x = ray_data->horizontal_x_hit;
 		ray_data->wall_hit_y = ray_data->horizontal_y_hit;
+		ray_data->distance = ray_data->horizontal_distance;
+		//printf(RED"horizontal x_hit %f y_hit %f\n"WHITE, ray_data->wall_hit_x, ray_data->wall_hit_y );
 	}
 	else
 	{
-		printf(RED"vertical\n"WHITE);
 		ray_data->wall_hit_x = ray_data->vertical_x_hit;
 		ray_data->wall_hit_y = ray_data->vertical_y_hit;
+		ray_data->distance = ray_data->vertical_distance;
+		//printf(RED"vertical x_hit %f y_hit %f\n"WHITE, ray_data->wall_hit_x, ray_data->wall_hit_y );
 	}
+	
 }
 
 double	to_rad(double angle)
 {
 	return (angle * (M_PI / 180));
+}
+
+void	normalize_angle(double *angle)
+{
+	if (*angle > 2 * M_PI)
+		*angle -= 2 * M_PI;
+	if (*angle < 0)
+		*angle += 2 * M_PI;
 }
 
 void	w_for_rays(t_game *game, t_ray *ray_data, double cell_height, double cell_width)
@@ -262,9 +277,11 @@ void	w_for_rays(t_game *game, t_ray *ray_data, double cell_height, double cell_w
 	i = 0;
 	start_rad = game->player->ray;
 	game->player->ray -= to_rad(game->player->fov / 2);
-	rad_step = to_rad(1);
-	while(i < 60)
-	{	
+	rad_step = to_rad(60.0 / NO_RAYS);
+	printf("rad_step: %f\n", rad_step);
+	printf(GREEN"w_for_rays"WHITE);
+	while(i < NO_RAYS)
+	{
 		reset_vars(ray_data);
 		set_direction(game);
 		set_horizontal_vars(game, ray_data, cell_height, cell_width);	
@@ -274,9 +291,8 @@ void	w_for_rays(t_game *game, t_ray *ray_data, double cell_height, double cell_w
 		set_hit_point(game, ray_data);
 		draw_ray(game->player->x, game->player->y, ray_data->wall_hit_x, ray_data->wall_hit_y, game->frame);
 		game->player->ray += rad_step;
+		normalize_angle(&game->player->ray);
 		i++;
-	//	draw_horizontal_line_dynamic(game, game->player->x, ray_data->wall_hit_x, game->player->y, 0x00FF00);
-	//	draw_vertical_lyne_dynamic(game, game->player->y, ray_data->wall_hit_y, ray_data->wall_hit_x, 0x0000FF);
 	}
 	game->player->ray = start_rad;
 }
@@ -292,6 +308,7 @@ void init_ray_cast(t_game *game, double cell_height, double cell_width)
 		w_for_rays(game, ray_data, cell_height, cell_width);
 	else
 	{	
+		printf("ray: %f\n", game->player->ray);
 		reset_vars(ray_data);
 		set_direction(game);
 		set_horizontal_vars(game, ray_data, cell_height, cell_width);	
@@ -303,5 +320,4 @@ void init_ray_cast(t_game *game, double cell_height, double cell_width)
 		draw_horizontal_line_dynamic(game, game->player->x, ray_data->wall_hit_x, game->player->y, 0x00FF00);
 		draw_vertical_lyne_dynamic(game, game->player->y, ray_data->wall_hit_y, ray_data->wall_hit_x, 0x0000FF);
 	}
-
 }

@@ -68,9 +68,11 @@ void	draw_minimap(t_game *game);
 
 //-----------------RAY_CASTING----------------------------------
 // DRAW_RAY
+void	draw_wall(int x, t_ray *ray_data, t_game *game);
 void	draw_ray(int x, int y, int x2, int y2, t_image *image);
 
 // START_RAY
+double	to_rad(double angle);
 void	init_ray_cast(t_game *game, double cell_height, double cell_width);
 
 //-----------------UPDATE----------------------------------

@@ -25,6 +25,7 @@ typedef struct s_ray
 	double	wall_hit_y;
 	double	adjacent;
 	double	opposite;
+	double	distance;
 }	t_ray;
 
 typedef struct		s_image
@@ -46,8 +47,8 @@ typedef struct s_pos
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 	double	ray;
 	int		fov;
 	int		mv_speed;

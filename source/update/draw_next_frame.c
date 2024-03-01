@@ -25,7 +25,7 @@ int		draw_next_frame(t_game *game)
 	update_ray(game);
 	create_background(game);
 	draw_minimap(game);
-	init_ray_cast(game, 8, 8);
+	init_ray_cast(game, TILE_SIZE, TILE_SIZE);
 	print_frame(game);
 	draw_pj(game);
 	draw2_rad(game);

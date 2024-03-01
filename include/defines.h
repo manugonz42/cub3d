@@ -27,6 +27,11 @@
 # define C					5
 # define FPS_30				33333
 # define FPS_60				16667
+# define FOV				60
+# define TILE_SIZE			32
+# define GAME_WIDTH			1280
+# define GAME_HEIGHT		720
+# define NO_RAYS			120
 
 // KEYBOARD CONFIG
 # define AHEAD				1
