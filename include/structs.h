@@ -1,6 +1,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef struct s_ray	t_ray;
+
 typedef struct s_ray_m
 {
 	int		horizontal_hit;	
@@ -26,7 +28,7 @@ typedef struct s_ray_m
 	double	adjacent;
 	double	opposite;
 	double	distance;
-}	t_ray;
+}	t_ray_m;
 
 typedef struct		s_image
 {
@@ -93,7 +95,7 @@ typedef struct s_minimap
 	int		cell_size;
 }	t_minimap;
 
-typedef struct s_ray
+struct s_ray
 {
 	float	x;
 	float	y;
@@ -107,7 +109,7 @@ typedef struct s_ray
 	float	disV;
 	float	vx;
 	float	vy;
-}	t_ray;
+};
 
 typedef struct s_game
 {
@@ -121,6 +123,7 @@ typedef struct s_game
 	t_sprites	sprites;
 	t_image		*frame;
 	t_minimap	*minimap;
+	t_image		*mini_map;
 	t_player	*player;
 }				t_game;
 

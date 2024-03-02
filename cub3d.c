@@ -1,5 +1,11 @@
 #include "cub3d.h"
 
+void	run_game(t_game *game)
+{
+	mlx_loop_hook(game->mlx_server, draw_next_frame, game);
+	mlx_loop(game->mlx_server);
+}
+
 void	check_args(int argc, char *argv[], t_game *game)
 {
 	int	len;
