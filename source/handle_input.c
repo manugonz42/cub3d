@@ -31,6 +31,8 @@ int	on_release_input(int keysym, t_game *game)
 }
 int	on_press_input(int keysym, t_game *game)
 {
+	if (keysym)
+	printf("key: %d pulsada\n", keysym);
 	if (keysym == ESC_KEY)
 		ft_closed(game);
 	if (keysym == W_KEY)

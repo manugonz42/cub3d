@@ -1,324 +1,204 @@
 #include "cub3d.h"
 
-void	find_next_horizontal_hit(t_game *game, t_ray *ray_data, double cell_height, double cell_width)
+void	draw_colision(t_game *game, int x, int y);
+/*
+	Save the px coordinates of the colision with horizontal lines. Loop can be executed up to how many
+	rows the map has. Map coordinates are obtained dividing px coordinate by the numer of pixels a tile
+	has (floor rounded). Once a collision is found, the distance between the collision and the player is
+	calculated and the px coordinates saved.
+*/
+void	set_hcolision(t_game *game, t_ray *ray)
 {
-	//Comprobamos en cada iteración si siguiente linea horizontal pertenece a una pared
+	int	dof;
+	int	mx;
+	int	my;
 
-	while(!ray_data->horizontal_hit && ray_data->next_horizontal_x >= 0 && ray_data->next_horizontal_x < cell_width * game->map->cols && ray_data->next_horizontal_y >= 0 && ray_data->next_horizontal_y < cell_height * game->map->rows)
+	dof = 0;
+	while (dof < game->map->rows)
 	{
-		if (game->map->matrix[(int)floor(ray_data->next_horizontal_y / cell_height)][(int)floor(ray_data->next_horizontal_x / cell_width)] == '1')
+		mx = ((int)(ray->x) >> TILE_BITS);
+		my = ((int)(ray->y) >> TILE_BITS);
+		if (mx < 0 || my < 0 || mx >= game->map->cols || my >= game->map->rows)
+			dof = game->map->rows;
+		else if (game->map->matrix[my][mx] == '1')
 		{
-			//printf("horizontal if: y_step: %f, y_start: %f, next_vertical_y: %f, x_start %f, next_X %f\n", ray_data->y_step, game->player->y, ray_data->next_vertical_y, game->player->x, ray_data->next_vertical_x);
-			ray_data->horizontal_hit = 1;
-			ray_data->horizontal_x_hit = ray_data->next_horizontal_x;
-			ray_data->horizontal_y_hit = ray_data->next_horizontal_y;
+			dof = game->map->rows;
+			ray->disH = ray_dist(game->player->x, game->player->y, ray->x, ray->y);
+			ray->hx = ray->x;
+			ray->hy = ray->y;
 		}
 		else
 		{
-			//printf("horizontal while: y_step: %f, y_start: %f, next_vertical_y: %f, x_start %f, next_X %f\n", ray_data->y_step, game->player->y, ray_data->next_vertical_y, game->player->x, ray_data->next_vertical_x);
-			ray_data->next_horizontal_x += ray_data->x_step;
-			ray_data->next_horizontal_y += ray_data->y_step;
+			ray->x += ray->xo;
+			ray->y += ray->yo;
+			dof += 1;
 		}
 	}
 }
 
-void	find_next_vertical_hit(t_game *game, t_ray *ray_data, double cell_height, double cell_width)
+/*
+	Find posible colisions in horizontal lines (moving up-down). After finding the direction the ray
+	is facing (up or down), set the posible colision with the limits of the tile the player is at.
+	Set up the ofset the colision will have for each extra tile moved. In case it goes straight right
+	or left, no horizontal colision will happen.
+*/
+void	horizontal_colision(t_game *game, t_ray *ray)
 {
-	//Comprobamos en cada iteración si siguiente linea vertical pertenece a una pared
-	while(!ray_data->vertical_hit && ray_data->next_vertical_x >= 0 && ray_data->next_vertical_x < cell_width * game->map->cols && ray_data->next_vertical_y >= 0 && ray_data->next_vertical_y < cell_height * game->map->rows)
+	ray->aTan = -1 / tan(ray->ra);
+	if (ray->ra < M_PI)
 	{
-		if (game->map->matrix[(int)floor(ray_data->next_vertical_y / cell_height)][(int)floor(ray_data->next_vertical_x / cell_width)] == '1')
+		ray->y = (((int)game->player->y >> TILE_BITS) << TILE_BITS) - 0.0001;
+		ray->x = (game->player->y - ray->y) * ray->aTan + game->player->x;
+		ray->yo = -TILE_SIZE;
+		ray->xo = -(ray->yo) * ray->aTan;
+	}
+	else if (ray->ra > M_PI)
+	{
+		ray->y = (((int)game->player->y >> TILE_BITS) << TILE_BITS) + TILE_SIZE;
+		ray->x = (game->player->y - ray->y) * ray->aTan + game->player->x;
+		ray->yo = TILE_SIZE;
+		ray->xo = -(ray->yo) * ray->aTan;
+	}
+	else if (ray->ra == 0 || ray->ra == M_PI)
+		return ;
+	set_hcolision(game, ray);
+}
+
+/*
+	Save the px coordinates of the colision with vertical lines. Loop can be executed up to how many
+	cols the map has. Map coordinates are obtained dividing px coordinate by the numer of pixels a tile
+	has (floor rounded). Once a collision is found, the distance between the collision and the player is
+	calculated and the px coordinates saved.
+*/
+void	set_vcolision(t_game *game, t_ray *ray)
+{
+	int	dof;
+	int	mx;
+	int	my;
+
+	dof = 0;
+	while (dof < game->map->cols)
+	{
+		mx = ((int)(ray->x) >> TILE_BITS);
+		my = ((int)(ray->y) >> TILE_BITS);
+		if (mx < 0 || my < 0 || mx >= game->map->cols || my >= game->map->rows)
+			dof = game->map->cols;
+		else if (game->map->matrix[my][mx] == '1')
 		{
-			//printf("vertical if: y_step: %f, y_start: %f, next_vertical_y: %f x_start %f, next_X %f\n", ray_data->y_step, game->player->y, ray_data->next_vertical_y, game->player->x, ray_data->next_vertical_x);
-			ray_data->vertical_hit = 1;
-			ray_data->vertical_x_hit = ray_data->next_vertical_x;
-			ray_data->vertical_y_hit = ray_data->next_vertical_y;
+			dof = game->map->cols;
+			ray->disV = ray_dist(game->player->x, game->player->y, ray->x, ray->y);
+			ray->vx = ray->x;
+			ray->vy = ray->y;
 		}
 		else
 		{
-			//printf(GREEN"else: y_step: %f, y_start: %f, next_vertical_y: %f\n"WHITE, ray_data->y_step, game->player->y, ray_data->next_vertical_y);
-			ray_data->next_vertical_x += ray_data->x_step;
-			ray_data->next_vertical_y += ray_data->y_step;
+			ray->x += ray->xo;
+			ray->y += ray->yo;
+			dof += 1;
 		}
 	}
 }
 
-void	set_horizontal_vars(t_game *game, t_ray *ray_data, double cell_height, double cell_width)
+/*
+	Find posible colisions in vertical lines (moving right-left). After finding the direction the ray
+	is facing (right or left), set the posible colision with the limits of the tile the player is at.
+	Set up the ofset the colision will have for each extra tile moved. In case it goes straight up
+	or down, no vertical colision will happen.
+*/
+void	vertical_colision(t_game *game, t_ray *ray)
 {
-	double	ray_angle;
-
-	printf("player x: %f, y: %f\n", game->player->x, game->player->y);
-	//printf("horizntal player angle: %f\n", game->player->ray);
-	ray_angle = game->player->ray;
-	/*if (ray_angle == 0 || ray_angle == M_PI)
-		ray_angle = INT_MAX;*/
-	//Distancia en Y entre jugador y la siguiente colisión horizontal
-	ray_data->y_intercept = floor(game->player->y / cell_height) * cell_height;
-	//Si el rayo esta hacia abajo la colisión será en la siguiente casil la
-	if (!ray_data->up)
-		ray_data->y_intercept += cell_height;
-	//Distancia en X entre jugador y la siguiente colision horizontal
-	ray_data->adjacent = fabs((game->player->y - ray_data->y_intercept) / tan(ray_angle));
-	//Distancia en Y entre dos casillas
-	ray_data->y_step = cell_height;
-	//Si el rayo va hacia arriba hay que restar las Y
-	if (ray_data->up)
-		ray_data->y_step *= -1;
-	//Distancia en X entre dos colisiones horizontales
-	ray_data->x_step = cell_width / tan(ray_angle);
-	//Si el rayo va hacia la izquierda hay que restar las X
-	if ((!ray_data->left && ray_data->x_step < 0) || (ray_data->left && ray_data->x_step > 0))
-		ray_data->x_step *= -1;
-	//Punto de X de la primera colisión linea horizontal
-	ray_data->x_intercept = game->player->x + (game->player->y - ray_data->y_intercept) / tan(ray_angle);
-	//Actualizo los valores de la primera colisión horizontal
-	ray_data->next_horizontal_x = ray_data->x_intercept;
-	ray_data->next_horizontal_y = ray_data->y_intercept;
-	//Si miramos hacia arriba hay que comprobar la casilla anterior
-	if (ray_data->up)
-		ray_data->next_horizontal_y--;
-	//printf("horizontal x_step %f, y_step: %f\n",ray_data->x_step, ray_data->y_step);
-}
-
-void	set_vertical_vars(t_game *game, t_ray *ray, double cell_height, double cell_width)
-{
-	(void)cell_height;
-	double	ray_angle;
-
-	//printf("player angle: %f\n", game->player->ray);
-	ray_angle = game->player->ray;
-	//Distancia en X entre jugador y la siguiente colisión vertical
-	ray->x_intercept = floor(game->player->x / cell_width) * cell_width;
-	//Si el rayo esta hacia la derecha la colisión será en la siguiente casil la
-	if (!ray->left)
-		ray->x_intercept += cell_width;
-	//Distancia en Y entre jugador y la siguiente colision vertical
-	ray->opposite = (game->player->x - ray->x_intercept) * tan(ray_angle);
-	//Distancia en X entre dos casillas
-	ray->x_step = cell_width;
-	//Si el rayo va hacia la izquierda hay que restar las X
-	if (ray->left)
-		ray->x_step *= -1;
-	//Distancia en Y entre dos colisiones verticales
-	ray->y_step = cell_height * tan(ray_angle);
-	
-	//Si el rayo va hacia arriba hay que restar las Y
-	if ((!ray->up && ray->y_step < 0) || (ray->up && ray->y_step > 0))
-		ray->y_step *= -1;
-	//Punto de Y de la primera colisión linea vertical
-	ray->y_intercept = game ->player->y + ray->opposite;
-	//Actualizo los valores de la primera colisión vertical
-	ray->next_vertical_x = ray->x_intercept;
-	ray->next_vertical_y = ray->y_intercept;
-	//Si miramos hacia la izquierda hay que comprobar la casilla anterior
-	if (ray->left)
-		ray->next_vertical_x--;
-	//printf("vertocal x_step %f, y_step: %f\n",ray->x_step, ray->y_step);
-}
-
-void	set_direction(t_game *game)
-{
-	//Si el rayo esta entre 0 y 180 grados
-	if (game->player->ray > 0 && game->player->ray < M_PI)
-		game->player->ray_data->up = 1;
-	//Si el rayo esta entre 90 y 270 grados
-	if (game->player->ray > M_PI_2 && game->player->ray < 3 * M_PI_2)
-		game->player->ray_data->left = 1;
-}
-
-void reset_vars(t_ray *ray_data)
-{
-	ray_data->up = 0;
-	ray_data->left = 0;
-	ray_data->horizontal_hit = 0;
-	ray_data->horizontal_x_hit = 0;
-	ray_data->horizontal_y_hit = 0;
-	ray_data->vertical_hit = 0;
-	ray_data->vertical_x_hit = 0;
-	ray_data->vertical_y_hit = 0;
-	ray_data->horizontal_distance = 9999;
-	ray_data->vertical_distance = 9999;
-	ray_data->wall_hit_x = 0;
-	ray_data->wall_hit_y = 0;
-	ray_data->adjacent = 0;
-	ray_data->opposite = 0;
-}
-
-void	draw_opposite(t_game *game, t_ray *ray_data)
-{
-	int	i;
-	int	pixel_index;
-	if (ray_data->left)
+	ray->aTan = -tan(ray->ra);
+	if (ray->ra < M_PI_2 || ray->ra > M_PI_3)
 	{
-		i = -1;
-		while (i > ray_data->opposite)
+		ray->x = (((int)game->player->x >> TILE_BITS) << TILE_BITS) - 0.0001;
+		ray->y = (game->player->x - ray->x) * ray->aTan + game->player->y;
+		ray->xo = - TILE_SIZE;
+		ray->yo = -(ray->xo) * ray->aTan;
+	}
+	else if (ray->ra > M_PI_2 && ray->ra < M_PI_3)
+	{
+		ray->x = (((int)game->player->x >> TILE_BITS) << TILE_BITS) + TILE_SIZE;
+		ray->y = (game->player->x - ray->x) * ray->aTan + game->player->y;
+		ray->xo = TILE_SIZE;
+		ray->yo = -(ray->xo) * ray->aTan;
+	}
+	else if (ray->ra == M_PI_2 || ray->ra == M_PI_3)
+		return ;
+	set_vcolision(game, ray);
+}
+
+
+void	render_ray(t_game *game, t_ray *ray, int type, int n)
+{
+	float	lineH;
+	float	lineO;
+	float	angle;
+
+	angle = game->player->ray - ray->ra;
+	angle = adjust_angle(angle);
+	if (type == 'H')
+	{
+		lineH = (TILE_SIZE * game->height) / (ray->disH * cos(angle));
+		if (lineH > game->height)
+			lineH = game->height;
+		lineO = (game->height / 2) - (lineH / 2);
+		for (int i = 0; i < (int)lineH; i++)
 		{
-			pixel_index = (game->player->y * game->frame->line_bytes) + (game->player->x * (game->frame->bitsinpixel / 8)) - i;
-        	*(int *)(game->frame->addr + pixel_index) = 0x00FFFF;
-			i--;
-
+			for (int j = 0; j < 16; j++)
+			{
+				if (ray->ra > M_PI)
+					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 64 + 4 * j ) = create_trgb(0, 255, 0, 0);
+				else
+					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 64 + 4 * j ) = create_trgb(0, 0, 255, 0);
+			}
 		}
 	}
-	else
+	if (type == 'V')
 	{
-		i = 1;
-		while (i > ray_data->opposite)
+		lineH = TILE_SIZE * game->height / ray->disV * cos(angle);
+		if (lineH > game->height)
+			lineH = game->height;
+		lineO = (game->height / 2) - (lineH / 2);
+		for (int i = 0; i < (int)lineH; i++)
 		{
-			pixel_index = (game->player->y * game->frame->line_bytes) + (game->player->x * (game->frame->bitsinpixel / 8)) + i;
-			*(int *)(game->frame->addr + pixel_index) = 0x00FFFF;
-			i++;
+			for (int j = 0; j < 16; j++)
+			{
+				if (ray->ra > M_PI_2 && ray->ra < M_PI_3)
+					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 64 + 4 * j ) = create_trgb(0, 255, 255, 0);
+				else
+					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 64 + 4 * j ) = create_trgb(0, 0, 0, 255);
+			}
+		}	
+	}
+}
+
+void	cast_rays(t_game *game)
+{
+	t_ray	ray;
+	int		nb_rays;
+
+	nb_rays = 0;
+	ray.ra = game->player->ray - FOV / 2 * DR;
+	while (nb_rays < FOV)
+	{
+		ray.disH = 10000000;
+		ray.disV = 10000000;
+		ray.ra = adjust_angle(ray.ra);
+		horizontal_colision(game, &ray);
+		vertical_colision(game, &ray);
+
+		//De aquí para abajo se haría la llamada al renderizado de la imágen por cada rayo lanzado
+		if (ray.disH < ray.disV)
+		{
+	//		draw_colision(game, (int)ray.hx, (int)ray.hy);
+			render_ray(game, &ray, 'H', nb_rays);
 		}
-	}
-}
-
-void draw_horizontal_line_dynamic(t_game *game, int x_start, int x_end, int y, int color)
-{
-    int x;
-
-    // Asegurarse de que x_start y x_end estén dentro de los límites de la ventana
-    x_start = fmin(game->width - 1, fmax(0, x_start));
-    x_end = fmin(game->width - 1, fmax(0, x_end));
-
-    // Determinar la dirección de dibujo
-    int step = (x_start < x_end) ? 1 : -1;
-
-    // Iniciar el bucle
-    x = x_start + 31;
-	y = y + 31;
-	x_end = x_end + 31;
-	
-    while (x != x_end)
-    {
-        int pixel_index = (y * game->frame->line_bytes) + (x * (game->frame->bitsinpixel / 8));
-        *(int *)(game->frame->addr + pixel_index) = color;
-        x += step;
-    }
-
-    // Pintar el último píxel
-    int last_pixel_index = (y * game->frame->line_bytes) + (x * (game->frame->bitsinpixel / 8));
-    *(int *)(game->frame->addr + last_pixel_index) = color;
-}
-
-void	draw_vertical_lyne_dynamic(t_game *game, int y_start, int y_end, int x, int color)
-{
-    int y;
-
-    // Asegurarse de que x_start y x_end estén dentro de los límites de la ventana
-    y_start = fmin(game->height - 1, fmax(0, y_start));
-    y_end = fmin(game->height - 1, fmax(0, y_end));
-
-    // Determinar la dirección de dibujo
-    int step = (y_start < y_end) ? 1 : -1;
-
-    // Iniciar el bucle
-    y = y_start + 31;
-	x = x + 31;
-	y_end = y_end + 31;
-	
-    while (y != y_end)
-    {
-        int pixel_index = (y * game->frame->line_bytes) + (x * (game->frame->bitsinpixel / 8));
-        *(int *)(game->frame->addr + pixel_index) = color;
-        y += step;
-    }
-
-    // Pintar el último píxel
-    int last_pixel_index = (y * game->frame->line_bytes) + (x * (game->frame->bitsinpixel / 8));
-    *(int *)(game->frame->addr + last_pixel_index) = color;
-}
-
-double	distance(double x1, double y1, double x2, double y2)
-{
-	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
-}
-
-void	set_hit_point(t_game *game, t_ray *ray_data)
-{
-	if (ray_data->horizontal_hit)
-		ray_data->horizontal_distance = distance(game->player->x, game->player->y, ray_data->horizontal_x_hit, ray_data->horizontal_y_hit);
-	if (ray_data->vertical_hit)
-		ray_data->vertical_distance = distance(game->player->x, game->player->y, ray_data->vertical_x_hit, ray_data->vertical_y_hit);
-	if (ray_data->horizontal_distance < ray_data->vertical_distance)
-	{
-		ray_data->wall_hit_x = ray_data->horizontal_x_hit;
-		ray_data->wall_hit_y = ray_data->horizontal_y_hit;
-		ray_data->distance = ray_data->horizontal_distance;
-		//printf(RED"horizontal x_hit %f y_hit %f\n"WHITE, ray_data->wall_hit_x, ray_data->wall_hit_y );
-	}
-	else
-	{
-		ray_data->wall_hit_x = ray_data->vertical_x_hit;
-		ray_data->wall_hit_y = ray_data->vertical_y_hit;
-		ray_data->distance = ray_data->vertical_distance;
-		//printf(RED"vertical x_hit %f y_hit %f\n"WHITE, ray_data->wall_hit_x, ray_data->wall_hit_y );
-	}
-	
-}
-
-double	to_rad(double angle)
-{
-	return (angle * (M_PI / 180));
-}
-
-void	normalize_angle(double *angle)
-{
-	if (*angle > 2 * M_PI)
-		*angle -= 2 * M_PI;
-	if (*angle < 0)
-		*angle += 2 * M_PI;
-}
-
-void	w_for_rays(t_game *game, t_ray *ray_data, double cell_height, double cell_width)
-{
-	int		i;
-	double	start_rad;
-	double	rad_step;
-
-	i = 0;
-	start_rad = game->player->ray;
-	game->player->ray -= to_rad(game->player->fov / 2);
-	rad_step = to_rad(60.0 / NO_RAYS);
-	printf("rad_step: %f\n", rad_step);
-	printf(GREEN"w_for_rays"WHITE);
-	while(i < NO_RAYS)
-	{
-		reset_vars(ray_data);
-		set_direction(game);
-		set_horizontal_vars(game, ray_data, cell_height, cell_width);	
-		find_next_horizontal_hit(game, ray_data, cell_height, cell_width);
-		set_vertical_vars(game, ray_data, cell_height, cell_width);
-		find_next_vertical_hit(game, ray_data, cell_height, cell_width);
-		set_hit_point(game, ray_data);
-		//draw_ray(game->player->x, game->player->y, ray_data->wall_hit_x, ray_data->wall_hit_y, game->frame);
-		draw_wall(i, ray_data, game);
-		game->player->ray += rad_step;
-		normalize_angle(&game->player->ray);
-		i++;
-	}
-	game->player->ray = start_rad;
-}
-
-void init_ray_cast(t_game *game, double cell_height, double cell_width)
-{
-	int		do_while;
-	t_ray	*ray_data;
-
-	do_while = 1;
-	ray_data = game->player->ray_data;
-	if (do_while)
-		w_for_rays(game, ray_data, cell_height, cell_width);
-	else
-	{	
-		printf("ray: %f\n", game->player->ray);
-		reset_vars(ray_data);
-		set_direction(game);
-		set_horizontal_vars(game, ray_data, cell_height, cell_width);	
-		find_next_horizontal_hit(game, ray_data, cell_height, cell_width);
-		set_vertical_vars(game, ray_data, cell_height, cell_width);
-		find_next_vertical_hit(game, ray_data, cell_height, cell_width);
-		set_hit_point(game, ray_data);
-		draw_ray(game->player->x, game->player->y, ray_data->wall_hit_x, ray_data->wall_hit_y, game->frame);
-		draw_horizontal_line_dynamic(game, game->player->x, ray_data->wall_hit_x, game->player->y, 0x00FF00);
-		draw_vertical_lyne_dynamic(game, game->player->y, ray_data->wall_hit_y, ray_data->wall_hit_x, 0x0000FF);
+		if (ray.disV < ray.disH)
+		{
+//			draw_colision(game, (int)ray.vx, (int)ray.vy);
+			render_ray(game, &ray, 'V', nb_rays);
+		}
+		ray.ra += DR;
+		nb_rays++;
 	}
 }

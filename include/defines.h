@@ -25,6 +25,8 @@
 # define WE					3
 # define F					4
 # define C					5
+# define B					6
+# define W					7
 # define FPS_30				33333
 # define FPS_60				16667
 # define FOV				60
@@ -79,5 +81,13 @@
 # define INVALID_FORMAT		"Invalid format of .cub file"
 # define NOT_WALL_SR_MAP 	"Map must be surrounded by walls"
 # define EMPTY_LINE			"Empty line in map"
+
+// VALUES
+# define DR                 M_PI / 180
+# define M_PI_2             M_PI / 2
+# define M_PI_3             3 * M_PI / 2
+# define TILE_SIZE          8
+# define TILE_BITS          3
+# define FOV                60
 
 #endif

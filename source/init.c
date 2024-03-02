@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	init_ray(t_game *game)
+/*void	init_ray(t_game *game)
 {
 	game->player->ray_data->horizontal_hit = 0;
 	game->player->ray_data->horizontal_x_hit = 0;
@@ -20,7 +20,7 @@ void	init_ray(t_game *game)
 	game->player->ray_data->next_horizontal_y = 0;
 	game->player->ray_data->adjacent = 0;
 	game->player->ray_data->opposite = 0;
-}
+}*/
 
 void	init_mlx(t_game *game)
 {
@@ -42,12 +42,12 @@ void	init_mlx(t_game *game)
 	mlx_hook(game->mlx_window, 3, 1L << 1, on_release_input, game);
 }
 
-void	init_map(t_game *game)
+void	init_map(t_game *game, char *map)
 {
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
 		ft_error_message(MALLOC_ERROR, game);
-	game->map->cub_path = "map.cub";
+	game->map->cub_path = map;
 	game->map->alloc = 0;
 	game->map->rows = 0;
 	game->map->cols = 0;
@@ -63,11 +63,13 @@ void	init_sprites(t_game *game)
 	game->sprites.we = malloc(sizeof(t_image));
 	game->sprites.f = malloc(sizeof(t_image));
 	game->sprites.c = malloc(sizeof(t_image));
+	game->sprites.b = malloc(sizeof(t_image));
+	game->sprites.w = malloc(sizeof(t_image));
 	if (!game->sprites.no || !game->sprites.so || !game->sprites.ea || !game->sprites.we || !game->sprites.f || !game->sprites.c)
 		ft_error_message(MALLOC_ERROR, game);
 }
 
-void	set_cell_dimensions(t_game *game)
+/*void	set_cell_dimensions(t_game *game)
 {
 	game->map->cell_height = (double)game->height / (double)game->map->rows;
 	game->map->cell_width = (double)game->width / (double)game->map->cols;
@@ -86,22 +88,22 @@ void	init_minimap(t_game *game)
 	game->minimap->width = 8 * game->map->cols;
 	game->minimap->height = 8 * game->map->rows;
 	game->minimap->cell_size = 8;
-}
+}*/
 
-void	init_game(t_game *game)
+void	init_game(t_game *game, char *map)
 {
 	game->alloc = 1;
 	game->c_count = 0;
 	game->width = GAME_WIDTH;
 	game->height = GAME_HEIGHT;
 	init_mlx(game);
-	init_map(game);
+	init_map(game, map);
 	init_sprites(game);
-	parse_map(game);
+	/*parse_map(game);
 	create_new_map_matrix(game);
 	check_wall_status(game);
 	init_minimap(game);
 	set_cell_dimensions(game);
 	init_pj(game);
-	init_ray(game);
+	init_ray(game);*/
 }

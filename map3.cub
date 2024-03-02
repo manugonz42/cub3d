@@ -1,0 +1,16 @@
+NO ./assets/textures/LavaF2.xpm
+SO ./assets/textures/Bricks.xpm
+WE ./assets/textures/Sand.xpm
+EA ./assets/textures/WoolSnow.xpm
+
+C 97,207,231
+F 36,85,1
+
+11111111
+10000001
+10000101
+10001101
+10001001
+10001N01
+10000001
+11111111

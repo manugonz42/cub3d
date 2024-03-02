@@ -45,9 +45,9 @@ $(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(NAME)	: $(OBJ)
-	@ar -r $(NAME) $(OBJ) > /dev/null 2>&1
-	@ranlib $(NAME)
-	@cp $(NAME) $(NAME_UNAME)
+	ar -r $(NAME) $(OBJ)
+	ranlib $(NAME)
+	cp $(NAME) $(NAME_UNAME)
 
 check: all
 	@test/run_tests.sh
@@ -55,7 +55,7 @@ check: all
 show:
 	@printf "NAME  		: $(NAME)\n"
 	@printf "NAME_UNAME	: $(NAME_UNAME)\n"
-	@printf "CC			: $(CC)\n"
+	@printf "CC		: $(CC)\n"
 	@printf "CFLAGS		: $(CFLAGS)\n"
 	@printf "SRC		:\n	$(SRC)\n"
 	@printf "OBJ		:\n	$(OBJ)\n"

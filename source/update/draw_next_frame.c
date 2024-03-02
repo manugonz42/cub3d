@@ -5,30 +5,18 @@ void	print_frame(t_game *game)
 	mlx_put_image_to_window(game->mlx_server, game->mlx_window, game->frame->ptr, 0, 0);
 }
 
-void	draw2_rad(t_game *game)
-{
-    char *float_str;
-    
-	float_str = (char *)malloc(10 * sizeof(char));
-    snprintf(float_str, 10, "%.2f", game->player->ray);
-    mlx_string_put(game->mlx_server, game->mlx_window, game->player->x + 25, game->player->y + 10, 0x000000, float_str);
-	free(float_str);
-}
+void	cast_rays(t_game *game);
 
 int		draw_next_frame(t_game *game)
 {
-	//mlx_clear_window(game->mlx_server, game->mlx_window);
-	printf("moving: %d, rotating: %d\n", game->player->moving, game->player->rotating);
-	/*if (game->player->moving == 0 && game->player->rotating == 0)
-		return (0);*/
+	create_background(game);
 	update_player_pos(game);
 	update_ray(game);
-	create_background(game);
-	draw_minimap(game);
-	init_ray_cast(game, TILE_SIZE, TILE_SIZE);
-	print_frame(game);
+	cast_rays(game);
+	create_map(game);
+	mlx_put_image_to_window(game->mlx_server, game->mlx_window, game->frame->ptr, 0, 0);
 	draw_pj(game);
-	draw2_rad(game);
+	mlx_destroy_image(game->mlx_server, game->frame->ptr);
 	usleep(FPS_30);
 	return (0);
 }
