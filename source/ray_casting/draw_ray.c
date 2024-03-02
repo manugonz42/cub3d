@@ -2,25 +2,22 @@
 
 void	draw_wall(int x, t_ray *ray_data, t_game *game)
 {
-	//double distance;
+    double  pixels_wall_size;
+    double  pp_distance;
+    int     wall_size;
+    int     wall_bottom;
+    int     wall_top;
+    int     color;
 
-	//distance = (ray_data->distance / 8) * 720;
-	printf("draw_wall: x: %d\n", x);
-    int		pp_distance = game->width / 2 / tan(to_rad(game->player->fov) / 2);
-	printf("pp_distance: %d\n", pp_distance);
-	printf("1\n");
-	int		wall_height = (game->height / ray_data->distance) * pp_distance;
-	printf("distance %f\n", ray_data->distance);
-	int		wall_top = (game->height / 2) - (wall_height / 2);
-	printf("wall_top %i, wall_height %i, game_width %i\n", wall_top, wall_height, game->width);
-	int		wall_bottom = (game->height / 2) + (wall_height / 2);
-	printf("4\n");
-	int		color = create_trgb(0, 125, 125, 125);
-	int		y = wall_top;
-	printf("5\n");
+    color = create_trgb(255, 125, 125, 125);
+    pp_distance = TILE_SIZE / 2;
+    pixels_wall_size = (TILE_SIZE / ray_data->distance) * pp_distance;
+    wall_size = (int)pixels_wall_size;
+    wall_top = (game->height / 2) - (wall_size / 2);
+    wall_bottom = (game->height / 2) + (wall_size / 2);
+    int y = wall_top;
 	while (y != wall_bottom)
     {
-		printf("y: %d\n", y);
         int pixel_index = (y * game->frame->line_bytes) + (x * (game->frame->bitsinpixel / 8));
         *(int *)(game->frame->addr + pixel_index) = color;
         y ++;

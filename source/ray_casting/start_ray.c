@@ -289,7 +289,8 @@ void	w_for_rays(t_game *game, t_ray *ray_data, double cell_height, double cell_w
 		set_vertical_vars(game, ray_data, cell_height, cell_width);
 		find_next_vertical_hit(game, ray_data, cell_height, cell_width);
 		set_hit_point(game, ray_data);
-		draw_ray(game->player->x, game->player->y, ray_data->wall_hit_x, ray_data->wall_hit_y, game->frame);
+		//draw_ray(game->player->x, game->player->y, ray_data->wall_hit_x, ray_data->wall_hit_y, game->frame);
+		draw_wall(i, ray_data, game);
 		game->player->ray += rad_step;
 		normalize_angle(&game->player->ray);
 		i++;

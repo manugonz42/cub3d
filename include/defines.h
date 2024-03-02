@@ -41,21 +41,35 @@
 # define ROT_LEFT			16
 # define ROT_RIGHT			32
 
-// KEYS
-# define W_KEY				119
-# define A_KEY				97
-# define S_KEY				115
-# define D_KEY				100
-# define ESC_KEY			65307
-# define Q_KEY				113
-# define R_ARROW			65363
-# define L_ARROW			65361
+// LINUX KEYS
+# ifdef __linux__
+#  define W_KEY				119
+#  define A_KEY				97
+#  define S_KEY				115
+#  define D_KEY				100
+#  define ESC_KEY			65307
+#  define Q_KEY				113
+#  define R_ARROW			65363
+#  define L_ARROW			65361
+# endif
+
+// MAC KEYS
+# ifdef __APPLE__
+#  define W_KEY				13
+#  define A_KEY				0
+#  define S_KEY				1
+#  define D_KEY				2
+#  define ESC_KEY			53
+#  define Q_KEY				12
+#  define R_ARROW			124
+#  define L_ARROW			123
+# endif
 
 // ERROR MESSAGES
 # define INVALID_MAP		"Invalid map"
 # define INVALID_TEXTURE	"Invalid texture path"
 # define INVALID_COLOR		"Invalid color value"
-# define INVALID_LINE		"Invalid line in .ber file"
+# define INVALID_LINE		"Invalid line in .cub file"
 # define INVALID_ARG		"Invalid argument"
 # define INVALID_FILE		"Invalid file"
 # define REPIATED_ARG		"Repiated argument"
