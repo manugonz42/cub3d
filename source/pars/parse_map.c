@@ -51,8 +51,8 @@ void	check_line_map_format(char *line, t_game *game)
 			ft_error_message(INVALID_MAP, game);
 		i++;
 	}
-	if (line[i - 1] != '1')
-		ft_error_message(INVALID_MAP, game);
+	/*if (last_token(line, 0) != '1')
+		ft_error_message(INVALID_MAP, game);*/
 }
 
 void	parse_map_line(char *line, t_game *game)

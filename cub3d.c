@@ -19,7 +19,6 @@ void	check_args(int argc, char *argv[], t_game *game)
 
 int	main(int argc, char *argv[])
 {
-	printf("Cubed\n");
 	t_game	game;
 
 	check_args(argc, argv, &game);
@@ -27,6 +26,7 @@ int	main(int argc, char *argv[])
 	parse_map(&game);
 	create_new_map_matrix(&game);
 	ft_print_matrix(game.map->matrix);
+	check_wall_status(&game);
 //	create_map(&game);
 	init_pj(&game);
 //	draw_pj(&game);
