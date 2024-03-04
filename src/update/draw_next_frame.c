@@ -14,9 +14,11 @@ int		draw_next_frame(t_game *game)
 	update_ray(game);
 	cast_rays(game);
 	create_map(game);
+	//create_pj(game);
 	mlx_put_image_to_window(game->mlx_server, game->mlx_window, game->frame->ptr, 0, 0);
-	draw_pj(game);
 	mlx_destroy_image(game->mlx_server, game->frame->ptr);
+	free(game->frame);
+	draw_pj(game);
 	usleep(FPS_30);
 	return (0);
 }

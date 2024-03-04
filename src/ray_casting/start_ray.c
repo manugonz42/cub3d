@@ -2,11 +2,11 @@
 
 void	draw_colision(t_game *game, int x, int y);
 /*
-	Save the px coordinates of the colision with horizontal lines. Loop can be executed up to how many
-	rows the map has. Map coordinates are obtained dividing px coordinate by the numer of pixels a tile
-	has (floor rounded). Once a collision is found, the distance between the collision and the player is
-	calculated and the px coordinates saved.
-*/
+ *	Save the px coordinates of the colision with horizontal lines. Loop can be executed up to how many
+ *	rows the map has. Map coordinates are obtained dividing px coordinate by the number of pixels a tile
+ *	has (floor rounded). Once a collision is found, the distance between the collision and the player is
+ *	calculated and the px coordinates saved.
+ */
 void	set_hcolision(t_game *game, t_ray *ray)
 {
 	int	dof;
@@ -37,11 +37,11 @@ void	set_hcolision(t_game *game, t_ray *ray)
 }
 
 /*
-	Find posible colisions in horizontal lines (moving up-down). After finding the direction the ray
-	is facing (up or down), set the posible colision with the limits of the tile the player is at.
-	Set up the ofset the colision will have for each extra tile moved. In case it goes straight right
-	or left, no horizontal colision will happen.
-*/
+ *	Find posible colisions in horizontal lines (moving up-down). After finding the direction the ray
+ *	is facing (up or down), set the posible colision with the limits of the tile the player is at.
+ *	Set up the ofset the colision will have for each extra tile moved. In case it goes straight right
+ *	or left, no horizontal colision will happen.
+ */
 void	horizontal_colision(t_game *game, t_ray *ray)
 {
 	ray->aTan = -1 / tan(ray->ra);
@@ -65,11 +65,11 @@ void	horizontal_colision(t_game *game, t_ray *ray)
 }
 
 /*
-	Save the px coordinates of the colision with vertical lines. Loop can be executed up to how many
-	cols the map has. Map coordinates are obtained dividing px coordinate by the numer of pixels a tile
-	has (floor rounded). Once a collision is found, the distance between the collision and the player is
-	calculated and the px coordinates saved.
-*/
+ *	Save the px coordinates of the colision with vertical lines. Loop can be executed up to how many
+ *	cols the map has. Map coordinates are obtained dividing px coordinate by the number of pixels a tile
+ *	has (floor rounded). Once a collision is found, the distance between the collision and the player is
+ *	calculated and the px coordinates saved.
+ */
 void	set_vcolision(t_game *game, t_ray *ray)
 {
 	int	dof;
@@ -100,11 +100,11 @@ void	set_vcolision(t_game *game, t_ray *ray)
 }
 
 /*
-	Find posible colisions in vertical lines (moving right-left). After finding the direction the ray
-	is facing (right or left), set the posible colision with the limits of the tile the player is at.
-	Set up the ofset the colision will have for each extra tile moved. In case it goes straight up
-	or down, no vertical colision will happen.
-*/
+ *	Find posible colisions in vertical lines (moving right-left). After finding the direction the ray
+ *	is facing (right or left), set the posible colision with the limits of the tile the player is at.
+ *	Set up the ofset the colision will have for each extra tile moved. In case it goes straight up
+ *	or down, no vertical colision will happen.
+ */
 void	vertical_colision(t_game *game, t_ray *ray)
 {
 	ray->aTan = -tan(ray->ra);
@@ -144,29 +144,29 @@ void	render_ray(t_game *game, t_ray *ray, int type, int n)
 		lineO = (game->height / 2) - (lineH / 2);
 		for (int i = 0; i < (int)lineH; i++)
 		{
-			for (int j = 0; j < 16; j++)
+			for (int j = 0; j < 4; j++)
 			{
 				if (ray->ra > M_PI)
-					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 64 + 4 * j ) = create_trgb(0, 255, 0, 0);
+					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 16 + 4 * j ) = create_trgb(0, 255, 0, 0);
 				else
-					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 64 + 4 * j ) = create_trgb(0, 0, 255, 0);
+					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 16 + 4 * j ) = create_trgb(0, 255, 0, 0);
 			}
 		}
 	}
 	if (type == 'V')
 	{
-		lineH = TILE_SIZE * game->height / ray->disV * cos(angle);
+		lineH = (TILE_SIZE * game->height) / (ray->disV * cos(angle));
 		if (lineH > game->height)
 			lineH = game->height;
 		lineO = (game->height / 2) - (lineH / 2);
 		for (int i = 0; i < (int)lineH; i++)
 		{
-			for (int j = 0; j < 16; j++)
+			for (int j = 0; j < 4; j++)
 			{
 				if (ray->ra > M_PI_2 && ray->ra < M_PI_3)
-					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 64 + 4 * j ) = create_trgb(0, 255, 255, 0);
+					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 16 + 4 * j ) = create_trgb(0, 200, 0, 0);
 				else
-					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 64 + 4 * j ) = create_trgb(0, 0, 0, 255);
+					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 16 + 4 * j ) = create_trgb(0, 200, 0, 0);
 			}
 		}	
 	}
@@ -179,26 +179,18 @@ void	cast_rays(t_game *game)
 
 	nb_rays = 0;
 	ray.ra = game->player->ray - FOV / 2 * DR;
-	while (nb_rays < FOV)
+	while (nb_rays < FOV * 4)
 	{
 		ray.disH = 10000000;
 		ray.disV = 10000000;
 		ray.ra = adjust_angle(ray.ra);
 		horizontal_colision(game, &ray);
 		vertical_colision(game, &ray);
-
-		//De aquí para abajo se haría la llamada al renderizado de la imágen por cada rayo lanzado
 		if (ray.disH < ray.disV)
-		{
-	//		draw_colision(game, (int)ray.hx, (int)ray.hy);
 			render_ray(game, &ray, 'H', nb_rays);
-		}
-		if (ray.disV < ray.disH)
-		{
-//			draw_colision(game, (int)ray.vx, (int)ray.vy);
+		else
 			render_ray(game, &ray, 'V', nb_rays);
-		}
-		ray.ra += DR;
+		ray.ra += DR/4;
 		nb_rays++;
 	}
 }

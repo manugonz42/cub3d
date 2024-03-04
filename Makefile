@@ -13,30 +13,43 @@ MAGENTA = \033[0;35m
 WHITE = \033[0;37m
 
 # Paths
-INCLUDES = include
-SRC_PATH = source/
+INC = inc
+SRC_DIR = src/
+OBJ_DIR = obj/
 
 # Target file
 TARGET = cub3d
 
 # Source files
-PRINT_MAP = print_map.c create_background.c draw_pj.c
-RAY_CASTING = start_ray.c draw_ray.c ray_utils.c
-UPDATE = draw_next_frame.c update.c
-PARS = check_walls_utils.c check_walls.c clean_matrix_utils.c \
-		clean_matrix.c color.c pars_utils.c parse_map.c
-FILES = error.c exit.c handle_input.c \
-		init.c init_pj.c
-SOURCES = cub3d.c $(addprefix $(SRC_PATH), $(FILES)) \
-		$(addprefix $(SRC_PATH)/pars/, $(PARS)) \
-		$(addprefix $(SRC_PATH)/print_map/, $(PRINT_MAP)) \
-		$(addprefix $(SRC_PATH)/update/, $(UPDATE)) \
-		$(addprefix $(SRC_PATH)/ray_casting/, $(RAY_CASTING))
+SRC =	$(SRC_DIR)pars/check_walls_utils.c					\
+		$(SRC_DIR)pars/check_walls.c						\
+		$(SRC_DIR)pars/clean_matrix_utils.c					\
+		$(SRC_DIR)pars/clean_matrix.c						\
+		$(SRC_DIR)pars/color.c								\
+		$(SRC_DIR)pars/pars_utils.c							\
+		$(SRC_DIR)pars/parse_map.c							\
+		$(SRC_DIR)print/create_background.c					\
+		$(SRC_DIR)print/draw_pj.c							\
+		$(SRC_DIR)print/print_map.c							\
+		$(SRC_DIR)ray_casting/ray_utils.c					\
+		$(SRC_DIR)ray_casting/start_ray.c					\
+		$(SRC_DIR)update/draw_next_frame.c					\
+		$(SRC_DIR)update/update.c							\
+		$(SRC_DIR)utils/error.c								\
+		$(SRC_DIR)utils/exit.c								\
+		$(SRC_DIR)utils/handle_input.c						\
+		$(SRC_DIR)utils/init_pj.c							\
+		$(SRC_DIR)utils/init.c								\
+		$(SRC_DIR)cub3d.c
+
+OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+
+
 # Compiler
 CC = gcc
 
 # Oompiler flags
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES)
+CFLAGS = -Wall -Wextra -Werror -I$(INC)
 
 # Libraries
 LIBMLX = mlx/libmlx_Linux.a
@@ -49,11 +62,12 @@ MLXDIR = mlx
 # System libraries to link
 LIBS = -lXext -lX11 -lm
 
-# Objets
-OBJECTS = $(SOURCES:.c=.o)
-
 # Rules
 all: $(TARGET)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
 	make -C libft
@@ -61,25 +75,21 @@ $(LIBFT):
 $(LIBMLX): 
 	@make -C mlx > /dev/null 2>&1
 
-$(TARGET): $(OBJECTS) $(LIBFT) $(LIBMLX)
+$(TARGET): $(OBJ) $(LIBFT) $(LIBMLX)
 	@echo -e "$(CYAN)--Compiling $(YELLOW)cub$(GREEN)3$(YELLOW)d$(RESET)"
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LIBFT) $(LIBMLX) $(LIBS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ) $(LIBFT) $(LIBMLX) $(LIBS)
 	@echo -e "$(CYAN)--Ready$(WHITE)"
 # Clean rules
 clean:
 	@echo -e "$(MAGENTA)--Deleting .o archives$(RESET)"
 	$(MAKE) clean -C $(LIBFTDIR)
 	$(MAKE) clean -C $(MLXDIR)
-	@rm -f $(OBJECTS) /objs
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@echo -e "$(MAGENTA)--Deleting .a archives$(RESET)"
 	$(MAKE) fclean -C $(LIBFTDIR)
-	$(MAKE) clean -C $(MLXDIR)
 	@rm -f $(TARGET)
 re:	fclean all
 	@echo -e "$(BLUE)--Remaking all...$(WHITE)"
-	$(MAKE) all -C $(LIBFTDIR)
-	$(MAKE) all -C $(MLXDIR)
-	$(MAKE) all
 

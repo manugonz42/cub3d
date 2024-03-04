@@ -52,7 +52,7 @@ void	check_line_map_format(char *line, t_game *game)
 		i++;
 	}
 	if (line[i - 1] != '1')
-		ft_error_message(INVALID_MAP, game);
+		ft_error_message(NOT_WALL_SR_MAP, game);
 }
 
 void	parse_map_line(char *line, t_game *game)

@@ -50,8 +50,8 @@ void	init_game(t_game *game, char *map)
 {
 	game->alloc = 1;
 	game->c_count = 0;
-	game->width = 1024;
-	game->height = 512;
+	game->width = 960;
+	game->height = 600;
 	init_mlx(game);
 	init_map(game, map);
 	init_sprites(game);
