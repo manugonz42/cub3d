@@ -65,8 +65,17 @@ void	init_sprites(t_game *game)
 	game->sprites.c = malloc(sizeof(t_image));
 	game->sprites.b = malloc(sizeof(t_image));
 	game->sprites.w = malloc(sizeof(t_image));
-	if (!game->sprites.no || !game->sprites.so || !game->sprites.ea || !game->sprites.we || !game->sprites.f || !game->sprites.c)
+	if (!game->sprites.no || !game->sprites.so || !game->sprites.ea || \
+		!game->sprites.we || !game->sprites.f || !game->sprites.c)
 		ft_error_message(MALLOC_ERROR, game);
+	game->sprites.no->setted = 0;
+	game->sprites.so->setted = 0;
+	game->sprites.we->setted = 0;
+	game->sprites.ea->setted = 0;
+	game->sprites.f->setted = 0;
+	game->sprites.c->setted = 0;
+	game->sprites.b->setted = 0;
+	game->sprites.w->setted = 0;
 }
 
 /*void	set_cell_dimensions(t_game *game)

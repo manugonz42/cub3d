@@ -55,22 +55,22 @@ char	*save_texture_path(char *line, int i, t_game *game)
 
 void	save_texture(char *line, t_game *game, int side, int i)
 {
-	if (side == NO)
+	if (side == NO && game->sprites.no->setted == 0)
 	{
 		game->sprites.no->addr = save_texture_path(line, i, game);
 		game->sprites.no->setted = 1;
 	}
-	else if (side == SO)
+	else if (side == SO && game->sprites.so->setted == 0)
 	{
 		game->sprites.so->addr = save_texture_path(line, i, game);
 		game->sprites.so->setted = 1;
 	}
-	else if (side == EA)
+	else if (side == EA && game->sprites.ea->setted == 0)
 	{
 		game->sprites.ea->addr = save_texture_path(line, i, game);
 		game->sprites.ea->setted = 1;
 	}
-	else if (side == WE)
+	else if (side == WE && game->sprites.we->setted == 0)
 	{
 		game->sprites.we->addr = save_texture_path(line, i, game);
 		game->sprites.we->setted = 1;
