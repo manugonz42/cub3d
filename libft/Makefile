@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: manugonz <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: jimmy <jimmy@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/04 17:23:36 by manugonz          #+#    #+#              #
-#    Updated: 2023/03/08 21:35:24 by manugonz         ###   ########.fr        #
+#    Updated: 2024/03/01 17:17:13 by jimmy            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 
 CC = gcc
 
-INCLUDES = ../include
+INCLUDES = ../inc
 
 CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES)
 

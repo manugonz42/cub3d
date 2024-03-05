@@ -14,8 +14,9 @@ void	draw_pj(t_game *game)
 		*(int *)(img->addr + i * 4) = create_trgb(0, 255, 0, 0);
 		i++;
 	}
-	mlx_put_image_to_window(game->mlx_server, game->mlx_window, img->ptr, game->player->x, game->player->y);
+	mlx_put_image_to_window(game->mlx_server, game->mlx_window, img->ptr, game->player->x - TILE_SIZE / 4, game->player->y - TILE_SIZE / 4);
 	mlx_destroy_image(game->mlx_server, img->ptr);
+	free(img);
 }
 
 void	draw_colision(t_game *game, int x, int y)
