@@ -61,7 +61,6 @@ void	n_of_cols(t_game *game)
 			j++;
 		if (j > max)
 			max = j;
-		printf("max: %d\n", max);
 		i++;
 	}
 	game->map->cols = max;

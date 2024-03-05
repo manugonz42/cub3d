@@ -2,6 +2,7 @@
 
 void create_background(t_game *game)
 {
+	int	i;
 //	int sky_color;
 //	int	floor_color;
 
@@ -9,16 +10,19 @@ void create_background(t_game *game)
 //	floor_color = game->sprites.f->rgb;
 //	if (game->frame)
 		//Liberacion de frame
+	i = 0;
 	game->frame = malloc(sizeof(t_image));
+	if (!game->frame)
+		ft_error_message(MALLOC_ERROR, game);
 	game->frame->ptr = mlx_new_image(game->mlx_server, game->width, game->height);
 	game->frame->addr = mlx_get_data_addr(game->frame->ptr, &game->frame->bitsinpixel, &game->frame->line_bytes, &game->frame->endian);
-	for (int i = 0; i < game->width * game->height; i++)
+	while (i < game->width * game->height)
 	{
-//		if (i < game->width * game->height / 2)
-//			*(int *)(game->frame->addr + i * 4) = sky_color;
-//		else
-//			*(int *)(game->frame->addr + i * 4) = floor_color;
-		*(int *)(game->frame->addr + i * 4) = create_trgb(0, 140, 140, 140);
+		if (i < game->width * game->height / 2)
+			*(int *)(game->frame->addr + i * 4) = game->sprites.c->rgb;
+		else
+			*(int *)(game->frame->addr + i * 4) = game->sprites.f->rgb;
+		i++;
 	}
 }
 

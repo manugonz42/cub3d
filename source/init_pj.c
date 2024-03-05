@@ -33,8 +33,7 @@ void	set_starting_pj_pos(t_game *game)
 		}
 		y++;
 	}
-	game->player->fov = 60;
-	printf("x: %d y: %d",x , y);
+	game->player->fov = FOV;
 	game->player->x = x * TILE_SIZE + TILE_SIZE / 2 - TILE_SIZE / 4;
 	game->player->y = y * TILE_SIZE + TILE_SIZE / 2 - TILE_SIZE / 4;
 	set_starting_pj_direction(game, map[y][x]);
@@ -43,6 +42,8 @@ void	set_starting_pj_pos(t_game *game)
 void	init_pj(t_game *game)
 {
 	game->player = malloc(sizeof(t_player));
+	if (!game->player)
+		ft_error_message(MALLOC_ERROR, game);
 	game->player->fov = FOV;
 	game->player->ray = 0;
 	game->player->x = 0;
