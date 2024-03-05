@@ -1,27 +1,5 @@
 #include "cub3d.h"
 
-/*void	init_ray(t_game *game)
-{
-	game->player->ray_data->horizontal_hit = 0;
-	game->player->ray_data->horizontal_x_hit = 0;
-	game->player->ray_data->horizontal_y_hit = 0;
-	game->player->ray_data->horizontal_distance = 9999;
-	game->player->ray_data->vertical_hit = 0;
-	game->player->ray_data->vertical_x_hit = 0;
-	game->player->ray_data->vertical_y_hit = 0;
-	game->player->ray_data->vertical_distance = 9999;
-	game->player->ray_data->up = 0;
-	game->player->ray_data->left = 0;
-	game->player->ray_data->y_intercept = 0;
-	game->player->ray_data->x_intercept = 0;
-	game->player->ray_data->y_step = 0;
-	game->player->ray_data->x_step = 0;
-	game->player->ray_data->next_horizontal_x = 0;
-	game->player->ray_data->next_horizontal_y = 0;
-	game->player->ray_data->adjacent = 0;
-	game->player->ray_data->opposite = 0;
-}*/
-
 void	init_mlx(t_game *game)
 {
 	game->alloc = 0;
@@ -78,27 +56,6 @@ void	init_sprites(t_game *game)
 	game->sprites.w->setted = 0;
 }
 
-/*void	set_cell_dimensions(t_game *game)
-{
-	game->map->cell_height = (double)game->height / (double)game->map->rows;
-	game->map->cell_width = (double)game->width / (double)game->map->cols;
-	printf("game->height: %d, game->width: %d\n", game->height, game->width);
-	printf("cell_height: %f, cell_width: %f\n", game->map->cell_height, game->map->cell_width);
-}
-
-void	init_minimap(t_game *game)
-{
-	game->minimap = malloc(sizeof(t_minimap));
-	if (!game->minimap)
-		ft_error_message(MALLOC_ERROR, game);
-	game->minimap->img = malloc(sizeof(t_image));
-	if (!game->minimap->img)
-		ft_error_message(MALLOC_ERROR, game);
-	game->minimap->width = 8 * game->map->cols;
-	game->minimap->height = 8 * game->map->rows;
-	game->minimap->cell_size = 8;
-}*/
-
 void	init_frame(t_game *game)
 {
 	game->frame = malloc(sizeof(t_image));
@@ -121,11 +78,4 @@ void	init_game(t_game *game, char *map)
 	init_map(game, map);
 	init_sprites(game);
 	init_frame(game);
-	/*parse_map(game);
-	create_new_map_matrix(game);
-	check_wall_status(game);
-	init_minimap(game);
-	set_cell_dimensions(game);
-	init_pj(game);
-	init_ray(game);*/
 }

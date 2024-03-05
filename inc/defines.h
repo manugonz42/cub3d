@@ -62,6 +62,7 @@
 
 // ERROR MESSAGES
 # define INVALID_MAP		"Invalid map"
+# define NO_MAP				"No map found"
 # define INVALID_TEXTURE	"Invalid texture path"
 # define INVALID_COLOR		"Invalid color value"
 # define INVALID_LINE		"Invalid line in .cub file"
