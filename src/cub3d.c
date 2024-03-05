@@ -27,7 +27,6 @@ int	main(int argc, char *argv[])
 	create_new_map_matrix(&game);
 	check_wall_status(&game);
 	ft_print_matrix(game.map->matrix);
-	check_wall_status(&game);
 //	create_map(&game);
 	init_pj(&game);
 //	draw_pj(&game);

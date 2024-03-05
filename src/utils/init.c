@@ -99,6 +99,18 @@ void	init_minimap(t_game *game)
 	game->minimap->cell_size = 8;
 }*/
 
+void	init_frame(t_game *game)
+{
+	game->frame = malloc(sizeof(t_image));
+	if (!game->frame)
+		ft_error_message(MALLOC_ERROR, game);
+	game->frame->ptr = mlx_new_image(game->mlx_server, game->width, game->height);
+	if (!game->frame->ptr)
+		ft_error_message(MLX_ERROR, game);
+	game->frame->addr = mlx_get_data_addr(game->frame->ptr, &game->frame->bitsinpixel, &game->frame->line_bytes, &game->frame->endian);
+
+}
+
 void	init_game(t_game *game, char *map)
 {
 	game->alloc = 1;
@@ -108,6 +120,7 @@ void	init_game(t_game *game, char *map)
 	init_mlx(game);
 	init_map(game, map);
 	init_sprites(game);
+	init_frame(game);
 	/*parse_map(game);
 	create_new_map_matrix(game);
 	check_wall_status(game);

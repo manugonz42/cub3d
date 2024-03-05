@@ -55,7 +55,10 @@ int		parse_map(t_game *game);
 
 //-----------------PRINT_MAP----------------------------------
 // CREATE_BACKGROUND
-void	create_map(t_game *game);
+void    draw_background(t_game *game);
+void	minimap_wall_case(t_game *game, int i, int j);
+void	minimap_empty_case(t_game *game, int i, int j);
+void	draw_map(t_game *game);
 
 // DRAW_PJ
 void	draw_pj(t_game *game);
@@ -110,6 +113,5 @@ void	init_game(t_game *game, char *map);
 
 float	adjust_angle(float ra);
 float	ray_dist(float ax, float ay, float bx, float by);
-void    create_background(t_game *game);
 
 #endif

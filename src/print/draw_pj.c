@@ -1,22 +1,22 @@
 #include "cub3d.h"
 
-void	draw_pj(t_game *game)
+void draw_pj(t_game *game)
 {
-	t_image *img;
-	int		i;
+	int	k;
+	int	l;
 
-	i = 0;
-	img = malloc(sizeof(t_image));
-	img->ptr = mlx_new_image(game->mlx_server, TILE_SIZE / 4, TILE_SIZE / 4);
-	img->addr = mlx_get_data_addr(img->ptr, &img->bitsinpixel, &img->line_bytes, &img->endian);
-	while(i < (TILE_SIZE) / 4 * (TILE_SIZE / 4))
+	k = 0;
+	while (k < 2)
 	{
-		*(int *)(img->addr + i * 4) = create_trgb(0, 255, 0, 0);
-		i++;
+		l = 0;
+		while (l < 2)
+		{
+			*(int *)(game->frame->addr + ((int)game->player->y + TILE_SIZE + l) * game->frame->line_bytes + \
+				(int)game->player->x * 4 + k + 31) = create_trgb(0, 255, 0, 0);
+			l++;
+		}
+		k++;
 	}
-	mlx_put_image_to_window(game->mlx_server, game->mlx_window, img->ptr, game->player->x - TILE_SIZE / 4, game->player->y - TILE_SIZE / 4);
-	mlx_destroy_image(game->mlx_server, img->ptr);
-	free(img);
 }
 
 void	draw_colision(t_game *game, int x, int y)

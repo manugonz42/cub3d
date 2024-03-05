@@ -34,8 +34,8 @@ void	set_starting_pj_pos(t_game *game)
 		y++;
 	}
 	game->player->fov = FOV;
-	game->player->x = x * TILE_SIZE + TILE_SIZE / 2 - TILE_SIZE / 4;
-	game->player->y = y * TILE_SIZE + TILE_SIZE / 2 - TILE_SIZE / 4;
+	game->player->x = x * TILE_SIZE + TILE_SIZE / 2;
+	game->player->y = y * TILE_SIZE + TILE_SIZE / 2;
 	set_starting_pj_direction(game, map[y][x]);
 }
 

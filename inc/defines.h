@@ -74,6 +74,7 @@
 # define INVALID_FORMAT		"Invalid format of .cub file"
 # define NOT_WALL_SR_MAP 	"Map must be surrounded by walls"
 # define EMPTY_LINE			"Empty line in map"
+# define MLX_ERROR			"MLX error"
 
 // VALUES
 # define DR                 M_PI / 180
@@ -84,8 +85,8 @@
 # define FPS_30				33333
 # define FPS_60				16667
 # define FOV				60
-# define GAME_WIDTH			1280
-# define GAME_HEIGHT		720
+# define GAME_WIDTH			960
+# define GAME_HEIGHT		600
 # define NO_RAYS			120
 
 #endif
