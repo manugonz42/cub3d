@@ -4,8 +4,6 @@ void create_background(t_game *game)
 {
 	int	i;
 
-	sky_color = game->sprites.c->rgb;
-	floor_color = game->sprites.f->rgb;
 //	if (game->frame)
 		//Liberacion de frame
 //		free(game->frame);
