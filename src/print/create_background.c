@@ -58,6 +58,7 @@ void	draw_map(t_game *game)
     int i = 0;
     int j;
 
+	printf("rows = %d, cols = %d\n", game->map->rows, game->map->cols);
     while (i < game->map->rows)
     {
         j = 0;

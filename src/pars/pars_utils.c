@@ -55,6 +55,7 @@ void	save_texture(char *line, t_game *game, int side, int i)
 	char	*path;
 
 	path = save_texture_path(line, i, game);
+	printf("path: %s\n", path);
 	if (side == NO)
 	{
 		game->sprites->no->ptr = mlx_xpm_file_to_image(game->mlx_server,

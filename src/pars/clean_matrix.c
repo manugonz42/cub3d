@@ -54,13 +54,9 @@ char	**tabs_to_spcs(t_game *game)
 
 void	create_new_map_matrix(t_game *game)
 {
-	int	i;
-
-	i = 0;
 	if (check_empty_map_line(game->map->raw_map))
 		ft_error_message(EMPTY_LINE, game);
 	game->map->matrix = tabs_to_spcs(game);
 	n_of_rows(game);
 	n_of_cols(game);
-	game->map->rows = i;
 }
