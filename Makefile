@@ -31,7 +31,6 @@ SRC =	$(SRC_DIR)pars/check_walls_utils.c					\
 		$(SRC_DIR)pars/textures.c							\
 		$(SRC_DIR)print/create_background.c					\
 		$(SRC_DIR)print/draw_pj.c							\
-		$(SRC_DIR)print/print_map.c							\
 		$(SRC_DIR)ray_casting/ray_utils.c					\
 		$(SRC_DIR)ray_casting/render.c						\
 		$(SRC_DIR)ray_casting/start_ray.c					\
