@@ -35,16 +35,16 @@ void	init_map(t_game *game, char *map)
 
 void	init_sprites(t_game *game)
 {
-	game->sprites.no = malloc(sizeof(t_image));
-	game->sprites.so = malloc(sizeof(t_image));
-	game->sprites.ea = malloc(sizeof(t_image));
-	game->sprites.we = malloc(sizeof(t_image));
-	game->sprites.f = malloc(sizeof(t_image));
-	game->sprites.c = malloc(sizeof(t_image));
-	game->sprites.b = malloc(sizeof(t_image));
-	game->sprites.w = malloc(sizeof(t_image));
-	if (!game->sprites.no || !game->sprites.so || !game->sprites.ea || \
-		!game->sprites.we || !game->sprites.f || !game->sprites.c)
+	game->sprites = malloc(sizeof(t_sprites));
+	if (!game->sprites)
+		ft_error_message(MALLOC_ERROR, game);
+	game->sprites->no = malloc(sizeof(t_image));
+	game->sprites->so = malloc(sizeof(t_image));
+	game->sprites->ea = malloc(sizeof(t_image));
+	game->sprites->we = malloc(sizeof(t_image));
+	game->sprites->f = malloc(sizeof(t_image));
+	game->sprites->c = malloc(sizeof(t_image));
+	if (!game->sprites->no || !game->sprites->so || !game->sprites->ea || !game->sprites->we || !game->sprites->f || !game->sprites->c)
 		ft_error_message(MALLOC_ERROR, game);
 	game->sprites.no->setted = 0;
 	game->sprites.so->setted = 0;

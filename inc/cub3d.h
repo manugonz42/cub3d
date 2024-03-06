@@ -113,5 +113,9 @@ void	init_game(t_game *game, char *map);
 
 float	adjust_angle(float ra);
 float	ray_dist(float ax, float ay, float bx, float by);
+void    create_background(t_game *game);
+void    set_textures(t_game *game);
+void	copy_texture(int *dst, int *src);
+void	render_ray(t_game *game, t_ray *ray, int n);
 
 #endif

@@ -69,7 +69,7 @@ void	parse_color(char *line, t_game *game, int side)
 	line++;
 	ft_skip_spaces(&line);
 	if (side == F)
-		game->sprites.f->rgb = extract_color(line, game);
+		game->sprites->f->rgb = extract_color(line, game);
 	else
-		game->sprites.c->rgb = extract_color(line, game);
+		game->sprites->c->rgb = extract_color(line, game);
 }

@@ -28,10 +28,12 @@ SRC =	$(SRC_DIR)pars/check_walls_utils.c					\
 		$(SRC_DIR)pars/color.c								\
 		$(SRC_DIR)pars/pars_utils.c							\
 		$(SRC_DIR)pars/parse_map.c							\
+		$(SRC_DIR)pars/textures.c							\
 		$(SRC_DIR)print/create_background.c					\
 		$(SRC_DIR)print/draw_pj.c							\
 		$(SRC_DIR)print/print_map.c							\
 		$(SRC_DIR)ray_casting/ray_utils.c					\
+		$(SRC_DIR)ray_casting/render.c						\
 		$(SRC_DIR)ray_casting/start_ray.c					\
 		$(SRC_DIR)update/draw_next_frame.c					\
 		$(SRC_DIR)update/update.c							\

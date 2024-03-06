@@ -22,13 +22,21 @@ int	main(int argc, char *argv[])
 	t_game	game;
 
 	check_args(argc, argv, &game);
+	printf("1\n");
 	init_game(&game, argv[1]);
+	printf("2\n");
 	parse_map(&game);
+	printf("3\n");
 	create_new_map_matrix(&game);
-	check_wall_status(&game);
+	printf("4\n");
+//	check_wall_status(&game);
 	ft_print_matrix(game.map->matrix);
+	printf("5\n");
 //	create_map(&game);
 	init_pj(&game);
+	printf("6\n");
+	set_textures(&game);
+	printf("7\n");
 //	draw_pj(&game);
 	run_game(&game);
 	return (0);
