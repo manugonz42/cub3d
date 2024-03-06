@@ -1,4 +1,4 @@
-#include "include/cub3d.h"
+#include "inc/cub3d.h"
 
 int		create_trgb(int t, int r, int g, int b)
 {
@@ -56,31 +56,34 @@ int on_press_input(int keysym, t_game *game)
 		x = 0;
 	if (keysym == ESC_KEY)
 		exit(0);
-	else
-	{
-		printf("x: %d\n", x);
-		x++;
-		fill_image(game->frame, create_trgb(x, 0, 255, 0));
-		mlx_put_image_to_window(game->mlx_server, game->mlx_window, game->frame->ptr, 200, 200);
-	}
+
 	return (0);
 }
 
 int main(int argc, char const *argv[])
 {
 	t_image back;
+	int i = 0;
 	t_game 	game;
+	t_image sprite;
+	int		width;
+	int		height;
 
 	init_mlx(&game);
-	back.ptr = mlx_new_image(game.mlx_server, 400, 400);
+	back.ptr = mlx_new_image(game.mlx_server, 32, 32);
 	back.addr = mlx_get_data_addr(back.ptr, &back.bitsinpixel, &back.line_bytes, &back.endian);
-	game.frame->ptr = mlx_new_image(game.mlx_server, 400, 400);
-	game.frame->addr = mlx_get_data_addr(game.frame->ptr, &game.frame->bitsinpixel, &game.frame->line_bytes, &game.frame->endian);
-	fill_image(&back, create_trgb(255, 255, 0, 0));
-	fill_image(game.frame, create_trgb(255, 255, 255, 255));
+	sprite.ptr = mlx_xpm_file_to_image(game.mlx_server, "coin.xpm", &width, &height);
+	sprite.addr = mlx_get_data_addr(sprite.ptr, &sprite.bitsinpixel, &sprite.line_bytes, &sprite.endian);
+	if (!sprite.ptr)
+		printf("Error\n");
+	while (i < 32 * 32 * 4)
+	{
+		*(int *)(back.addr + i) = *(int *)(sprite.addr + i);
+		i++;
+	}
+	mlx_put_image_to_window(game.mlx_server, game.mlx_window, sprite.ptr, 0, 0);
+	mlx_put_image_to_window(game.mlx_server, game.mlx_window, back.ptr, 100, 100);
 	mlx_key_hook(game.mlx_window, on_press_input, &game);
-	mlx_put_image_to_window(game.mlx_server, game.mlx_window, back.ptr, 0, 0);
-	mlx_put_image_to_window(game.mlx_server, game.mlx_window, game.frame->ptr, 200, 200);
 	mlx_loop(game.mlx_server);
 
 	return 0;

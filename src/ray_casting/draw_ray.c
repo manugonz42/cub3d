@@ -24,7 +24,7 @@ void	draw_wall(int x, t_ray *ray_data, t_game *game)
     }
     int last_pixel_index = (y * game->frame->line_bytes) + (x * (game->frame->bitsinpixel / 8));
     *(int *)(game->frame->addr + last_pixel_index) = color;
-}*/
+}
 
 void draw_ray(int x, int y, int x2, int y2, t_image *image)
 {
@@ -50,3 +50,4 @@ void draw_ray(int x, int y, int x2, int y2, t_image *image)
 	printf("pixel_x: %f, pixel_y: %f\n", pixel_x, pixel_y);
 }
 
+*/
