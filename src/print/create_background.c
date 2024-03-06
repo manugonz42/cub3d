@@ -5,8 +5,8 @@ void create_background(t_game *game)
 	int sky_color;
 	int	floor_color;
 
-	sky_color = game->sprites.c->rgb;
-	floor_color = game->sprites.f->rgb;
+	sky_color = game->sprites->c->rgb;
+	floor_color = game->sprites->f->rgb;
 //	if (game->frame)
 //		free(game->frame);
 	game->frame = malloc(sizeof(t_image));

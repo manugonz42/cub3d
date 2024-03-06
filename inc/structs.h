@@ -9,7 +9,9 @@ typedef struct		s_image
 	int			bitsinpixel;	
 	int			line_bytes;	
 	int			endian;
-	int			setted;	
+	int			setted;
+	int			height;
+	int			width;
 }	t_image;
 
 typedef struct s_pos
@@ -50,8 +52,6 @@ typedef struct	s_sprites
 	t_image	*we;
 	t_image	*f;
 	t_image	*c;
-	t_image	*b;
-	t_image	*w;
 }	t_sprites;
 
 typedef struct s_ray
@@ -68,6 +68,9 @@ typedef struct s_ray
 	float	disV;
 	float	vx;
 	float	vy;
+	float	disT;
+	float	lineH;
+	float	lineO;
 }	t_ray;
 
 typedef struct s_game
@@ -79,7 +82,7 @@ typedef struct s_game
 	int			alloc;
 	int			width;
 	int			height;
-	t_sprites	sprites;
+	t_sprites	*sprites;
 	t_image		*frame;
 	t_image		*mini_map;
 	t_player	*player;

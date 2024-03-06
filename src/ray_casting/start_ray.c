@@ -127,51 +127,6 @@ void	vertical_colision(t_game *game, t_ray *ray)
 	set_vcolision(game, ray);
 }
 
-
-void	render_ray(t_game *game, t_ray *ray, int type, int n)
-{
-	float	lineH;
-	float	lineO;
-	float	angle;
-
-	angle = game->player->ray - ray->ra;
-	angle = adjust_angle(angle);
-	if (type == 'H')
-	{
-		lineH = (TILE_SIZE * game->height) / (ray->disH * cos(angle));
-		if (lineH > game->height)
-			lineH = game->height;
-		lineO = (game->height / 2) - (lineH / 2);
-		for (int i = 0; i < (int)lineH; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				if (ray->ra > M_PI)
-					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 16 + 4 * j ) = create_trgb(0, 255, 0, 0);
-				else
-					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 16 + 4 * j ) = create_trgb(0, 255, 0, 0);
-			}
-		}
-	}
-	if (type == 'V')
-	{
-		lineH = (TILE_SIZE * game->height) / (ray->disV * cos(angle));
-		if (lineH > game->height)
-			lineH = game->height;
-		lineO = (game->height / 2) - (lineH / 2);
-		for (int i = 0; i < (int)lineH; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				if (ray->ra > M_PI_2 && ray->ra < M_PI_3)
-					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 16 + 4 * j ) = create_trgb(0, 200, 0, 0);
-				else
-					*(int *)(game->frame->addr + (i + (int)lineO) * game->frame->line_bytes + n * 16 + 4 * j ) = create_trgb(0, 200, 0, 0);
-			}
-		}	
-	}
-}
-
 void	cast_rays(t_game *game)
 {
 	t_ray	ray;
@@ -187,9 +142,10 @@ void	cast_rays(t_game *game)
 		horizontal_colision(game, &ray);
 		vertical_colision(game, &ray);
 		if (ray.disH < ray.disV)
-			render_ray(game, &ray, 'H', nb_rays);
+			ray.disT = ray.disH;
 		else
-			render_ray(game, &ray, 'V', nb_rays);
+			ray.disT = ray.disV;
+		render_ray(game, &ray, nb_rays);
 		ray.ra += DR/4;
 		nb_rays++;
 	}
