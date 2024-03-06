@@ -112,7 +112,7 @@ struct s_ray
 	float	disT;
 	float	lineH;
 	float	lineO;
-}	t_ray;
+};
 
 typedef struct s_game
 {

@@ -8,9 +8,9 @@ void	draw_background(t_game *game)
 	while (i < game->width * game->height)
 	{
 		if (i < game->width * game->height / 2)
-			*(int *)(game->frame->addr + i * 4) = game->sprites.c->rgb;
+			*(int *)(game->frame->addr + i * 4) = game->sprites->c->rgb;
 		else
-			*(int *)(game->frame->addr + i * 4) = game->sprites.f->rgb;
+			*(int *)(game->frame->addr + i * 4) = game->sprites->f->rgb;
 		i++;
 	}
 }
