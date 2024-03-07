@@ -36,21 +36,6 @@ int	parse_line(char *line, t_game *game)
 	return (1);
 }
 
-void	check_line_map_format(char *line, t_game *game)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && line[i] != '\n')
-	{
-		if (!is_valid_map_char(line[i]))
-			ft_error_message(INVALID_MAP, game);
-		i++;
-	}
-	/*if (last_token(line, 0) != '1')
-		ft_error_message(INVALID_MAP, game);*/
-}
-
 void	parse_map_line(char *line, t_game *game)
 {
 	char	*temp;
@@ -61,30 +46,37 @@ void	parse_map_line(char *line, t_game *game)
 	game->map->raw_map = temp;
 }
 
+int	check_nline(t_game *game, char *line, int *in_map)
+{
+	char	*cpy;
+
+	cpy = line;
+	ft_skip_spaces(&cpy);
+	if (cpy[0] == '1')
+		*in_map = 1;
+	if (*in_map)
+		parse_map_line(line, game);
+	else
+		parse_line(cpy, game);
+	return (1);
+}
+
 int	parse_map(t_game *game)
 {
 	int		fd;
-	char	*line;
-	char	*cpy;
 	int		in_map;
+	char	*line;
 
 	in_map = 0;
 	fd = open(game->map->cub_path, O_RDONLY);
 	if (fd == -1)
-		ft_error_message("Invalid map path", game);
+		ft_error_message("Invalid scene description file path", game);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		cpy = line;
-		ft_skip_spaces(&cpy);
-		if (cpy[0] == '1')
-			in_map = 1;
-		if (in_map)
-			parse_map_line(line, game);
-		else
-			parse_line(cpy, game);
+		check_nline(game, line, &in_map);
 		free(line);
 	}
 	if (in_map == 0)

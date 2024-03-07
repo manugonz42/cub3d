@@ -29,6 +29,7 @@ SRC =	$(SRC_DIR)pars/check_walls_utils.c					\
 		$(SRC_DIR)pars/pars_utils.c							\
 		$(SRC_DIR)pars/parse_map.c							\
 		$(SRC_DIR)pars/textures.c							\
+		$(SRC_DIR)pars/save_texture.c							\
 		$(SRC_DIR)print/create_background.c					\
 		$(SRC_DIR)print/draw_pj.c							\
 		$(SRC_DIR)ray_casting/ray_utils.c					\

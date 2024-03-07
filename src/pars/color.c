@@ -53,13 +53,7 @@ int	extract_color(char *line, t_game *game)
 		i++;
 	}
 	res = create_trgb(0, ft_atoi(temp[0]), ft_atoi(temp[1]), ft_atoi(temp[2]));
-	i = 0;
-	while (i < 3)
-	{
-		free(temp[i]);
-		i++;
-	}
-	free(temp);
+	ft_free_array(temp);
 	return (res);
 }
 

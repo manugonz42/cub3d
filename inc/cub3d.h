@@ -41,17 +41,24 @@ void	parse_color(char *line, t_game *game, int side);
 
 // PARSE_UTILS
 int		is_valid_map_char(char c);
+void	check_line_map_format(char *line, t_game *game);
 char	next_token(char *line, int i);
 int		last_token(char *line, int i);
 char	*save_texture_path(char *line, int i, t_game *game);
-void	save_texture(char *line, t_game *game, int side, int i);
 
 // PARSE_MAP
 void	parse_texture(char *line, t_game *game, int side);
 int		parse_line(char *line, t_game *game);
-void	check_line_map_format(char *line, t_game *game);
 void	parse_map_line(char *line, t_game *game);
 int		parse_map(t_game *game);
+
+// SAVE_TEXTURE
+void	no_case(t_game *game, char *path);
+void	so_case(t_game *game, char *path);
+void	we_case(t_game *game, char *path);
+void	ea_case(t_game *game, char *path);
+void	save_texture(char *line, t_game *game, int side, int i);
+
 
 //-----------------PRINT_MAP----------------------------------
 // CREATE_BACKGROUND
