@@ -75,7 +75,6 @@ void	ft_skip_spaces(char **line);
 int		ft_isspace(char c);
 void	ft_free_matrix(char **matrix);
 void	ft_print_matrix(char **matrix);
-void	ft_free_array(char **array);
 
 // GNL
 char	*ft_save_rest(char *next);

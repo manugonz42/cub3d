@@ -53,7 +53,7 @@ int	extract_color(char *line, t_game *game)
 		i++;
 	}
 	res = create_trgb(0, ft_atoi(temp[0]), ft_atoi(temp[1]), ft_atoi(temp[2]));
-	ft_free_array(temp);
+	ft_free_matrix(temp);
 	return (res);
 }
 
