@@ -9,7 +9,8 @@ void	init_mlx(t_game *game)
 		free(game->mlx_server);
 		ft_error_message("Mlx server start failed.\n", game);
 	}
-	game->mlx_window = mlx_new_window(game->mlx_server, game->width, game->height, "Cub3D");
+	game->mlx_window = mlx_new_window(game->mlx_server, \
+		game->width, game->height, "Cub3D");
 	if (!game->mlx_window)
 	{
 		free (game->mlx_server);
@@ -44,7 +45,8 @@ void	init_sprites(t_game *game)
 	game->sprites->we = malloc(sizeof(t_image));
 	game->sprites->f = malloc(sizeof(t_image));
 	game->sprites->c = malloc(sizeof(t_image));
-	if (!game->sprites->no || !game->sprites->so || !game->sprites->ea || !game->sprites->we || !game->sprites->f || !game->sprites->c)
+	if (!game->sprites->no || !game->sprites->so || !game->sprites->ea || \
+		!game->sprites->we || !game->sprites->f || !game->sprites->c)
 		ft_error_message(MALLOC_ERROR, game);
 	game->sprites->no->setted = 0;
 	game->sprites->so->setted = 0;
@@ -62,8 +64,8 @@ void	init_frame(t_game *game)
 	game->frame->ptr = mlx_new_image(game->mlx_server, game->width, game->height);
 	if (!game->frame->ptr)
 		ft_error_message(MLX_ERROR, game);
-	game->frame->addr = mlx_get_data_addr(game->frame->ptr, &game->frame->bitsinpixel, &game->frame->line_bytes, &game->frame->endian);
-
+	game->frame->addr = mlx_get_data_addr(game->frame->ptr, &game->frame->bitsinpixel, \
+		&game->frame->line_bytes, &game->frame->endian);
 }
 
 void	init_game(t_game *game, char *map)

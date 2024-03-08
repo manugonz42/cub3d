@@ -59,7 +59,6 @@ void	we_case(t_game *game, char *path);
 void	ea_case(t_game *game, char *path);
 void	save_texture(char *line, t_game *game, int side, int i);
 
-
 //-----------------PRINT_MAP----------------------------------
 // CREATE_BACKGROUND
 void    draw_background(t_game *game);
@@ -100,6 +99,9 @@ int		ft_error_message(char *message, t_game *game);
 
 // EXIT
 void	destroy_game(t_game *game);
+void	destroy_images(t_game *game);
+void	free_sprites(t_game *game);
+void	free_map(t_game *game);
 int		ft_closed(t_game *game);
 
 // HANDLE_INPUT

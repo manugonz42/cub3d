@@ -49,10 +49,30 @@ void	free_map(t_game *game)
 		free(game->map);
 }
 
+void	free_frame(t_game *game)
+{
+	if (game->frame)
+	{
+		if (game->frame->ptr)
+			mlx_destroy_image(game->mlx_server, game->frame->ptr);
+		free(game->frame);
+	}
+}
+
+void	free_all(t_game *game)
+{
+	destroy_images(game);
+	free_sprites(game);
+	free_map(game);
+	free_frame(game);
+	if (game->player)
+		free(game->player);
+	mlx_destroy_window(game->mlx_server, game->mlx_window);
+}
+
 int		ft_closed(t_game *game)
 {
-	(void)game;
-	//destroy_game(game);
+	free_all(game);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
