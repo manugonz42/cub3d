@@ -42,6 +42,7 @@ SRC =	$(SRC_DIR)pars/check_walls_utils.c					\
 		$(SRC_DIR)utils/handle_input.c						\
 		$(SRC_DIR)utils/init_pj.c							\
 		$(SRC_DIR)utils/init.c								\
+		$(SRC_DIR)utils/print_i.c							\
 		$(SRC_DIR)cub3d.c
 
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

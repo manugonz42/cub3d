@@ -22,11 +22,12 @@ int	main(int argc, char *argv[])
 	t_game	game;
 
 	check_args(argc, argv, &game);
+	print_intro();
 	init_game(&game, argv[1]);
 	parse_map(&game);
 	create_new_map_matrix(&game);
 	check_wall_status(&game);
-	ft_print_matrix(game.map->matrix);
+//	ft_print_matrix(game.map->matrix);
 //	create_map(&game);
 	init_pj(&game);
 	set_textures(&game);

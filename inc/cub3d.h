@@ -127,4 +127,8 @@ void    set_textures(t_game *game);
 void	copy_texture(int *dst, int *src);
 void	render_ray(t_game *game, t_ray *ray, int n);
 
+//-----------------ULTIS----------------------------------
+// PRINT_I
+void	print_intro(void);
+
 #endif
