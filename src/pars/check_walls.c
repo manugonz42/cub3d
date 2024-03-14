@@ -25,7 +25,6 @@ void	check_wall_status(t_game *game)
 
 	check_first_or_last_row(game->map->matrix[0], game);
 	i = 1;
-	n_of_rows(game);
 	while(i < game->map->rows - 1)
 	{
 		j = 0;
