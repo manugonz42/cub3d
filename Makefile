@@ -21,28 +21,27 @@ OBJ_DIR = obj/
 TARGET = cub3d
 
 # Source files
-SRC =	$(SRC_DIR)pars/check_walls_utils.c					\
-		$(SRC_DIR)pars/check_walls.c						\
-		$(SRC_DIR)pars/clean_matrix_utils.c					\
-		$(SRC_DIR)pars/clean_matrix.c						\
-		$(SRC_DIR)pars/color.c								\
-		$(SRC_DIR)pars/pars_utils.c							\
-		$(SRC_DIR)pars/parse_map.c							\
-		$(SRC_DIR)pars/textures.c							\
-		$(SRC_DIR)pars/save_texture.c							\
-		$(SRC_DIR)print/create_background.c					\
-		$(SRC_DIR)print/draw_pj.c							\
+SRC =	$(SRC_DIR)frame/create_background.c					\
+		$(SRC_DIR)frame/create_minimap.c					\
+		$(SRC_DIR)frame/create_player.c						\
+		$(SRC_DIR)frame/print_frame.c						\
+		$(SRC_DIR)init/init_game.c							\
+		$(SRC_DIR)parse/check_walls_utils.c					\
+		$(SRC_DIR)parse/check_walls.c						\
+		$(SRC_DIR)parse/clean_matrix_utils.c				\
+		$(SRC_DIR)parse/clean_matrix.c						\
+		$(SRC_DIR)parse/color.c								\
+		$(SRC_DIR)parse/parse_utils.c						\
+		$(SRC_DIR)parse/parse.c								\
+		$(SRC_DIR)parse/textures.c							\
 		$(SRC_DIR)ray_casting/ray_utils.c					\
 		$(SRC_DIR)ray_casting/render.c						\
 		$(SRC_DIR)ray_casting/start_ray.c					\
 		$(SRC_DIR)update/draw_next_frame.c					\
 		$(SRC_DIR)update/update.c							\
 		$(SRC_DIR)utils/error.c								\
-		$(SRC_DIR)utils/exit.c								\
-		$(SRC_DIR)utils/handle_input.c						\
-		$(SRC_DIR)utils/init_pj.c							\
-		$(SRC_DIR)utils/init.c								\
-		$(SRC_DIR)utils/print_i.c							\
+		$(SRC_DIR)utils/free_program.c						\
+		$(SRC_DIR)utils/set_player.c						\
 		$(SRC_DIR)cub3d.c
 
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

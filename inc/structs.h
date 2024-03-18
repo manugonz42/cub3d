@@ -1,35 +1,6 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_ray	t_ray;
-
-typedef struct s_ray_m
-{
-	int		horizontal_hit;	
-	double	horizontal_x_hit;
-	double	horizontal_y_hit;
-	double	horizontal_distance;
-	double	vertical_hit;
-	double	vertical_x_hit;
-	double	vertical_y_hit;
-	double	vertical_distance;
-	int		up;
-	int		left;
-	double	y_intercept;
-	double	x_intercept;
-	double	y_step;
-	double	x_step;
-	double	next_horizontal_x;
-	double	next_horizontal_y;
-	double	next_vertical_x;
-	double	next_vertical_y;
-	double	wall_hit_x;
-	double	wall_hit_y;
-	double	adjacent;
-	double	opposite;
-	double	distance;
-}	t_ray_m;
-
 typedef struct		s_image
 {
 	void		*ptr;
@@ -43,38 +14,25 @@ typedef struct		s_image
 	int			width;
 }	t_image;
 
-typedef struct s_pos
-{
-	float	x;
-	float	y;
-}	t_pos;
-
 typedef struct s_player
 {
 	double	x;
 	double	y;
 	double	ray;
 	int		fov;
-	int		mv_speed;
+	int		mov_speed;
 	double	rot_speed;
 	int		moving;
 	int		rotating;
-	t_ray	*ray_data;
-
 }	t_player;
 
 typedef struct s_map
 {
 	char	**matrix;
 	char	*raw_map;
-	char	*cub_path;
+	char	*path;
 	int		rows;
 	int		cols;
-	int		alloc;
-	double	cell_height;
-	double	cell_width;
-	t_pos	*player_pos;
-	t_ray	*ray;
 }	t_map;
 
 typedef struct	s_sprites
@@ -87,15 +45,7 @@ typedef struct	s_sprites
 	t_image	*c;
 }	t_sprites;
 
-typedef struct s_minimap
-{
-	t_image	*img;
-	int		width;
-	int		height;
-	int		cell_size;
-}	t_minimap;
-
-struct s_ray
+typedef struct s_ray
 {
 	float	x;
 	float	y;
@@ -110,23 +60,23 @@ struct s_ray
 	float	vx;
 	float	vy;
 	float	disT;
+	float	tx;
+	float	ty;
+	float	ty_step;
+	float	ty_off;
 	float	lineH;
 	float	lineO;
-};
+}	t_ray;
 
 typedef struct s_game
 {
-	t_map		*map;
 	void		*mlx_server;
 	void		*mlx_window;
-	int			c_count;
-	int			alloc;
 	int			width;
 	int			height;
-	t_sprites	*sprites;
 	t_image		*frame;
-	t_minimap	*minimap;
-	t_image		*mini_map;
+	t_map		*map;
+	t_sprites	*sprites;
 	t_player	*player;
 }				t_game;
 
