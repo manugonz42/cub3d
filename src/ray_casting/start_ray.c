@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_ray.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jimmy <jimmy@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/18 13:51:44 by jimmy             #+#    #+#             */
+/*   Updated: 2024/03/18 13:51:48 by jimmy            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void	draw_colision(t_game *game, int x, int y);
 /*
  *	Save the px coordinates of the colision with horizontal lines. Loop can be executed up to how many
  *	rows the map has. Map coordinates are obtained dividing px coordinate by the number of pixels a tile

@@ -1,102 +1,126 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jimmy <jimmy@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/18 13:51:56 by jimmy             #+#    #+#             */
+/*   Updated: 2024/03/18 20:16:59 by jimmy            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	render_north(t_game *game, t_ray *ray, int n)
 {
-	float	tx;
-	float	ty;
-	float	ty_step;
-	float	ty_off;
+	int	i;
+	int	j;
 
-	ty_off = 0;
-	ty_step = 32 / ray->lineH;
+	i = -1;
+	ray->ty_off = 0;
+	ray->ty_step = 32 / ray->lineH;
 	if (ray->lineH > game->height)
 	{
-		ty_off = (ray->lineH - game->height) / 2;
+		ray->ty_off = (ray->lineH - game->height) / 2;
 		ray->lineH = game->height;
 	}
 	ray->lineO = (game->height / 2) - (ray->lineH / 2);
-	tx = 32 - (int)(ray->hx * 4) % 32;
-	ty = ty_off * ty_step;
-	for (int i = 0; i < ray->lineH; i++)
+	ray->tx = 31 - (int)(ray->hx * 4) % 32;
+	ray->ty = ray->ty_off * ray->ty_step;
+	while (++i < ray->lineH)
 	{
-		for (int j = 0; j < 4; j++)
-			*(int *)(game->frame->addr + (i + (int)ray->lineO) * game->frame->line_bytes + n * 16 + 4 * j) = *(int *)(game->sprites->no->addr + ((int)ty * game->sprites->no->line_bytes) + (4 * (int)tx));
-		ty += ty_step;
+		j = -1;
+		while (++j < 4)
+			*(int *)(game->frame->addr + (i + (int)ray->lineO)
+			* game->frame->line_bytes + n * 16 + 4 * j) =
+			*(int *)(game->sprites->no->addr + ((int)ray->ty *
+			game->sprites->no->line_bytes) + (4 * (int)ray->tx));
+		ray->ty += ray->ty_step;
 	}
 }
 
 void	render_south(t_game *game, t_ray *ray, int n)
 {
-	float	tx;
-	float	ty;
-	float	ty_step;
-	float	ty_off;
+	int	i;
+	int	j;
 
-	ty_off = 0;
-	ty_step = 32 / ray->lineH;
+	i = -1;
+	ray->ty_off = 0;
+	ray->ty_step = 32 / ray->lineH;
 	if (ray->lineH > game->height)
 	{
-		ty_off = (ray->lineH - game->height) / 2;
+		ray->ty_off = (ray->lineH - game->height) / 2;
 		ray->lineH = game->height;
 	}
 	ray->lineO = (game->height / 2) - (ray->lineH / 2);
-	tx = (int)(ray->hx * 4) % 32;
-	ty = ty_off * ty_step;
-	for (int i = 0; i < ray->lineH; i++)
+	ray->tx = (int)(ray->hx * 4) % 32;
+	ray->ty = ray->ty_off * ray->ty_step;
+	while (++i < ray->lineH)
 	{
-		for (int j = 0; j < 4; j++)
-			*(int *)(game->frame->addr + (i + (int)ray->lineO) * game->frame->line_bytes + n * 16 + 4 * j) = *(int *)(game->sprites->so->addr + ((int)ty * game->sprites->no->line_bytes) + (4 * (int)tx));
-		ty += ty_step;
+		j = -1;
+		while (++j < 4)
+			*(int *)(game->frame->addr + (i + (int)ray->lineO)
+			* game->frame->line_bytes + n * 16 + 4 * j) =
+			*(int *)(game->sprites->so->addr + ((int)ray->ty *
+			game->sprites->so->line_bytes) + (4 * (int)ray->tx));
+		ray->ty += ray->ty_step;
 	}
 }
 
 void	render_east(t_game *game, t_ray *ray, int n)
 {
-	float	tx;
-	float	ty;
-	float	ty_step;
-	float	ty_off;
+	int	i;
+	int	j;
 
-	ty_off = 0;
-	ty_step = 32 / ray->lineH;
+	i = -1;
+	ray->ty_off = 0;
+	ray->ty_step = 32 / ray->lineH;
 	if (ray->lineH > game->height)
 	{
-		ty_off = (ray->lineH - game->height) / 2;
+		ray->ty_off = (ray->lineH - game->height) / 2;
 		ray->lineH = game->height;
 	}
 	ray->lineO = (game->height / 2) - (ray->lineH / 2);
-	tx = 32 - (int)(ray->vy * 32 / TILE_SIZE) % 32;
-	ty = ty_off * ty_step;
-	for (int i = 0; i < ray->lineH; i++)
+	ray->tx = 31 - (int)(ray->vy * 32 / TILE_SIZE) % 32;
+	ray->ty = ray->ty_off * ray->ty_step;
+	while (++i < ray->lineH)
 	{
-		for (int j = 0; j < 4; j++)
-			*(int *)(game->frame->addr + (i + (int)ray->lineO) * game->frame->line_bytes + n * 16 + 4 * j) = *(int *)(game->sprites->ea->addr + ((int)ty * game->sprites->no->line_bytes) + (4 * (int)tx));
-		ty += ty_step;
+		j = -1;
+		while (++j < 4)
+			*(int *)(game->frame->addr + (i + (int)ray->lineO)
+			* game->frame->line_bytes + n * 16 + 4 * j) =
+			*(int *)(game->sprites->ea->addr + ((int)ray->ty *
+			game->sprites->ea->line_bytes) + (4 * (int)ray->tx));
+		ray->ty += ray->ty_step;
 	}
 }
 
 void	render_west(t_game *game, t_ray *ray, int n)
 {
-	float	tx;
-	float	ty;
-	float	ty_step;
-	float	ty_off;
+	int	i;
+	int	j;
 
-	ty_off = 0;
-	ty_step = 32 / ray->lineH;
+	i = -1;
+	ray->ty_off = 0;
+	ray->ty_step = 32 / ray->lineH;
 	if (ray->lineH > game->height)
 	{
-		ty_off = (ray->lineH - game->height) / 2;
+		ray->ty_off = (ray->lineH - game->height) / 2;
 		ray->lineH = game->height;
 	}
 	ray->lineO = (game->height / 2) - (ray->lineH / 2);
-	tx = (int)(ray->vy * 4) % 32;
-	ty = ty_off * ty_step;
-	for (int i = 0; i < ray->lineH; i++)
+	ray->tx = (int)(ray->vy * 32 / TILE_SIZE) % 32;
+	ray->ty = ray->ty_off * ray->ty_step;
+	while (++i < ray->lineH)
 	{
-		for (int j = 0; j < 4; j++)
-			*(int *)(game->frame->addr + (i + (int)ray->lineO) * game->frame->line_bytes + n * 16 + 4 * j) = *(int *)(game->sprites->we->addr + ((int)ty * game->sprites->no->line_bytes) + (4 * (int)tx));
-		ty += ty_step;
+		j = -1;
+		while (++j < 4)
+			*(int *)(game->frame->addr + (i + (int)ray->lineO)
+			* game->frame->line_bytes + n * 16 + 4 * j) =
+			*(int *)(game->sprites->we->addr + ((int)ray->ty *
+			game->sprites->we->line_bytes) + (4 * (int)ray->tx));
+		ray->ty += ray->ty_step;
 	}
 }
 

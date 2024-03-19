@@ -1,22 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_next_frame.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jimmy <jimmy@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/18 13:52:50 by jimmy             #+#    #+#             */
+/*   Updated: 2024/03/18 20:06:22 by jimmy            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void	print_frame(t_game *game)
+int	draw_next_frame(t_game *game)
 {
-	mlx_put_image_to_window(game->mlx_server, game->mlx_window, game->frame->ptr, 0, 0);
-}
-
-void	cast_rays(t_game *game);
-
-int		draw_next_frame(t_game *game)
-{
-	draw_background(game);
+	mlx_clear_window(game->mlx_server, game->mlx_window);
+	create_background(game);
 	update_player_pos(game);
 	update_ray(game);
 	cast_rays(game);
-	draw_map(game);
-	//create_pj(game);
-	draw_pj(game);
-	mlx_put_image_to_window(game->mlx_server, game->mlx_window, game->frame->ptr, 0, 0);
+	create_minimap(game);
+	create_player(game);
+	print_frame(game);
 	usleep(FPS_30);
 	return (0);
 }
