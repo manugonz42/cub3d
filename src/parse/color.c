@@ -29,13 +29,19 @@ void	check_color_format(char *line, t_game *game)
 	while(line[i] && line[i] != '\n')
 	{
 		if (!ft_isdigit(line[i]) && line[i] != ',')
+		{
+			if (ft_isspace(line[i]) && next_t(line, i) == '\n')
+				break ;
 			err("COLOUR: invalid colour", game);
+		}
 		if (line[i] == ',')
 			comma_case(line, &i, &commas, game);
 		i++;
 	}
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
 	if (commas != 2 || line[i] != '\n' || line[i - 1] == ',')
-		err("COLOUR: invalid colour", game);
+		err("2COLOUR: invalid colour", game);
 }
 
 int	extract_color(char *line, t_game *game)
@@ -63,7 +69,17 @@ void	parse_color(char *line, t_game *game, int side)
 	line++;
 	ft_skip_spaces(&line);
 	if (side == F)
+	{
+		if (game->sprites->f->setted)
+			err("COLOUR: duplicate floor colour", game);
 		game->sprites->f->rgb = extract_color(line, game);
+		game->sprites->f->setted = 1;
+	}
 	else
+	{
+		if (game->sprites->c->setted)
+			err("COLOUR: duplicate ceiling colour", game);
 		game->sprites->c->rgb = extract_color(line, game);
+		game->sprites->c->setted = 1;
+	}
 }

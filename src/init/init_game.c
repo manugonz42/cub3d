@@ -17,12 +17,6 @@ int	init_mlx(t_game *game)
 	game->mlx_server = mlx_init();
 	if (!game->mlx_server)
 		err("MLX: Failed server initialization", game);
-	game->mlx_window = mlx_new_window(game->mlx_server, game->width,
-		game->height, "Cub3D");
-	if (!game->mlx_window)
-		err("MLX: Failed window initialization", game);
-	mlx_hook(game->mlx_window, 2, 1L << 0, press_input, game);
-	mlx_hook(game->mlx_window, 3, 1L << 1, release_input, game);
 	return (0);
 }
 
@@ -34,7 +28,9 @@ int	init_map(t_game *game, char *map)
 	game->map->path = map;
 	game->map->rows = 0;
 	game->map->cols = 0;
+	game->map->pj = 0;
 	game->map->matrix = NULL;
+	game->map->tc_matrix = NULL;
 	game->map->raw_map = ft_strdup("");
 	if (!game->map->raw_map)
 		err("MAP: malloc error", game);

@@ -65,7 +65,11 @@ int	check_nline(t_game *game, char *line, int *in_map)
 	cpy = line;
 	ft_skip_spaces(&cpy);
 	if (cpy[0] == '1')
+	{
+		if (!all_args_setted(game))
+			err("MAP: missing texture or color", game);
 		*in_map = 1;
+	}
 	if (*in_map)
 		parse_map_line(line, game);
 	else
@@ -82,7 +86,7 @@ int	parse_input(t_game *game)
 	in_map = 0;
 	fd = open(game->map->path, O_RDONLY);
 	if (fd == -1)
-		err("MAP: map not found", game);
+		err("1MAP: map not found", game);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -92,8 +96,9 @@ int	parse_input(t_game *game)
 		free(line);
 	}
 	if (in_map == 0)
-		err("MAP: map not found", game);
+		err("2MAP: map not found", game);
 	close(fd);
+	create_to_check_matrix(game);
 	create_new_map_matrix(game);
 	check_wall_status(game);
 	return (1);

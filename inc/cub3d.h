@@ -50,6 +50,9 @@ void	n_of_cols(t_game *game);
 void	n_of_rows(t_game *game);
 int		check_empty_map_line(char *line);
 char	*save_texture_path(char *line, int i, t_game *game);
+int		all_args_setted(t_game *game);
+char	next_t(char *line, int i);
+void	create_to_check_matrix(t_game *game);
 
 ///////////////////////////////////////////////////////////////////////////////
 //																			 //

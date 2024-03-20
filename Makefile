@@ -18,7 +18,7 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 
 # Target file
-TARGET = cub3d
+TARGET = cub3D
 
 # Source files
 SRC =	$(SRC_DIR)frame/create_background.c					\
@@ -30,10 +30,12 @@ SRC =	$(SRC_DIR)frame/create_background.c					\
 		$(SRC_DIR)parse/check_walls.c						\
 		$(SRC_DIR)parse/clean_matrix_utils.c				\
 		$(SRC_DIR)parse/clean_matrix.c						\
+		$(SRC_DIR)parse/to_check_matrix.c						\
 		$(SRC_DIR)parse/color.c								\
 		$(SRC_DIR)parse/parse_utils.c						\
 		$(SRC_DIR)parse/parse.c								\
 		$(SRC_DIR)parse/textures.c							\
+		$(SRC_DIR)parse/check_args.c						\
 		$(SRC_DIR)ray_casting/ray_utils.c					\
 		$(SRC_DIR)ray_casting/render.c						\
 		$(SRC_DIR)ray_casting/start_ray.c					\

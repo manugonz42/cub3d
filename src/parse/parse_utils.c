@@ -29,6 +29,12 @@ void	check_line_map_format(char *line, t_game *game)
 	{
 		if (!is_valid_map_char(line[i]))
 			err("MAP: invalid map format", game);
+		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
+		{
+			if (game->map->pj > 0)
+				err("MAP: double init position", game);
+			game->map->pj++;
+		}
 		i++;
 	}
 }
@@ -37,7 +43,7 @@ char	next_token(char *line, int i)
 {
 	while (line[i])
 	{
-		if (ft_isspace(line[i]) || line[i] == '\n')
+		if (ft_isspace(line[i]))
 			i++;
 		else
 			return (line[i]);
@@ -70,7 +76,7 @@ char	*save_texture_path(char *line, int i, t_game *game)
 		j++;
 	}
 	word = ft_substr(line, i + 1, j - i - 1);
-	if (next_token(line, j) != 0 && next_token(line, i) == '\n')
+	if (next_token(line, j) != 0)
 		err("MAP: invalid line format", game);
 	return (word);
 }
