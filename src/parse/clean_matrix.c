@@ -11,8 +11,6 @@ void fill_new_str(char *new_str, char *str)
 	j = 0;
 	while(str[i])
 	{
-		if (k == 0 && str[i] != ' ' && str[i] != '\t')
-			k = 1;
 		if (str[i] == '\t')
 		{
 			add_spcs(new_str, j);
@@ -20,8 +18,6 @@ void fill_new_str(char *new_str, char *str)
 		}
 		else
 			new_str[j] = str[i];
-		if (k == 1 && str[i] == ' ')
-			new_str[j] = '1';
 		i++;
 		j++;
 	}

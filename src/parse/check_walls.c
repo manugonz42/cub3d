@@ -8,6 +8,8 @@ void	check_adjacent_cells(int i, int j, t_game *game)
 	if (matrix[i][j] == '0' || matrix[i][j] == '2' || matrix[i][j] == 'N'
 		|| matrix[i][j] == 'S' || matrix[i][j] == 'E' || matrix[i][j] == 'W')
 	{
+		if (j == 0)
+			err("5MAP: map must be surrounded by walls", game);
 		if (matrix[i][j - 1] == ' '  || !matrix[i][j - 1]
 			|| matrix[i][j + 1] == ' ' || !matrix[i][j + 1]
 			|| matrix[i - 1][j] == ' ' || !matrix[i - 1][j]

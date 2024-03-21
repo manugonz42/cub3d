@@ -77,6 +77,30 @@ int	check_nline(t_game *game, char *line, int *in_map)
 	return (1);
 }
 
+void	add_walls_in_spcs(t_game *game)
+{
+	int	k;
+	int	i;
+	int	j;
+
+	i = 0;
+	while(game->map->matrix[i])
+	{
+		k = 0;
+		j = 0;
+		while(game->map->matrix[i][j])
+		{
+			if (k == 0 && game->map->matrix[i][j] == '1')
+				k = 1;
+			if (k == 1 && game->map->matrix[i][j] == ' ')
+				game->map->matrix[i][j] = '1';
+			j++;
+		}
+		i++;
+	}
+
+}
+
 int	parse_input(t_game *game)
 {
 	int		fd;
@@ -100,5 +124,6 @@ int	parse_input(t_game *game)
 	close(fd);
 	create_new_map_matrix(game);
 	check_wall_status(game);
+	add_walls_in_spcs(game);
 	return (1);
 }
