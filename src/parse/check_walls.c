@@ -35,6 +35,6 @@ void	check_wall_status(t_game *game)
 		i++;
 	}
 	check_first_or_last_row(game->map->matrix[i], game);
-	if (game->map->pj > 1)
+	if (game->map->pj == 0)
 		err("MAP: init position not found", game);
 }
