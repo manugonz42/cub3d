@@ -9,7 +9,8 @@ int	check_first_or_last_row(char *line, t_game *game)
 	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != ' ')
-			err("MAP: map must be surrounded by walls", game);
+		{
+			err("1MAP: map must be surrounded by walls", game);}
 		i++;
 	}
 	return (1);
@@ -38,9 +39,9 @@ void	check_first_or_last_clmns(t_game *game)
 	while(game->map->matrix[i])
 	{
 		if (next_token(game->map->matrix[i], 0) != '1')
-			err("MAP: map must be surrounded by walls", game);
+			err("2MAP: map must be surrounded by walls", game);
 		if (last_token(game->map->matrix[i], 0) != '1')
-			err("MAP: map must be surrounded by walls", game);
+			err("3MAP: map must be surrounded by walls", game);
 		i++;
 	}
 }

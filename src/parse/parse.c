@@ -98,7 +98,6 @@ int	parse_input(t_game *game)
 	if (in_map == 0)
 		err("2MAP: map not found", game);
 	close(fd);
-	create_to_check_matrix(game);
 	create_new_map_matrix(game);
 	check_wall_status(game);
 	return (1);

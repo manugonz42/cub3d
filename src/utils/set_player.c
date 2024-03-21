@@ -32,6 +32,7 @@ void	set_player(t_game *game)
 
 	map = game->map->matrix;
 	y = 0;
+	x = 0;
 	while(map[y])
 	{
 		if (ft_strchr(map[y], 'N') || ft_strchr(map[y], 'W') || \

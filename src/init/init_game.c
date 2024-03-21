@@ -30,7 +30,6 @@ int	init_map(t_game *game, char *map)
 	game->map->cols = 0;
 	game->map->pj = 0;
 	game->map->matrix = NULL;
-	game->map->tc_matrix = NULL;
 	game->map->raw_map = ft_strdup("");
 	if (!game->map->raw_map)
 		err("MAP: malloc error", game);

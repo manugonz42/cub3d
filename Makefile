@@ -30,7 +30,6 @@ SRC =	$(SRC_DIR)frame/create_background.c					\
 		$(SRC_DIR)parse/check_walls.c						\
 		$(SRC_DIR)parse/clean_matrix_utils.c				\
 		$(SRC_DIR)parse/clean_matrix.c						\
-		$(SRC_DIR)parse/to_check_matrix.c						\
 		$(SRC_DIR)parse/color.c								\
 		$(SRC_DIR)parse/parse_utils.c						\
 		$(SRC_DIR)parse/parse.c								\
@@ -55,16 +54,19 @@ CC = gcc
 # Oompiler flags
 CFLAGS = -Wall -Wextra -Werror -I$(INC)
 
-# Libraries
-LIBMLX = mlx/libmlx_Linux.a
+LIBMLX = mlx_mac/libmlx.a
+MLXDIR = mlx_mac
+LIBS = -lmlx -framework OpenGL -framework AppKit
 
+ifeq ($(UNAME), Linux)
+MLXDIR = mlx
+LIBMLX = mlx/libmlx_Linux.a
+LIBS = -lXext -lX11 -lm
+endif
+
+# Libraries
 LIBFT  = libft/libft.a
 LIBFTDIR = libft/
-
-MLXDIR = mlx
-
-# System libraries to link
-LIBS = -lXext -lX11 -lm
 
 # Rules
 all: $(TARGET)
@@ -77,7 +79,7 @@ $(LIBFT):
 	make -C libft
 
 $(LIBMLX): 
-	@make -C mlx > /dev/null 2>&1
+	@make -C $(MLXDIR) > /dev/null 2>&1
 
 $(TARGET): $(OBJ) $(LIBFT) $(LIBMLX)
 	@echo -e "$(CYAN)--Compiling $(YELLOW)cub$(GREEN)3$(YELLOW)d$(RESET)"

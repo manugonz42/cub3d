@@ -29,7 +29,6 @@ typedef struct s_player
 typedef struct s_map
 {
 	char	**matrix;
-	char	**tc_matrix;
 	char	*raw_map;
 	char	*path;
 	int		rows;
