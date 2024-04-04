@@ -22,7 +22,7 @@ int	init_mlx(t_game *game)
 
 int	init_map(t_game *game, char *map)
 {
-	game->map = malloc(sizeof(t_map));
+	game->map = ft_calloc(sizeof(t_map), 1);
 	if (!game->map)
 		err("MAP: malloc error", game);
 	game->map->path = map;
@@ -38,15 +38,15 @@ int	init_map(t_game *game, char *map)
 
 int	init_sprites(t_game *game)
 {
-	game->sprites = malloc(sizeof(t_sprites));
+	game->sprites = ft_calloc(sizeof(t_sprites), 1);
 	if (!game->sprites)
 		err("SPRITES: malloc error", game);
-	game->sprites->no = malloc(sizeof(t_image));
-	game->sprites->so = malloc(sizeof(t_image));
-	game->sprites->ea = malloc(sizeof(t_image));
-	game->sprites->we = malloc(sizeof(t_image));
-	game->sprites->f = malloc(sizeof(t_image));
-	game->sprites->c = malloc(sizeof(t_image));
+	game->sprites->no = ft_calloc(sizeof(t_image), 1);
+	game->sprites->so = ft_calloc(sizeof(t_image), 1);
+	game->sprites->ea = ft_calloc(sizeof(t_image), 1);
+	game->sprites->we = ft_calloc(sizeof(t_image), 1);
+	game->sprites->f = ft_calloc(sizeof(t_image), 1);
+	game->sprites->c = ft_calloc(sizeof(t_image), 1);
 	if (!game->sprites->no || !game->sprites->so || !game->sprites->ea
 		|| !game->sprites->we || !game->sprites->f || !game->sprites->c)
 		err("SPRITES: malloc error", game);
@@ -61,7 +61,7 @@ int	init_sprites(t_game *game)
 
 int	init_player(t_game *game)
 {
-	game->player = malloc(sizeof(t_player));
+	game->player = ft_calloc(sizeof(t_player), 1);
 	if (!game->player)
 		err("PLAYER: malloc error", game);
 	game->player->fov = FOV;
@@ -80,7 +80,7 @@ int	init_program(t_game *game, char *map)
 	game->width = GAME_WIDTH;
 	game->height = GAME_HEIGHT;
 	init_mlx(game);
-	game->frame = malloc(sizeof(t_image));
+	game->frame = ft_calloc(sizeof(t_image), 1);
 	if (!game->frame)
 		err("GAME: malloc error", game);
 	game->frame->ptr = mlx_new_image(game->mlx_server, game->width,

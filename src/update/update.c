@@ -34,7 +34,6 @@ void	update_player_pos(t_game *game)
 		game->player->x = new_x;
 		game->player->y = new_y;
 	}
-	printf("x: %f y: %f\n", game->player->x, game->player->y);
 }
 
 void	update_ray(t_game *game)
@@ -54,7 +53,6 @@ void	update_ray(t_game *game)
 int	release_input(int keysym, t_game *game)
 {
 	if (keysym)
-	printf("key: %d soltada\n", keysym);
 	if (keysym == W_KEY || keysym == S_KEY || \
 		keysym == A_KEY || keysym == D_KEY)
 		game->player->moving = 0;
@@ -66,7 +64,6 @@ int	release_input(int keysym, t_game *game)
 int	press_input(int keysym, t_game *game)
 {
 	if (keysym)
-	printf("key: %d pulsada\n", keysym);
 	if (keysym == ESC_KEY)
 		free_program(game);
 	if (keysym == W_KEY)
