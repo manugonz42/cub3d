@@ -71,7 +71,7 @@ int	init_player(t_game *game)
 	game->player->moving = 0;
 	game->player->rotating = 0;
 	game->player->mov_speed = 1;
-	game->player->rot_speed = 6 * DR;
+	game->player->rot_speed = 6 * M_PI / 180;
 	return (0);
 }
 
