@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int		is_valid_map_char(char c)
+int	is_valid_map_char(char c)
 {
 	if (c == '0' || c == '1' || c == '2' || c == 'N' || c == 'S' || c == 'E'
 		|| c == 'W' || c == ' ' || c == '\t')
@@ -29,7 +29,8 @@ void	check_line_map_format(char *line, t_game *game)
 	{
 		if (!is_valid_map_char(line[i]))
 			err("MAP: invalid map format", game);
-		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
+		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || \
+			line[i] == 'W')
 		{
 			if (game->map->pj > 0)
 				err("MAP: double init position", game);
@@ -53,7 +54,7 @@ char	next_token(char *line, int i)
 
 int	last_token(char *line, int i)
 {
-	int last;
+	int	last;
 
 	last = i;
 	while (line[i])

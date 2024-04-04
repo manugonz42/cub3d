@@ -18,16 +18,13 @@ int main(void)
         *(int *)(image.addr + i) = create_trgb(0, 255, 0, 0);
         i += 4;
     }
-    i = 0;
-    int j = 0;
-    while (j < 1)
-    {
-        while (i < 500)
-        {
-            *(int *)(image.addr + (i * image.bitsinpixel) + (j * image.line_bytes)) = create_trgb(0, 0, 0, 255);
-            i += 4;
+    int x = 25; // Posición x del cuadrado
+    int y = 25; // Posición y del cuadrado
+    for (int dy = 0; dy < 10; dy++) {
+        for (int dx = 0; dx < 10; dx++) {
+            int pixel_index = (y + dy) * image.line_bytes + (x + dx) * (image.bitsinpixel / 8);
+            *(int *)(image.addr + pixel_index) = create_trgb(0, 255, 255, 255); // Color blanco (RGB: 255, 255, 255)
         }
-        j++;
     }
     mlx_put_image_to_window(game.mlx_server, game.mlx_window, image.ptr, 0, 0);
     mlx_loop(game.mlx_server);

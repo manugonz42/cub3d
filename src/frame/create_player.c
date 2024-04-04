@@ -23,9 +23,8 @@ void	create_player(t_game *game)
 		l = 0;
 		while (l < 2)
 		{
-			*(int *)(game->frame->addr + ((int)game->player->y +
-			TILE_SIZE + l) * game->frame->line_bytes + (int)game->player->x
-			* 4 + k + 31) = create_trgb(0, 255, 0, 0);
+			*(int *)(game->frame->addr + ((int)game->player->y + l) * game->frame->line_bytes + (int)game->player->x
+			* 4 + k + 3) = create_trgb(0, 255, 0, 0);
 			l++;
 		}
 		k++;

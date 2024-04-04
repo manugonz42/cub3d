@@ -12,6 +12,35 @@
 
 #include "cub3d.h"
 
+int	release_input(int keysym, t_game *game)
+{
+	if (keysym == W_KEY || keysym == S_KEY || \
+		keysym == A_KEY || keysym == D_KEY)
+		game->player->moving = 0;
+	if (keysym == L_ARROW || keysym == R_ARROW)
+		game->player->rotating = 0;
+	return (0);
+}
+
+int	press_input(int keysym, t_game *game)
+{
+	if (keysym == ESC_KEY)
+		free_program(game);
+	if (keysym == W_KEY)
+		game->player->moving = AHEAD;
+	if (keysym == S_KEY)
+		game->player->moving = BACK;
+	if (keysym == D_KEY)
+		game->player->moving = RIGHT;
+	if (keysym == A_KEY)
+		game->player->moving = LEFT;
+	if (keysym == L_ARROW)
+		game->player->rotating = ROT_LEFT;
+	if (keysym == R_ARROW)
+		game->player->rotating = ROT_RIGHT;
+	return (0);
+}
+
 int run_program(t_game *game)
 {
 	game->mlx_window = mlx_new_window(game->mlx_server, game->width,

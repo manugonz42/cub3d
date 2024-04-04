@@ -1,9 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: manugonz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/04 13:36:40 by manugonz          #+#    #+#             */
+/*   Updated: 2024/04/04 13:36:41 by manugonz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int		create_trgb(int t, int r, int g, int b)
-{
-	return(t << 24 | r << 16 | g << 8 | b);
-}
+#include "cub3d.h"
 
 void	comma_case(char *line, int *i, int *commas, t_game *game)
 {
@@ -26,7 +33,7 @@ void	check_color_format(char *line, t_game *game)
 	if (!line[i] || line[i] == '\n')
 		err("MAP: invalid line format", game);
 	commas = 0;
-	while(line[i] && line[i] != '\n')
+	while (line[i] && line[i] != '\n')
 	{
 		if (!ft_isdigit(line[i]) && line[i] != ',')
 		{
@@ -41,7 +48,7 @@ void	check_color_format(char *line, t_game *game)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (commas != 2 || line[i] != '\n' || line[i - 1] == ',')
-		err("2COLOUR: invalid colour", game);
+		err("COLOUR: invalid colour", game);
 }
 
 int	extract_color(char *line, t_game *game)

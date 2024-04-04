@@ -18,6 +18,6 @@ int	err(char *message, t_game *game)
 	ft_putstr_fd (message, 2);
 	ft_putstr_fd ("\n", 2);
 	if (game)
-        free_program(game);
+		free_program(game);
 	exit(EXIT_FAILURE);
 }

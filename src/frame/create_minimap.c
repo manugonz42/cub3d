@@ -12,63 +12,43 @@
 
 #include "cub3d.h"
 
-void	minimap_wall_case(t_game *game, int i, int j)
+void	minimap_case(t_game *game, int y, int x, int color)
 {
-	int	l;
-	int	k;
+	int dy;
+	int dx;
 
-	k = 0;
-	while (k < 4 * TILE_SIZE + 1)
+	dy = 0;
+	while (dy < 8)
 	{
-		l = 0;
-		while (l < TILE_SIZE)
+		dx = 0;
+        while (dx < 8)
 		{
-			*(int *)(game->frame->addr + ((i + 1) * TILE_SIZE + l) *
-			game->frame->line_bytes + j * 4 *
-			TILE_SIZE + k + 31) = create_trgb(0, 0, 0, 0);
-			l++;
-		 }
-		k++;
-   	}
-}
-
-void	minimap_empty_case(t_game *game, int i, int j)
-{
-	int	l;
-	int	k;
-
-	k = 0;
-	while (k < 4 * TILE_SIZE + 1)
-	{
-		l = 0;
-		while (l < TILE_SIZE)
-		{
-			*(int *)(game->frame->addr + ((i + 1) * TILE_SIZE + l) *
-			game->frame->line_bytes + j * 4 *
-			TILE_SIZE + k + 31) = create_trgb(0, 255, 255, 255);
-			l++;
-		}
-		k++;
-	}
+            int pixel_index = ((y * TILE_SIZE) + dy) * game->frame->line_bytes
+			+ ((x * TILE_SIZE) + dx) * (game->frame->bitsinpixel / 8);
+            *(int *)(game->frame->addr + pixel_index) = color;
+			dx++;
+        }
+		dy++;
+    }
 }
 
 void	create_minimap(t_game *game)
 {
-	int i = 0;
-	int j;
+	int y = 0;
+	int x;
 
-	while (i < game->map->rows)
+	while (y < game->map->rows)
 	{
-		j = 0;
-		while (j < game->map->cols)
+		x = 0;
+		while (x < game->map->cols)
 		{
-			if (game->map->matrix[i][j] && game->map->matrix[i][j] == '1')
-				minimap_wall_case(game, i, j);
-			else if (game->map->matrix[i][j] &&
-				!ft_isspace(game->map->matrix[i][j]))
-				minimap_empty_case(game, i, j);
-		    j++;
+			if (x < (int)ft_strlen(game->map->matrix[y]) && game->map->matrix[y][x] == '1')
+				minimap_case(game, y, x, create_trgb(0,0,0,0));
+			else if (x < (int)ft_strlen(game->map->matrix[y]) &&
+				!ft_isspace(game->map->matrix[y][x]))
+				minimap_case(game, y, x, create_trgb(0,255,255,255));
+		    x++;
 		}
-		i++;
+		y++;
 	}
 }

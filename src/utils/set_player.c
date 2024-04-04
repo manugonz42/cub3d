@@ -33,13 +33,13 @@ void	set_player(t_game *game)
 	map = game->map->matrix;
 	y = 0;
 	x = 0;
-	while(map[y])
+	while (map[y])
 	{
 		if (ft_strchr(map[y], 'N') || ft_strchr(map[y], 'W') || \
 		ft_strchr(map[y], 'E') || ft_strchr(map[y], 'S'))
 		{
 			x = 0;
-			while(map[y][x] != 'N' && map[y][x] != 'S' && \
+			while (map[y][x] != 'N' && map[y][x] != 'S' && \
 			map[y][x] != 'E' && map[y][x] != 'W')
 				x++;
 			break ;

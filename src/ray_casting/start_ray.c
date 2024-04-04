@@ -13,9 +13,12 @@
 #include "cub3d.h"
 
 /*
- *	Save the px coordinates of the colision with horizontal lines. Loop can be executed up to how many
- *	rows the map has. Map coordinates are obtained dividing px coordinate by the number of pixels a tile
- *	has (floor rounded). Once a collision is found, the distance between the collision and the player is
+ *	Save the px coordinates of the colision with horizontal lines.
+ *	Loop can be executed up to how many
+ *	rows the map has. Map coordinates are obtained dividing px 
+ *	coordinate by the number of pixels a tile
+ *	has (floor rounded). Once a collision is found, the distance 
+ *	between the collision and the player is
  *	calculated and the px coordinates saved.
  */
 void	set_hcolision(t_game *game, t_ray *ray)
@@ -34,7 +37,8 @@ void	set_hcolision(t_game *game, t_ray *ray)
 		else if (game->map->matrix[my][mx] == '1')
 		{
 			dof = game->map->rows;
-			ray->disH = ray_dist(game->player->x, game->player->y, ray->x, ray->y);
+			ray->disH = ray_dist(game->player->x, \
+				game->player->y, ray->x, ray->y);
 			ray->hx = ray->x;
 			ray->hy = ray->y;
 		}

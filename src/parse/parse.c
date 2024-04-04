@@ -14,9 +14,9 @@
 
 void	parse_texture(char *line, t_game *game, int side)
 {
-	(void)side;
 	int	i;
 
+	(void)side;
 	i = 2;
 	if (!ft_isspace(line[i]))
 		err("MAP: invalid line format", game);
@@ -58,25 +58,6 @@ void	parse_map_line(char *line, t_game *game)
 	game->map->raw_map = temp;
 }
 
-int	check_nline(t_game *game, char *line, int *in_map)
-{
-	char	*cpy;
-
-	cpy = line;
-	ft_skip_spaces(&cpy);
-	if (cpy[0] == '1')
-	{
-		if (!all_args_setted(game))
-			err("MAP: missing texture or color", game);
-		*in_map = 1;
-	}
-	if (*in_map)
-		parse_map_line(line, game);
-	else
-		parse_line(cpy, game);
-	return (1);
-}
-
 void	add_walls_in_spcs(t_game *game)
 {
 	int	k;
@@ -84,11 +65,11 @@ void	add_walls_in_spcs(t_game *game)
 	int	j;
 
 	i = 0;
-	while(game->map->matrix[i])
+	while (game->map->matrix[i])
 	{
 		k = 0;
 		j = 0;
-		while(game->map->matrix[i][j])
+		while (game->map->matrix[i][j])
 		{
 			if (k == 0 && game->map->matrix[i][j] == '1')
 				k = 1;
@@ -98,7 +79,6 @@ void	add_walls_in_spcs(t_game *game)
 		}
 		i++;
 	}
-
 }
 
 int	parse_input(t_game *game)
