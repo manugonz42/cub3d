@@ -84,12 +84,12 @@ int	init_program(t_game *game, char *map)
 	if (!game->frame)
 		err("GAME: malloc error", game);
 	game->frame->ptr = mlx_new_image(game->mlx_server, game->width,
-		game->height);
+			game->height);
 	if (!game->frame->ptr)
 		err("MLX: image error", game);
 	game->frame->addr = mlx_get_data_addr(game->frame->ptr,
-		&game->frame->bitsinpixel, &game->frame->line_bytes,
-		&game->frame->endian);
+			&game->frame->bitsinpixel, &game->frame->line_bytes,
+			&game->frame->endian);
 	init_map(game, map);
 	init_sprites(game);
 	init_player(game);

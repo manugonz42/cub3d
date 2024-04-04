@@ -26,7 +26,7 @@ void	render_north(t_game *game, t_ray *ray, int n)
 		ray->lineH = game->height;
 	}
 	ray->lineO = (game->height / 2) - (ray->lineH / 2);
-	ray->tx = 32 - (int)(ray->hx * 4) % 32;
+	ray->tx = 31 - (int)(ray->hx * 4) % 32;
 	ray->ty = ray->ty_off * ray->ty_step;
 	while (++i < ray->lineH)
 	{
@@ -82,7 +82,7 @@ void	render_east(t_game *game, t_ray *ray, int n)
 		ray->lineH = game->height;
 	}
 	ray->lineO = (game->height / 2) - (ray->lineH / 2);
-	ray->tx = 32 - (int)(ray->vy * 32 / TILE_SIZE) % 32;
+	ray->tx = 31 - (int)(ray->vy * 32 / TILE_SIZE) % 32;
 	ray->ty = ray->ty_off * ray->ty_step;
 	while (++i < ray->lineH)
 	{

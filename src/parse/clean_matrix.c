@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_matrix.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: manugonz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/04 15:25:04 by manugonz          #+#    #+#             */
+/*   Updated: 2024/04/04 15:25:05 by manugonz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void fill_new_str(char *new_str, char *str)
+void	fill_new_str(char *new_str, char *str)
 {
-	int i;
-	int j;
-	int k;
+	int	i;
+	int	j;
+	int	k;
 
 	k = 0;
 	i = 0;
 	j = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '\t')
 		{
@@ -25,10 +37,10 @@ void fill_new_str(char *new_str, char *str)
 
 void	fill_new_matrix(char **matrix, char **new_matrix)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(matrix[i])
+	while (matrix[i])
 	{
 		fill_new_str(new_matrix[i], matrix[i]);
 		i++;
