@@ -20,6 +20,19 @@ void	comma_case(char *line, int *i, int *commas, t_game *game)
 		err("COLOUR: invalid colour", game);
 }
 
+int	validate_color_char(char *line, int *i, int *commas, t_game *game)
+{
+	if (!ft_isdigit(line[*i]) && line[*i] != ',')
+	{
+		if (ft_isspace(line[*i]) && next_t(line, *i) == '\n')
+			return (1);
+		err("COLOUR: invalid colour", game);
+	}
+	if (line[*i] == ',')
+		comma_case(line, i, commas, game);
+	return (0);
+}
+
 void	check_color_format(char *line, t_game *game)
 {
 	int	i;
@@ -35,14 +48,8 @@ void	check_color_format(char *line, t_game *game)
 	commas = 0;
 	while (line[i] && line[i] != '\n')
 	{
-		if (!ft_isdigit(line[i]) && line[i] != ',')
-		{
-			if (ft_isspace(line[i]) && next_t(line, i) == '\n')
-				break ;
-			err("COLOUR: invalid colour", game);
-		}
-		if (line[i] == ',')
-			comma_case(line, &i, &commas, game);
+		if (validate_color_char(line, &i, &commas, game))
+			break ;
 		i++;
 	}
 	while (line[i] == ' ' || line[i] == '\t')
