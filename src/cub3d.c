@@ -41,10 +41,10 @@ int	press_input(int keysym, t_game *game)
 	return (0);
 }
 
-int run_program(t_game *game)
+int	run_program(t_game *game)
 {
 	game->mlx_window = mlx_new_window(game->mlx_server, game->width,
-		game->height, "Cub3D");
+			game->height, "Cub3D");
 	if (!game->mlx_window)
 		err("MLX: Failed window initialization", game);
 	mlx_hook(game->mlx_window, 2, 1L << 0, press_input, game);
@@ -55,10 +55,10 @@ int run_program(t_game *game)
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_game  game;
-	int	 len;
+	t_game	game;
+	int		len;
 
 	if (argc != 2)
 		err(INVALID_ARGS, NULL);

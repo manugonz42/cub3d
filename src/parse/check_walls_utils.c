@@ -1,16 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_walls_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: manugonz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/04 15:25:57 by manugonz          #+#    #+#             */
+/*   Updated: 2024/04/04 15:25:58 by manugonz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	check_first_or_last_row(char *line, t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	ft_skip_spaces(&line);
 	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != ' ')
-		{
-			err("1MAP: map must be surrounded by walls", game);}
+			err("MAP: map must be surrounded by walls", game);
 		i++;
 	}
 	return (1);
@@ -18,7 +29,7 @@ int	check_first_or_last_row(char *line, t_game *game)
 
 int	check_empty_map_line(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
@@ -33,32 +44,32 @@ int	check_empty_map_line(char *line)
 
 void	check_first_or_last_clmns(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(game->map->matrix[i])
+	while (game->map->matrix[i])
 	{
 		if (next_token(game->map->matrix[i], 0) != '1')
-			err("2MAP: map must be surrounded by walls", game);
+			err("MAP: map must be surrounded by walls", game);
 		if (last_token(game->map->matrix[i], 0) != '1')
-			err("3MAP: map must be surrounded by walls", game);
+			err("MAP: map must be surrounded by walls", game);
 		i++;
 	}
 }
 
 void	n_of_cols(t_game *game)
 {
-	int i;
-	int j;
-	int max;
+	int	i;
+	int	j;
+	int	max;
 
 	i = 0;
 	game->map->cols = 0;
 	max = 0;
-	while(game->map->matrix[i])
+	while (game->map->matrix[i])
 	{
 		j = 0;
-		while(game->map->matrix[i][j])
+		while (game->map->matrix[i][j])
 			j++;
 		if (j > max)
 			max = j;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_args.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: manugonz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/04 15:33:08 by manugonz          #+#    #+#             */
+/*   Updated: 2024/04/04 15:33:09 by manugonz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	check_nline(t_game *game, char *line, int *in_map)
@@ -36,7 +48,7 @@ char	next_t(char *line, int i)
 	return (0);
 }
 
-int all_args_setted(t_game *game)
+int	all_args_setted(t_game *game)
 {
 	if (!game->sprites->c->setted || !game->sprites->f->setted
 		|| !game->sprites->no->setted || !game->sprites->so->setted
