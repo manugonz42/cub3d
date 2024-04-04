@@ -12,6 +12,11 @@
 
 #include "cub3d.h"
 
+void	leaks(void)
+{
+	system("leaks cub3D");
+}
+
 int	release_input(int keysym, t_game *game)
 {
 	if (keysym == W_KEY || keysym == S_KEY || \
@@ -60,6 +65,7 @@ int	main(int argc, char **argv)
 	t_game	game;
 	int		len;
 
+	atexit(leaks);
 	if (argc != 2)
 		err(INVALID_ARGS, NULL);
 	len = ft_strlen(argv[1]);
@@ -69,5 +75,6 @@ int	main(int argc, char **argv)
 	parse_input(&game);
 	set_player(&game);
 	run_program(&game);
+	exit(0);
 	return (0);
 }

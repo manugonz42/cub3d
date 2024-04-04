@@ -16,7 +16,7 @@ int	init_mlx(t_game *game)
 {
 	game->mlx_server = mlx_init();
 	if (!game->mlx_server)
-		err("MLX: Failed server initialization", NULL);
+		err("MLX: Failed server initialization", game);
 	return (0);
 }
 
@@ -80,6 +80,7 @@ int	init_program(t_game *game, char *map)
 	game->player = NULL;
 	game->sprites = NULL;
 	game->map = NULL;
+	game->mlx_window = NULL;
 	game->width = GAME_WIDTH;
 	game->height = GAME_HEIGHT;
 	init_mlx(game);
