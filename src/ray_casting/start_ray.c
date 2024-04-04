@@ -37,7 +37,7 @@ void	set_hcolision(t_game *game, t_ray *ray)
 		else if (game->map->matrix[my][mx] == '1')
 		{
 			dof = game->map->rows;
-			ray->disH = rdst(game->player->x, game->player->y, ray->x, ray->y);
+			ray->dish = rdst(game->player->x, game->player->y, ray->x, ray->y);
 			ray->hx = ray->x;
 			ray->hy = ray->y;
 		}
@@ -59,20 +59,20 @@ void	set_hcolision(t_game *game, t_ray *ray)
  */
 void	horizontal_colision(t_game *game, t_ray *ray)
 {
-	ray->aTan = -1 / tan(ray->ra);
+	ray->atan = -1 / tan(ray->ra);
 	if (ray->ra < M_PI)
 	{
 		ray->y = (((int)game->player->y >> TILE_BITS) << TILE_BITS) - 0.0001;
-		ray->x = (game->player->y - ray->y) * ray->aTan + game->player->x;
+		ray->x = (game->player->y - ray->y) * ray->atan + game->player->x;
 		ray->yo = -TILE_SIZE;
-		ray->xo = -(ray->yo) * ray->aTan;
+		ray->xo = -(ray->yo) * ray->atan;
 	}
 	else if (ray->ra > M_PI)
 	{
 		ray->y = (((int)game->player->y >> TILE_BITS) << TILE_BITS) + TILE_SIZE;
-		ray->x = (game->player->y - ray->y) * ray->aTan + game->player->x;
+		ray->x = (game->player->y - ray->y) * ray->atan + game->player->x;
 		ray->yo = TILE_SIZE;
-		ray->xo = -(ray->yo) * ray->aTan;
+		ray->xo = -(ray->yo) * ray->atan;
 	}
 	else if (ray->ra == 0 || ray->ra == M_PI)
 		return ;
@@ -102,7 +102,7 @@ void	set_vcolision(t_game *game, t_ray *ray)
 		else if (game->map->matrix[my][mx] == '1')
 		{
 			dof = game->map->cols;
-			ray->disV = rdst(game->player->x, game->player->y, ray->x, ray->y);
+			ray->disv = rdst(game->player->x, game->player->y, ray->x, ray->y);
 			ray->vx = ray->x;
 			ray->vy = ray->y;
 		}
@@ -124,22 +124,22 @@ void	set_vcolision(t_game *game, t_ray *ray)
  */
 void	vertical_colision(t_game *game, t_ray *ray)
 {
-	ray->aTan = -tan(ray->ra);
-	if (ray->ra < M_PI_2 || ray->ra > M_PI_3)
+	ray->atan = -tan(ray->ra);
+	if (ray->ra < M_PI / 2 || ray->ra > 3 * M_PI / 2)
 	{
 		ray->x = (((int)game->player->x >> TILE_BITS) << TILE_BITS) - 0.0001;
-		ray->y = (game->player->x - ray->x) * ray->aTan + game->player->y;
+		ray->y = (game->player->x - ray->x) * ray->atan + game->player->y;
 		ray->xo = -TILE_SIZE;
-		ray->yo = -(ray->xo) * ray->aTan;
+		ray->yo = -(ray->xo) * ray->atan;
 	}
-	else if (ray->ra > M_PI_2 && ray->ra < M_PI_3)
+	else if (ray->ra > M_PI / 2 && ray->ra < 3 * M_PI / 2)
 	{
 		ray->x = (((int)game->player->x >> TILE_BITS) << TILE_BITS) + TILE_SIZE;
-		ray->y = (game->player->x - ray->x) * ray->aTan + game->player->y;
+		ray->y = (game->player->x - ray->x) * ray->atan + game->player->y;
 		ray->xo = TILE_SIZE;
-		ray->yo = -(ray->xo) * ray->aTan;
+		ray->yo = -(ray->xo) * ray->atan;
 	}
-	else if (ray->ra == M_PI_2 || ray->ra == M_PI_3)
+	else if (ray->ra == M_PI / 2 || ray->ra == 3 * M_PI / 2)
 		return ;
 	set_vcolision(game, ray);
 }
@@ -150,20 +150,20 @@ void	cast_rays(t_game *game)
 	int		nb_rays;
 
 	nb_rays = 0;
-	ray.ra = game->player->ray - FOV / 2 * DR;
+	ray.ra = game->player->ray - FOV / 2 * (M_PI / 180);
 	while (nb_rays < FOV * 4)
 	{
-		ray.disH = 10000000;
-		ray.disV = 10000000;
+		ray.dish = 10000000;
+		ray.disv = 10000000;
 		ray.ra = adjust_angle(ray.ra);
 		horizontal_colision(game, &ray);
 		vertical_colision(game, &ray);
-		if (ray.disH < ray.disV)
-			ray.disT = ray.disH;
+		if (ray.dish < ray.disv)
+			ray.dist = ray.dish;
 		else
-			ray.disT = ray.disV;
+			ray.dist = ray.disv;
 		render_ray(game, &ray, nb_rays);
-		ray.ra += DR / 4;
+		ray.ra += M_PI / 180 / 4;
 		nb_rays++;
 	}
 }

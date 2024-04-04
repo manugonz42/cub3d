@@ -75,6 +75,5 @@ int	main(int argc, char **argv)
 	parse_input(&game);
 	set_player(&game);
 	run_program(&game);
-	exit(0);
 	return (0);
 }

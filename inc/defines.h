@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   defines.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jimmy <jimmy@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/18 13:56:26 by jimmy             #+#    #+#             */
+/*   Updated: 2024/03/18 14:32:59 by jimmy            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DEFINES_H
-# define  DEFINES_H
+# define DEFINES_H
 
 // COLORS
 # define RESET		"\033[0m"
@@ -78,9 +90,6 @@
 # define MLX_ERROR			"MLX error"
 
 // VALUES
-# define DR                 M_PI / 180
-# define M_PI_2             M_PI / 2
-# define M_PI_3             3 * M_PI / 2
 # define TILE_SIZE          8
 # define TILE_BITS          3
 # define FPS_30				33333

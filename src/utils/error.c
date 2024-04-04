@@ -14,6 +14,7 @@
 
 int	err(char *message, t_game *game)
 {
+	(void)game;
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd (message, 2);
 	ft_putstr_fd ("\n", 2);

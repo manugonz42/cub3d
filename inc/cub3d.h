@@ -53,8 +53,8 @@ char	*save_texture_path(char *line, int i, t_game *game);
 int		all_args_setted(t_game *game);
 char	next_t(char *line, int i);
 void	parse_map_line(char *line, t_game *game);
-int	    parse_line(char *line, t_game *game);
-int     check_nline(t_game *game, char *line, int *in_map);
+int		parse_line(char *line, t_game *game);
+int		check_nline(t_game *game, char *line, int *in_map);
 
 ///////////////////////////////////////////////////////////////////////////////
 //																			 //

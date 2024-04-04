@@ -19,7 +19,7 @@ int	draw_next_frame(t_game *game)
 	update_player_pos(game);
 	update_ray(game);
 	cast_rays(game);
-	create_minimap(game);
+//	create_minimap(game);
 	create_player(game);
 	print_frame(game);
 	usleep(FPS_30);

@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jimmy <jimmy@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/18 13:56:26 by jimmy             #+#    #+#             */
+/*   Updated: 2024/03/18 14:32:59 by jimmy            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct		s_image
+typedef struct s_image
 {
 	void		*ptr;
 	char		*addr;
@@ -36,7 +48,7 @@ typedef struct s_map
 	int		pj;
 }	t_map;
 
-typedef struct	s_sprites
+typedef struct s_sprites
 {
 	t_image	*no;
 	t_image	*so;
@@ -53,20 +65,20 @@ typedef struct s_ray
 	float	xo;
 	float	yo;
 	float	ra;
-	float	aTan;
-	float	disH;
+	float	atan;
+	float	dish;
 	float	hx;
 	float	hy;
-	float	disV;
+	float	disv;
 	float	vx;
 	float	vy;
-	float	disT;
+	float	dist;
 	float	tx;
 	float	ty;
 	float	ty_step;
 	float	ty_off;
-	float	lineH;
-	float	lineO;
+	float	lineh;
+	float	lineo;
 }	t_ray;
 
 typedef struct s_game

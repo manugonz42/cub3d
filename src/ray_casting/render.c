@@ -19,20 +19,20 @@ void	render_north(t_game *game, t_ray *ray, int n)
 
 	i = -1;
 	ray->ty_off = 0;
-	ray->ty_step = 32 / ray->lineH;
-	if (ray->lineH > game->height)
+	ray->ty_step = 32 / ray->lineh;
+	if (ray->lineh > game->height)
 	{
-		ray->ty_off = (ray->lineH - game->height) / 2;
-		ray->lineH = game->height;
+		ray->ty_off = (ray->lineh - game->height) / 2;
+		ray->lineh = game->height;
 	}
-	ray->lineO = (game->height / 2) - (ray->lineH / 2);
+	ray->lineo = (game->height / 2) - (ray->lineh / 2);
 	ray->tx = 31 - (int)(ray->hx * 4) % 32;
 	ray->ty = ray->ty_off * ray->ty_step;
-	while (++i < ray->lineH)
+	while (++i < ray->lineh)
 	{
 		j = -1;
 		while (++j < 4)
-			*(int *)(game->frame->addr + (i + (int)ray->lineO) \
+			*(int *)(game->frame->addr + (i + (int)ray->lineo) \
 			* game->frame->line_bytes + n * 16 + 4 * j) = \
 			*(int *)(game->sprites->no->addr + ((int)ray->ty * \
 			game->sprites->no->line_bytes) + (4 * (int)ray->tx));
@@ -47,20 +47,20 @@ void	render_south(t_game *game, t_ray *ray, int n)
 
 	i = -1;
 	ray->ty_off = 0;
-	ray->ty_step = 32 / ray->lineH;
-	if (ray->lineH > game->height)
+	ray->ty_step = 32 / ray->lineh;
+	if (ray->lineh > game->height)
 	{
-		ray->ty_off = (ray->lineH - game->height) / 2;
-		ray->lineH = game->height;
+		ray->ty_off = (ray->lineh - game->height) / 2;
+		ray->lineh = game->height;
 	}
-	ray->lineO = (game->height / 2) - (ray->lineH / 2);
+	ray->lineo = (game->height / 2) - (ray->lineh / 2);
 	ray->tx = (int)(ray->hx * 4) % 32;
 	ray->ty = ray->ty_off * ray->ty_step;
-	while (++i < ray->lineH)
+	while (++i < ray->lineh)
 	{
 		j = -1;
 		while (++j < 4)
-			*(int *)(game->frame->addr + (i + (int)ray->lineO) \
+			*(int *)(game->frame->addr + (i + (int)ray->lineo) \
 			* game->frame->line_bytes + n * 16 + 4 * j) = \
 			*(int *)(game->sprites->so->addr + ((int)ray->ty * \
 			game->sprites->so->line_bytes) + (4 * (int)ray->tx));
@@ -75,20 +75,20 @@ void	render_east(t_game *game, t_ray *ray, int n)
 
 	i = -1;
 	ray->ty_off = 0;
-	ray->ty_step = 32 / ray->lineH;
-	if (ray->lineH > game->height)
+	ray->ty_step = 32 / ray->lineh;
+	if (ray->lineh > game->height)
 	{
-		ray->ty_off = (ray->lineH - game->height) / 2;
-		ray->lineH = game->height;
+		ray->ty_off = (ray->lineh - game->height) / 2;
+		ray->lineh = game->height;
 	}
-	ray->lineO = (game->height / 2) - (ray->lineH / 2);
+	ray->lineo = (game->height / 2) - (ray->lineh / 2);
 	ray->tx = 31 - (int)(ray->vy * 32 / TILE_SIZE) % 32;
 	ray->ty = ray->ty_off * ray->ty_step;
-	while (++i < ray->lineH)
+	while (++i < ray->lineh)
 	{
 		j = -1;
 		while (++j < 4)
-			*(int *)(game->frame->addr + (i + (int)ray->lineO) \
+			*(int *)(game->frame->addr + (i + (int)ray->lineo) \
 			* game->frame->line_bytes + n * 16 + 4 * j) = \
 			*(int *)(game->sprites->ea->addr + ((int)ray->ty * \
 			game->sprites->ea->line_bytes) + (4 * (int)ray->tx));
@@ -103,20 +103,20 @@ void	render_west(t_game *game, t_ray *ray, int n)
 
 	i = -1;
 	ray->ty_off = 0;
-	ray->ty_step = 32 / ray->lineH;
-	if (ray->lineH > game->height)
+	ray->ty_step = 32 / ray->lineh;
+	if (ray->lineh > game->height)
 	{
-		ray->ty_off = (ray->lineH - game->height) / 2;
-		ray->lineH = game->height;
+		ray->ty_off = (ray->lineh - game->height) / 2;
+		ray->lineh = game->height;
 	}
-	ray->lineO = (game->height / 2) - (ray->lineH / 2);
+	ray->lineo = (game->height / 2) - (ray->lineh / 2);
 	ray->tx = (int)(ray->vy * 32 / TILE_SIZE) % 32;
 	ray->ty = ray->ty_off * ray->ty_step;
-	while (++i < ray->lineH)
+	while (++i < ray->lineh)
 	{
 		j = -1;
 		while (++j < 4)
-			*(int *)(game->frame->addr + (i + (int)ray->lineO) \
+			*(int *)(game->frame->addr + (i + (int)ray->lineo) \
 			* game->frame->line_bytes + n * 16 + 4 * j) = \
 			*(int *)(game->sprites->we->addr + ((int)ray->ty * \
 			game->sprites->we->line_bytes) + (4 * (int)ray->tx));
@@ -130,8 +130,8 @@ void	render_ray(t_game *game, t_ray *ray, int n)
 
 	angle = game->player->ray - ray->ra;
 	angle = adjust_angle(angle);
-	ray->lineH = (TILE_SIZE * game->height) / (ray->disT * cos(angle));
-	if (ray->disT == ray->disH)
+	ray->lineh = (TILE_SIZE * game->height) / (ray->dist * cos(angle));
+	if (ray->dist == ray->dish)
 	{
 		if (ray->ra > M_PI)
 			render_north(game, ray, n);
@@ -140,7 +140,7 @@ void	render_ray(t_game *game, t_ray *ray, int n)
 	}
 	else
 	{
-		if (ray->ra > M_PI_2 && ray->ra < M_PI_3)
+		if (ray->ra > M_PI / 2 && ray->ra < 3 * M_PI / 2)
 			render_west(game, ray, n);
 		else
 			render_east(game, ray, n);

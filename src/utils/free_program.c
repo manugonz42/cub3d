@@ -21,6 +21,10 @@ int	free_mlx(t_game *game)
 
 void	free_sprites(t_game *game)
 {
+	if (game->sprites->f)
+		free(game->sprites->f);
+	if (game->sprites->c)
+		free(game->sprites->c);
 	if (game->sprites->no)
 	{
 		mlx_destroy_image(game->mlx_server, game->sprites->no->ptr);
@@ -68,10 +72,7 @@ int	free_program(t_game *game)
 	if (game->map)
 		free_map(game);
 	if (game->mlx_window)
-		free_mlx(game);
-	if (game->mlx_window)
-		printf("Aquí");
-//	system("leaks cub3D");
+		mlx_destroy_window(game->mlx_server, game->mlx_window);
 	exit(0);
 	return (0);
 }
