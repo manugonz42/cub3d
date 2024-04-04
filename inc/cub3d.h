@@ -87,7 +87,7 @@ int		press_input(int keysym, t_game *game);
 
 void	cast_rays(t_game *game);
 void	render_ray(t_game *game, t_ray *ray, int n);
-float	ray_dist(float ax, float ay, float bx, float by);
+float	rdst(float ax, float ay, float bx, float by);
 float	adjust_angle(float ra);
 
 ///////////////////////////////////////////////////////////////////////////////

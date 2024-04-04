@@ -16,7 +16,7 @@ int	init_mlx(t_game *game)
 {
 	game->mlx_server = mlx_init();
 	if (!game->mlx_server)
-		err("MLX: Failed server initialization", game);
+		err("MLX: Failed server initialization", NULL);
 	return (0);
 }
 
@@ -77,6 +77,9 @@ int	init_player(t_game *game)
 
 int	init_program(t_game *game, char *map)
 {
+	game->player = NULL;
+	game->sprites = NULL;
+	game->map = NULL;
 	game->width = GAME_WIDTH;
 	game->height = GAME_HEIGHT;
 	init_mlx(game);
@@ -84,14 +87,14 @@ int	init_program(t_game *game, char *map)
 	if (!game->frame)
 		err("GAME: malloc error", game);
 	game->frame->ptr = mlx_new_image(game->mlx_server, game->width,
-		game->height);
+			game->height);
 	if (!game->frame->ptr)
 		err("MLX: image error", game);
-	game->frame->addr = mlx_get_data_addr(game->frame->ptr,
-		&game->frame->bitsinpixel, &game->frame->line_bytes,
-		&game->frame->endian);
+	game->frame->addr = mlx_get_data_addr(game->frame->ptr, \
+	&game->frame->bitsinpixel, &game->frame->line_bytes, \
+	&game->frame->endian);
 	init_map(game, map);
-	init_sprites(game);
 	init_player(game);
+	init_sprites(game);
 	return (0);
 }

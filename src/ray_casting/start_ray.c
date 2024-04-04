@@ -37,8 +37,7 @@ void	set_hcolision(t_game *game, t_ray *ray)
 		else if (game->map->matrix[my][mx] == '1')
 		{
 			dof = game->map->rows;
-			ray->disH = ray_dist(game->player->x, \
-				game->player->y, ray->x, ray->y);
+			ray->disH = rdst(game->player->x, game->player->y, ray->x, ray->y);
 			ray->hx = ray->x;
 			ray->hy = ray->y;
 		}
@@ -52,10 +51,11 @@ void	set_hcolision(t_game *game, t_ray *ray)
 }
 
 /*
- *	Find posible colisions in horizontal lines (moving up-down). After finding the direction the ray
- *	is facing (up or down), set the posible colision with the limits of the tile the player is at.
- *	Set up the ofset the colision will have for each extra tile moved. In case it goes straight right
- *	or left, no horizontal colision will happen.
+ *	Find posible colisions in horizontal lines (moving up-down). After finding
+ *	the direction the ray is facing (up or down), set the posible colision with
+ *	the limits of the tile the player is at.
+ *	Set up the ofset the colision will have for each extra tile moved. In case
+ *	it goes straight right or left, no horizontal colision will happen.
  */
 void	horizontal_colision(t_game *game, t_ray *ray)
 {
@@ -80,10 +80,11 @@ void	horizontal_colision(t_game *game, t_ray *ray)
 }
 
 /*
- *	Save the px coordinates of the colision with vertical lines. Loop can be executed up to how many
- *	cols the map has. Map coordinates are obtained dividing px coordinate by the number of pixels a tile
- *	has (floor rounded). Once a collision is found, the distance between the collision and the player is
- *	calculated and the px coordinates saved.
+ *	Save the px coordinates of the colision with vertical lines. Loop can be
+ *	executed up to how many	cols the map has. Map coordinates are obtained
+ *	dividing px coordinate by the number of pixels a tile has (floor rounded).
+ *	Once a collision is found, the distance between the collision and the
+ *	player is calculated and the px coordinates saved.
  */
 void	set_vcolision(t_game *game, t_ray *ray)
 {
@@ -101,7 +102,7 @@ void	set_vcolision(t_game *game, t_ray *ray)
 		else if (game->map->matrix[my][mx] == '1')
 		{
 			dof = game->map->cols;
-			ray->disV = ray_dist(game->player->x, game->player->y, ray->x, ray->y);
+			ray->disV = rdst(game->player->x, game->player->y, ray->x, ray->y);
 			ray->vx = ray->x;
 			ray->vy = ray->y;
 		}
@@ -115,9 +116,10 @@ void	set_vcolision(t_game *game, t_ray *ray)
 }
 
 /*
- *	Find posible colisions in vertical lines (moving right-left). After finding the direction the ray
- *	is facing (right or left), set the posible colision with the limits of the tile the player is at.
- *	Set up the ofset the colision will have for each extra tile moved. In case it goes straight up
+ *	Find posible colisions in vertical lines (moving right-left). After finding
+ *	the direction the ray is facing (right or left), set the posible colision
+ *	with the limits of the tile the player is at. Set up the ofset the colision
+ *	will have for each extra tile moved. In case it goes straight up
  *	or down, no vertical colision will happen.
  */
 void	vertical_colision(t_game *game, t_ray *ray)
@@ -127,7 +129,7 @@ void	vertical_colision(t_game *game, t_ray *ray)
 	{
 		ray->x = (((int)game->player->x >> TILE_BITS) << TILE_BITS) - 0.0001;
 		ray->y = (game->player->x - ray->x) * ray->aTan + game->player->y;
-		ray->xo = - TILE_SIZE;
+		ray->xo = -TILE_SIZE;
 		ray->yo = -(ray->xo) * ray->aTan;
 	}
 	else if (ray->ra > M_PI_2 && ray->ra < M_PI_3)
@@ -161,7 +163,7 @@ void	cast_rays(t_game *game)
 		else
 			ray.disT = ray.disV;
 		render_ray(game, &ray, nb_rays);
-		ray.ra += DR/4;
+		ray.ra += DR / 4;
 		nb_rays++;
 	}
 }
