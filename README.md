@@ -2,9 +2,9 @@
 
 > 3D maze game using raycasting — C & MinilibX
 
-![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
-![42 Project](https://img.shields.io/badge/42-Project-000000?style=for-the-badge)
-![Raycasting](https://img.shields.io/badge/Raycasting-Graphics-purple?style=for-the-badge)
+![C](https://img.shields.io/badge/C-73daca?style=for-the-badge&logo=c&logoColor=1a1b26&labelColor=1a1b26)
+![42 Project](https://img.shields.io/badge/42-Project-bb9af7?style=for-the-badge&labelColor=1a1b26)
+![Raycasting](https://img.shields.io/badge/Raycasting-7aa2f7?style=for-the-badge&labelColor=1a1b26)
 
 ---
 
